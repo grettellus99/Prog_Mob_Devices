@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Workoutic</string>
+    <string name="workoutic_brand">Workoutic Brand</string>
+    <string name="user_profile">User Profile</string>
+    <string name="menu">Menu</string>
+    <string name="exercises">Exercises</string>
+    <string name="rutinas">Rutinas</string>
+    <string name="progreso">Progreso</string>
+    <string name="footer">Footer</string>
 </resources>

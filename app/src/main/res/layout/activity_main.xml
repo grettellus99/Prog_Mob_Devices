@@ -4,15 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_MenuBar"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:background="@color/primary_MenuBar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_main_icon_brand"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/workoutic_brand"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/tb_main_menu"
+        app:layout_constraintEnd_toEndOf="@+id/tb_main_menu"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_brand_background" />
+
+    <ImageView
+        android:id="@+id/img_main_icon_user"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="84dp"
+        android:contentDescription="@string/user_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/tb_main_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_user_account_45" />
+
+    <ImageView
+        android:id="@+id/img_main_icon_menu"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/menu"
+        app:layout_constraintBottom_toBottomOf="@+id/tb_main_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_menu_45" />
+
+
+    <ScrollView
+        android:id="@+id/scr_main_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/tb_main_menu"
+        app:layout_constraintTop_toBottomOf="@+id/tb_main_menu"
+        app:layout_constraintVertical_bias="0.0">
+
+        <FrameLayout
+            android:id="@+id/frm_main_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_outline"
+            android:fadeScrollbars="false"
+            android:isScrollContainer="false"
+            android:paddingBottom="75dp"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:verticalScrollbarPosition="defaultPosition">
+
+            <ImageView
+                android:id="@+id/img_main_exercises"
+                android:layout_width="wrap_content"
+                android:layout_height="210dp"
+                android:layout_marginTop="40dp"
+                android:contentDescription="@string/exercises"
+                app:srcCompat="@drawable/ejercicios" />
+
+            <ImageView
+                android:id="@+id/img_main_rutinas"
+                android:layout_width="wrap_content"
+                android:layout_height="210dp"
+                android:layout_marginTop="290dp"
+                android:contentDescription="@string/rutinas"
+                app:srcCompat="@drawable/rutinas" />
+
+            <ImageView
+                android:id="@+id/img_main_progreso"
+                android:layout_width="wrap_content"
+                android:layout_height="210dp"
+                android:layout_marginTop="540dp"
+                android:contentDescription="@string/progreso"
+                app:srcCompat="@drawable/progreso" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tb_main_footer"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_marginTop="790dp"
+                android:background="@color/footer"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_main_brand_footer"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="800dp"
+                android:contentDescription="@string/footer"
+                app:srcCompat="@drawable/brand_extended" />
+
+        </FrameLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
