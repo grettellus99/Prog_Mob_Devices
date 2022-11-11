@@ -3,70 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/primary_MenuBar"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
+
+    <LinearLayout
         android:id="@+id/tb_main_menu"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/primary_MenuBar"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/img_main_icon_brand"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/workoutic_brand"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/tb_main_menu"
-        app:layout_constraintEnd_toEndOf="@+id/tb_main_menu"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_brand_background" />
+        app:layout_constraintVertical_bias="0.003">
 
-    <ImageView
-        android:id="@+id/img_main_icon_user"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="84dp"
-        android:contentDescription="@string/user_profile"
-        app:layout_constraintBottom_toBottomOf="@+id/tb_main_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_user_account_45" />
+        <ImageView
+            android:id="@+id/img_main_icon_brand"
+            android:layout_width="76dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/workoutic_brand"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/ic_brand_background" />
 
-    <ImageView
-        android:id="@+id/img_main_icon_menu"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/menu"
-        app:layout_constraintBottom_toBottomOf="@+id/tb_main_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_menu_45" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
+        <ImageView
+            android:id="@+id/img_main_icon_user"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/user_profile"
+            app:srcCompat="@drawable/ic_user_account_45" />
+
+        <ImageView
+            android:id="@+id/img_main_icon_menu"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/menu"
+            app:srcCompat="@drawable/ic_menu_45"
+            tools:ignore="ImageContrastCheck" />
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scr_main_layout"
         android:layout_width="0dp"
-        android:layout_height="688dp"
-        android:layout_marginTop="70dp"
+        android:layout_height="0dp"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/tb_main_menu"
-        app:layout_constraintTop_toTopOf="@+id/tb_main_menu">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_main_menu">
 
         <LinearLayout
             android:id="@+id/layout_home"
@@ -77,16 +70,17 @@
 
             <ImageView
                 android:id="@+id/img_main_exercises"
-                android:layout_width="wrap_content"
+                android:layout_width="360dp"
                 android:layout_height="210dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:contentDescription="@string/exercises"
+                android:onClick="click_exercises"
                 app:srcCompat="@drawable/ejercicios" />
 
             <ImageView
                 android:id="@+id/img_main_rutinas"
-                android:layout_width="wrap_content"
+                android:layout_width="360dp"
                 android:layout_height="210dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
@@ -95,7 +89,7 @@
 
             <ImageView
                 android:id="@+id/img_main_progreso"
-                android:layout_width="wrap_content"
+                android:layout_width="360dp"
                 android:layout_height="210dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
@@ -103,10 +97,11 @@
                 app:srcCompat="@drawable/progreso" />
 
             <FrameLayout
+                android:id="@+id/fl_main_footer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_gravity="center|center_vertical"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="15dp">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/tb_main_footer"
@@ -122,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="75dp"
                     android:layout_marginTop="5dp"
-                    android:contentDescription="@string/footer"
+                    android:contentDescription="@string/workoutic_brand"
                     app:srcCompat="@drawable/brand_extended" />
 
             </FrameLayout>

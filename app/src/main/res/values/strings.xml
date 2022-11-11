@@ -7,4 +7,8 @@
     <string name="rutinas">Rutinas</string>
     <string name="progreso">Progreso</string>
     <string name="footer">Footer</string>
+    <string name="seleccionar_parte_ejercicios">Selecciona una parte del cuerpo para ver los ejercicios</string>
+    <string name="go_back">Go Back</string>
+    <string name="human_body_front">Human Body Front</string>
+    <string name="human_back">Human Back</string>
 </resources>

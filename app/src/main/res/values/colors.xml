@@ -10,9 +10,11 @@
 
     <!-- Colores Workoutic -->
     <color name="main_Home">#EEEEEE</color>
+    <color name="secondary_main">#FFE4D7</color>
     <color name="primary_MenuBar">#FFB2A6</color>
     <color name="secondary_MenuBar">#45526C</color>
     <color name="brand_c1">#922727</color>
     <color name="brand_c2">#8F1457</color>
     <color name="footer">#B3D6E7</color>
+    <color name="footer_2">#F0ECE3</color>
 </resources>
