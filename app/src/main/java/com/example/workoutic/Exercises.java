@@ -18,4 +18,10 @@ public class Exercises extends AppCompatActivity {
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
     }
+
+    public void goMenu(View view) {
+        Intent intMenu = new Intent(getApplicationContext(),Menu.class);
+        intMenu.putExtra("caller","Exercises");
+        startActivity(intMenu);
+    }
 }

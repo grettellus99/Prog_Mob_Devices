@@ -28,7 +28,8 @@
             android:contentDescription="@string/workoutic_brand"
             android:onClick="goBack"
             android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/ic_brand_background" />
+            app:srcCompat="@mipmap/ic_brand_background"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <Space
             android:layout_width="0dp"
@@ -47,8 +48,9 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/menu"
+            android:onClick="goMenu"
             app:srcCompat="@drawable/ic_menu_45"
-            tools:ignore="ImageContrastCheck" />
+            tools:ignore="ImageContrastCheck,OnClick" />
 
     </LinearLayout>
     <ScrollView
@@ -84,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:contentDescription="@string/go_back"
+                    android:minHeight="48dp"
                     android:onClick="goBack"
                     app:srcCompat="@drawable/ic_arrow_45" />
 

@@ -11,4 +11,9 @@
     <string name="go_back">Go Back</string>
     <string name="human_body_front">Human Body Front</string>
     <string name="human_back">Human Back</string>
+    <string name="mi_cuenta">Mi Cuenta</string>
+    <string name="log_in_sing_up">Log In | Sign Up</string>
+    <string name="ejercicios">Ejercicios</string>
+    <string name="progreso_menu">Progreso</string>
+    <string name="rutina">Rutina</string>
 </resources>

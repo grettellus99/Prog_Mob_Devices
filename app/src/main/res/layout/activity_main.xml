@@ -46,6 +46,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/menu"
+            android:onClick="goMenu"
             app:srcCompat="@drawable/ic_menu_45"
             tools:ignore="ImageContrastCheck" />
 
@@ -75,7 +76,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:contentDescription="@string/exercises"
-                android:onClick="click_exercises"
+                android:onClick="goExercises"
                 app:srcCompat="@drawable/ejercicios" />
 
             <ImageView

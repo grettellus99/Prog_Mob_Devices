@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
 
 public class MainActivity extends AppCompatActivity {
     private View exercisesView;
@@ -23,8 +23,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void click_exercises(View view) {
+    public void goExercises(View view) {
         Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
         startActivity(intExercises);
+    }
+
+    public void goMenu(View view) {
+        Intent intMenu= new Intent(getApplicationContext(),Menu.class);
+        intMenu.putExtra("caller","MainActivity");
+        startActivity(intMenu);
     }
 }
