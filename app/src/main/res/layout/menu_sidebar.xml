@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_MenuBar"
+    android:gravity="bottom|fill_vertical"
+    android:orientation="vertical"
     tools:context=".Menu">
 
 
     <LinearLayout
         android:id="@+id/tb_menuSb_menu"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -28,7 +30,8 @@
             android:contentDescription="@string/workoutic_brand"
             android:onClick="goMain"
             android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/ic_brand_background" />
+            app:srcCompat="@mipmap/ic_brand_background"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <Space
             android:layout_width="0dp"
@@ -55,8 +58,8 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:foregroundGravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,41 +154,38 @@
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="94dp" />
-
-                    <FrameLayout
-                        android:id="@+id/fl_menuSb_footer"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_gravity="bottom|center|center_vertical"
-                        android:layout_marginBottom="0dp">
-
-                        <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/tb_menuSb_footer"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:background="@color/footer_2"
-                            android:foregroundGravity="center|fill_vertical"
-                            android:minHeight="?attr/actionBarSize"
-                            android:theme="?attr/actionBarTheme" />
-
-                        <ImageView
-                            android:id="@+id/img_menuSb_footer"
-                            android:layout_width="match_parent"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="5dp"
-                            android:contentDescription="@string/workoutic_brand"
-                            app:srcCompat="@drawable/brand_extended" />
-
-                    </FrameLayout>
+                        android:layout_height="70dp" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
+    <FrameLayout
+        android:id="@+id/fl_menuSb_footer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:background="@color/footer_2">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/img_menuSb_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/secondary_main"
+            android:contentDescription="@string/workoutic_brand"
+            app:srcCompat="@drawable/brand_extended" />
+
+    </FrameLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+<!-- <Toolbar
+            android:id="@+id/tb_menuSb_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/footer_2"
+            android:foregroundGravity="center|fill_vertical"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />-->

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Tag_exercises">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

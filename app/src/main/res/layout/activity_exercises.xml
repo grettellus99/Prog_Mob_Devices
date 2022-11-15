@@ -29,7 +29,7 @@
             android:onClick="goBack"
             android:scaleType="centerCrop"
             app:srcCompat="@mipmap/ic_brand_background"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
         <Space
             android:layout_width="0dp"
@@ -48,9 +48,10 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/menu"
+            android:minHeight="48dp"
             android:onClick="goMenu"
             app:srcCompat="@drawable/ic_menu_45"
-            tools:ignore="ImageContrastCheck,OnClick" />
+            tools:ignore="ImageContrastCheck,OnClick,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
     </LinearLayout>
     <ScrollView
@@ -124,6 +125,7 @@
                     app:srcCompat="@drawable/human_front"
                     tools:ignore="ImageContrastCheck" />
 
+
             </LinearLayout>
 
             <LinearLayout
@@ -163,7 +165,7 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/img_exercises_human_back"
+                        android:id="@+id/grid_exercises_human_back"
                         android:layout_width="match_parent"
                         android:layout_height="661dp"
                         android:contentDescription="@string/human_back"

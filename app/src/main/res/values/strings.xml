@@ -12,8 +12,24 @@
     <string name="human_body_front">Human Body Front</string>
     <string name="human_back">Human Back</string>
     <string name="mi_cuenta">Mi Cuenta</string>
-    <string name="log_in_sing_up">Log In | Sign Up</string>
+    <string name="log_in_sing_up">Log In</string>
     <string name="ejercicios">Ejercicios</string>
     <string name="progreso_menu">Progreso</string>
     <string name="rutina">Rutina</string>
+    <string name="hombro_izquierdo">Hombro Izquierdo</string>
+    <string name="hombro_derecho">Hombro Derecho</string>
+    <string name="pecho">Pecho</string>
+    <string name="abdominales">Abdominales</string>
+    <string name="brazo_izquierdo">Brazo Izquierdo</string>
+    <string name="brazo_derecho">Brazo Derecho</string>
+    <string name="muslos">Muslos</string>
+    <string name="caderas">Caderas</string>
+    <string name="gemelos">Gemelos</string>
+    <string name="cuadriceps">Cuadriceps</string>
+    <string name="h">H</string>
+    <string name="brazo">B</string>
+    <string name="deltoides">Deltoides</string>
+    <string name="espalda">Espalda</string>
+    <string name="abductores">Abductores</string>
+    <string name="gluteos">Gluteos</string>
 </resources>
