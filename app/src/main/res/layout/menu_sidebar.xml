@@ -143,12 +143,12 @@
                         android:layout_height="70dp" />
 
                     <TextView
-                        android:id="@+id/txt_menu_progress"
+                        android:id="@+id/txt_menu_chat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:gravity="center_horizontal"
-                        android:text="@string/progreso_menu"
+                        android:text="@string/chat_menu"
                         android:textColor="#E6000000"
                         android:textSize="36sp" />
 
@@ -176,7 +176,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/secondary_main"
             android:contentDescription="@string/workoutic_brand"
-            app:srcCompat="@drawable/brand_extended" />
+            app:srcCompat="@drawable/brand" />
 
     </FrameLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

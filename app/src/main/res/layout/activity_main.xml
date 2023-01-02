@@ -89,13 +89,13 @@
                 app:srcCompat="@drawable/rutinas" />
 
             <ImageView
-                android:id="@+id/img_main_progreso"
+                android:id="@+id/img_main_chat"
                 android:layout_width="360dp"
                 android:layout_height="210dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
-                android:contentDescription="@string/progreso"
-                app:srcCompat="@drawable/progreso" />
+                android:contentDescription="@string/chat"
+                app:srcCompat="@drawable/chat" />
 
             <FrameLayout
                 android:id="@+id/fl_main_footer"
@@ -119,7 +119,7 @@
                     android:layout_height="75dp"
                     android:layout_marginTop="5dp"
                     android:contentDescription="@string/workoutic_brand"
-                    app:srcCompat="@drawable/brand_extended" />
+                    app:srcCompat="@drawable/brand" />
 
             </FrameLayout>
 

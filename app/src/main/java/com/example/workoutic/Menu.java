@@ -27,8 +27,15 @@ public class Menu extends AppCompatActivity {
             case "Exercises":
                 Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
                 startActivity(intExercises);
+                break;
+            case "SelectionExercises":
+                Intent intSelExercises = new Intent(getApplicationContext(),SelectionExercises.class);
+                Intent i = getIntent();
+                String category = i.getStringExtra("category");
+                intSelExercises.putExtra("caller",category);
+                startActivity(intSelExercises);
+                break;
         }
-
     }
 
     public void goExercises(View view) {

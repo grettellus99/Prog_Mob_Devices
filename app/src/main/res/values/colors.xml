@@ -15,6 +15,7 @@
     <color name="secondary_MenuBar">#45526C</color>
     <color name="brand_c1">#922727</color>
     <color name="brand_c2">#8F1457</color>
-    <color name="footer">#B3D6E7</color>
+    <color name="footer">#E5BEBC</color>
     <color name="footer_2">#F0ECE3</color>
+    <color name="font_grid">#E1F5FE</color>
 </resources>
