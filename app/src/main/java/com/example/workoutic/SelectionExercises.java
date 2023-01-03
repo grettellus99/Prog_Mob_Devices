@@ -39,6 +39,10 @@ public class SelectionExercises extends AppCompatActivity {
         Intent i = getIntent();
         caller= i.getStringExtra("caller");
 
+        ListView lv = findViewById(R.id.lv_sel_exerc);
+        lv.setAdapter(new ExercisesAdapter(new LinkedList<ExercisesModel>()));
+        lv.setVisibility(View.GONE);
+
         imgCategory = findViewById(R.id.img_sel_exerc_principal);
         txtCategoria = findViewById(R.id.txtView_sel_exerc_categoria);
         txtCategoria.setText(caller);
@@ -93,9 +97,6 @@ public class SelectionExercises extends AppCompatActivity {
 
         ///////////// DOWNLOAD EXERCISES ///////////////
         downloadExercises();
-
-        ListView lv = findViewById(R.id.lv_sel_exerc);
-        lv.setAdapter(new ExercisesAdapter(new LinkedList<ExercisesModel>()));
     }
     public void goMain(View view) {
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
@@ -133,7 +134,9 @@ public class SelectionExercises extends AppCompatActivity {
     }
 
     public void prepareForDownloadExercises() {
+        ListView lv = findViewById(R.id.lv_sel_exerc);
         ProgressBar pb = findViewById(R.id.progressBar_sel_exerc);
+        lv.setVisibility(View.GONE);
         pb.setVisibility(View.VISIBLE);
     }
 
@@ -143,6 +146,7 @@ public class SelectionExercises extends AppCompatActivity {
 
         ProgressBar pb = findViewById(R.id.progressBar_sel_exerc);
         pb.setVisibility(View.GONE);
+        lv.setVisibility(View.VISIBLE);
 
     }
 
@@ -155,14 +159,14 @@ public class SelectionExercises extends AppCompatActivity {
     public void sinEquipamiento(View view) {
 
         botonSE.setBackgroundColor(getColor(R.color.primary_MenuBar));
-        botonCE.setBackgroundColor(getColor(R.color.secondary_main));
+        botonCE.setBackgroundColor(getColor(R.color.secondary_MenuBar));
         SelectionExercises.EQUIPAMIENTO = false;
         downloadExercises();
     }
 
     public void conEquipamiento(View view) {
-        botonSE.setBackgroundColor(getColor(R.color.primary_MenuBar));
-        botonSE.setBackgroundColor(getColor(R.color.secondary_main));
+        botonCE.setBackgroundColor(getColor(R.color.primary_MenuBar));
+        botonSE.setBackgroundColor(getColor(R.color.secondary_MenuBar));
         SelectionExercises.EQUIPAMIENTO = true;
         downloadExercises();
     }

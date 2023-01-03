@@ -9,11 +9,15 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/main_Home"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/fl_sel_exerc_footer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/tb_sel_exerc_menu"
@@ -60,7 +64,7 @@
         <LinearLayout
             android:id="@+id/ly_sel_exerc_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/primary_MenuBar"
             android:orientation="vertical">
 
@@ -101,7 +105,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="-25dp"
                     android:background="@drawable/shape_1"
                     android:orientation="vertical">
@@ -243,25 +247,33 @@
                             <ProgressBar
                                 android:id="@+id/progressBar_sel_exerc"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="50dp"
                                 android:background="@color/main_Home"
                                 android:indeterminate="true"
                                 android:indeterminateTint="@color/secondary_MenuBar"
                                 android:indeterminateTintMode="src_atop"
-                                android:padding="30dp"
-                                android:visibility="gone" />
+                                android:padding="30dp" />
 
                             <ListView
                                 android:id="@+id/lv_sel_exerc"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/main_Home">
+                                android:layout_height="wrap_content"
+                                android:background="@color/main_Home"
+                                tools:visibility="invisible">
 
                             </ListView>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_Home"
+                android:orientation="vertical"></LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -288,10 +300,8 @@
             android:id="@+id/img_sel_exerc_footer"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_marginTop="5dp"
             android:contentDescription="@string/workoutic_brand"
             app:srcCompat="@drawable/brand" />
-
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

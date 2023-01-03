@@ -15,9 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ExercisesAdapter extends BaseAdapter {
-    private List<ExercisesModel> exercisesModelData = new LinkedList<ExercisesModel>();
+    private List<ExercisesModel> exercisesModelData;
 
     public ExercisesAdapter(List<ExercisesModel> listaEjer) {
+        this.exercisesModelData = new LinkedList<ExercisesModel>();
         this.exercisesModelData.addAll(listaEjer);
     }
 
@@ -61,9 +62,9 @@ public class ExercisesAdapter extends BaseAdapter {
         super.notifyDataSetChanged();
     }
 
-    public String concatenarLista(List<String> lista) {
+    public String concatenarLista(String [] lista) {
         String res = "";
-        int len = lista.size();
+        int len = lista.length;
         for(String elem : lista){
             res += elem;
             len --;

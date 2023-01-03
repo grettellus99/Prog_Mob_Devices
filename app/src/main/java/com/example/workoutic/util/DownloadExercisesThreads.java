@@ -48,7 +48,7 @@ public class DownloadExercisesThreads implements Runnable{
                 public void run() {
                     try {
                         Bitmap imagenAlt = NetUtil.getURLBitmap(e.getImgAltURL());
-                        e.setImageMain(imagenAlt);
+                        e.setImageAlt(imagenAlt);
                         actSE.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -59,7 +59,7 @@ public class DownloadExercisesThreads implements Runnable{
                         ex.printStackTrace();
                     }
                 }
-            });
+            }).start();
         }
         actSE.runOnUiThread(new Runnable() {
             @Override

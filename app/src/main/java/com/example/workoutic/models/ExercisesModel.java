@@ -12,11 +12,11 @@ public class ExercisesModel {
     @SerializedName("nombre")
     private String name;
     @SerializedName("dificultad")
-    private List<String> level;
+    private String [] level;
     @SerializedName("equipamiento")
-    private List<String> equipment;
+    private String [] equipment;
     @SerializedName("musculos")
-    private List<String> muscles;
+    private String [] muscles;
     @SerializedName("descripcion")
     private String description;
     @SerializedName("ejecucion")
@@ -50,27 +50,27 @@ public class ExercisesModel {
         this.name = name;
     }
 
-    public List<String> getLevel() {
+    public String[] getLevel() {
         return level;
     }
 
-    public void setLevel(List<String> level) {
+    public void setLevel(String[] level) {
         this.level = level;
     }
 
-    public List<String> getEquipment() {
+    public String[] getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(List<String> equipment) {
+    public void setEquipment(String[] equipment) {
         this.equipment = equipment;
     }
 
-    public List<String> getMuscles() {
+    public String[] getMuscles() {
         return muscles;
     }
 
-    public void setMuscles(List<String> muscles) {
+    public void setMuscles(String[] muscles) {
         this.muscles = muscles;
     }
 
