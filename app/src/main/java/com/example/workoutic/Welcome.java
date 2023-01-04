@@ -3,6 +3,10 @@ package com.example.workoutic;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +27,7 @@ public class Welcome extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         };
-        timer.schedule(task, 5000);
+        timer.schedule(task, 3000);
 
     }
 }

@@ -22,6 +22,8 @@ public class ExercisesAdapter extends BaseAdapter {
         this.exercisesModelData.addAll(listaEjer);
     }
 
+
+
     @Override
     public int getCount() {
         return exercisesModelData.size();

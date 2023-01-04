@@ -49,4 +49,11 @@
     <string name="dificultad">Dificultad:</string>
     <string name="todo">TODO</string>
     <string name="welcome_screen_img">hombre y mujer levantando pesas</string>
+    <string name="img_ejercicio_especifico">Imagen de demostración del ejercicio</string>
+    <string name="nivel">Nivel:</string>
+    <string name="equipamiento_se">Equipamiento:</string>
+    <string name="add_exercise">Adicionar ejercicio a una rutina</string>
+    <string name="welcome_img">Imagen de bienbenia a Workoutic</string>
+    <string name="bienvenido_a_workoutic">Bienvenido a WORKOUTIC</string>
+    <string name="dont">Do not exist</string>
 </resources>

@@ -96,7 +96,7 @@
                     android:id="@+id/txt_exercises_choose"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/play_bold"
                     android:gravity="center_horizontal"
                     android:padding="10dp"
                     android:text="@string/seleccionar_parte_ejercicios"

@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.workoutic.models.ExercisesModel;
+
 public class Menu extends AppCompatActivity {
     private String caller;
     @Override
@@ -35,6 +37,14 @@ public class Menu extends AppCompatActivity {
                 intSelExercises.putExtra("caller",category);
                 startActivity(intSelExercises);
                 break;
+            case "EspecificExercises":
+                Intent intExercEspec = new Intent(getApplicationContext(),SelExerEspecific.class);
+                Intent i2 = getIntent();
+                ExercisesModel exercise = (ExercisesModel) i2.getSerializableExtra("exercise");
+                String cateExer = i2.getStringExtra("category");
+                intExercEspec.putExtra("exercise",exercise);
+                intExercEspec.putExtra("caller",cateExer);
+                startActivity(intExercEspec);
         }
     }
 

@@ -4,9 +4,10 @@ import android.graphics.Bitmap;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ExercisesModel {
+public class ExercisesModel implements Serializable {
     public static int N_EXERCISES = 0;
     private int id;
     @SerializedName("nombre")
@@ -26,8 +27,8 @@ public class ExercisesModel {
     @SerializedName("img_principal")
     private String imgMainURL;
 
-    private Bitmap imageMain;
-    private Bitmap imageAlt;
+    private transient Bitmap imageMain;
+    private transient Bitmap imageAlt;
 
     public ExercisesModel() {
         this.id = N_EXERCISES;
