@@ -14,6 +14,12 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Routine_Selection"
+            android:exported="false" />
+        <activity
+            android:name=".Routine_Main"
+            android:exported="false" />
+        <activity
             android:name=".SelExerEspecific"
             android:exported="false" />
         <activity
@@ -27,7 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".Welcome"
             android:exported="true">

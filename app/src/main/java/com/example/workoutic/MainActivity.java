@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void goExercises(View view) {
         Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
         startActivity(intExercises);
@@ -33,5 +32,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intMenu= new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("caller","MainActivity");
         startActivity(intMenu);
+    }
+
+    public void goRoutines(View view) {
+        Intent intRoutines= new Intent(getApplicationContext(),Routine_Main.class);
+        startActivity(intRoutines);
     }
 }

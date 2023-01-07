@@ -45,6 +45,7 @@ public class SelectionExercises extends AppCompatActivity {
         ListView lv = findViewById(R.id.lv_sel_exerc);
         lv.setAdapter(new ExercisesAdapter(new LinkedList<ExercisesModel>()));
 
+
         // Listener de cada item en el listview. Llama a la actividad de Ejercicio Especifico
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

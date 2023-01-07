@@ -56,4 +56,9 @@
     <string name="welcome_img">Imagen de bienbenia a Workoutic</string>
     <string name="bienvenido_a_workoutic">Bienvenido a WORKOUTIC</string>
     <string name="dont">Do not exist</string>
+    <string name="boton_mi_rutina">Boton Mi Rutina</string>
+    <string name="boton_nueva_rutina">Boton Nueva Rutina</string>
+    <string name="db_drop">DROP TABLE IF EXISTS</string>
+    <string name="buscar_por_nombre">Buscar por nombre</string>
+    <string name="ordenacion_descendente">Ordenacion Descendente</string>
 </resources>

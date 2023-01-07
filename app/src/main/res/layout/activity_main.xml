@@ -46,6 +46,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/menu"
+            android:minHeight="48dp"
             android:onClick="goMenu"
             app:srcCompat="@drawable/ic_menu_45"
             tools:ignore="ImageContrastCheck" />
@@ -86,6 +87,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:contentDescription="@string/rutinas"
+                android:onClick="goRoutines"
                 app:srcCompat="@drawable/rutinas" />
 
             <ImageView

@@ -67,6 +67,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_menu"
             android:foregroundGravity="center"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +76,7 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/workoutic_brand"
                 android:onClick="goMain"
@@ -89,6 +90,8 @@
             <TextView
                 android:id="@+id/txt_menu_profile"
                 style="@style/text_menu"
+                android:layout_width="wrap_content"
+                android:onClick="goLogin"
                 android:text="@string/log_in_sing_up" />
 
             <Space
@@ -97,7 +100,7 @@
 
             <TextView
                 android:id="@+id/txt_menu_exercises"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/play_regular"
@@ -123,6 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/round_exercises_white"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <Space
@@ -131,10 +135,11 @@
 
                     <TextView
                         android:id="@+id/txt_menu_rutina"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/play"
                         android:gravity="center_horizontal"
+                        android:onClick="goRoutine"
                         android:text="@string/rutina"
                         android:textColor="#E6000000"
                         android:textSize="36sp" />
@@ -145,10 +150,10 @@
 
                     <TextView
                         android:id="@+id/txt_menu_chat"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/play"
-                        android:gravity="center_horizontal"
+                        android:onClick="goChat"
                         android:text="@string/chat_menu"
                         android:textColor="#E6000000"
                         android:textSize="36sp" />

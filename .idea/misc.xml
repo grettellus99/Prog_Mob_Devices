@@ -19,8 +19,10 @@
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/round_menu.xml" value="0.1" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/round_outline.xml" value="0.1" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/round_outline_exercises_1.xml" value="0.1" />
+        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/round_routine_white.xml" value="0.131" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/shape_1.xml" value="0.2235" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/shape_2.xml" value="0.2235" />
+        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/shape_combined.xml" value="0.27" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/shape_exercises.xml" value="0.152" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/shape_exercises_blue.xml" value="0.152" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/drawable/shape_exercises_main.xml" value="0.152" />
@@ -32,6 +34,8 @@
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_exercises.xml" value="0.1" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_exercises_grid.xml" value="0.22" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_routine_main.xml" value="0.25" />
+        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_routine_selection.xml" value="0.25" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_sel_exer_especific.xml" value="0.25" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_selection_exercises.xml" value="0.33" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/exercises_item.xml" value="0.5" />

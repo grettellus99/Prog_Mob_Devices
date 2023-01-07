@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_MenuBar"
+    tools:context=".Routine_Main">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/main_Home"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/tb_routine_main_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_MenuBar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/img_routine_main_icon_brand"
+                android:layout_width="76dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/workoutic_brand"
+                android:onClick="goMain"
+                android:scaleType="centerCrop"
+                app:srcCompat="@mipmap/ic_brand_background"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/img_routine_main_icon_user"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/user_profile"
+                app:srcCompat="@drawable/ic_user_account_45" />
+
+            <ImageView
+                android:id="@+id/img_routine_main_icon_menu"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/menu"
+                android:minHeight="48dp"
+                android:onClick="goMenu"
+                app:srcCompat="@drawable/ic_menu_45"
+                tools:ignore="ImageContrastCheck" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_menu"
+        app:layout_constraintBottom_toTopOf="@+id/fl_routine_main_footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_MenuBar"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_routine_white"
+                android:orientation="vertical"
+                android:paddingBottom="130dp">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@string/go_back"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:onClick="goBack"
+                    app:srcCompat="@drawable/ic_arrow_45" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="320dp"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/boton_mi_rutina"
+                    android:onClick="myRoutine"
+                    app:srcCompat="@drawable/mi_rutina" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-120dp"
+                android:background="@drawable/shape_1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/shape_exercises_main"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="320dp"
+                        android:layout_height="220dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:contentDescription="@string/boton_nueva_rutina"
+                        android:onClick="newRoutine"
+                        app:srcCompat="@drawable/nueva_rutina" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fl_routine_main_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_sel_exerc_footer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/footer_2"
+            android:foregroundGravity="center|fill_vertical"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <ImageView
+            android:id="@+id/img_sel_exerc_footer"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:contentDescription="@string/workoutic_brand"
+            app:srcCompat="@drawable/brand" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
