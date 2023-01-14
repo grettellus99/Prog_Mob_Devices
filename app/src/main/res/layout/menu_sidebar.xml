@@ -1,37 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_MenuBar"
+    android:background="@color/secondary_main"
     android:gravity="bottom|fill_vertical"
     android:orientation="vertical"
     tools:context=".Menu">
-
 
     <LinearLayout
         android:id="@+id/tb_menuSb_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/secondary_main"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.003">
-
-        <ImageView
-            android:id="@+id/img_menuSb_icon_brand"
-            android:layout_width="76dp"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/workoutic_brand"
-            android:onClick="goMain"
-            android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/ic_brand_background"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+        app:layout_constraintVertical_bias="0.0">
 
         <Space
             android:layout_width="0dp"
@@ -58,13 +49,17 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_outline"
         android:foregroundGravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fl_menuSb_footer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_menuSb_menu">
+        app:layout_constraintTop_toBottomOf="@+id/tb_menuSb_menu"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/ln_menuSb_layout"
@@ -72,36 +67,45 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_menu"
             android:foregroundGravity="center"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tb_menuSb_menu">
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/workoutic_brand"
+                android:onClick="goMain"
+                app:srcCompat="@drawable/brand_ws"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="70dp" />
+                android:layout_height="50dp" />
 
             <TextView
                 android:id="@+id/txt_menu_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:gravity="center_horizontal"
-                android:text="@string/log_in_sing_up"
-                android:textColor="#E6000000"
-                android:textSize="36sp" />
+                style="@style/text_menu"
+                android:layout_width="wrap_content"
+                android:onClick="goLogin"
+                android:text="@string/log_in_sing_up" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="70dp" />
+                android:layout_height="48dp" />
 
             <TextView
                 android:id="@+id/txt_menu_exercises"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/play_regular"
                 android:gravity="center_horizontal"
+                android:minHeight="48dp"
                 android:onClick="goExercises"
                 android:text="@string/ejercicios"
                 android:textColor="#E6000000"
@@ -109,52 +113,50 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/round_exercises_blue"
                 android:orientation="vertical">
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="50dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/round_exercises_white"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="70dp" />
+                        android:layout_height="40dp" />
 
                     <TextView
                         android:id="@+id/txt_menu_rutina"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/play"
                         android:gravity="center_horizontal"
+                        android:onClick="goRoutine"
                         android:text="@string/rutina"
                         android:textColor="#E6000000"
                         android:textSize="36sp" />
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="70dp" />
+                        android:layout_height="40dp" />
 
                     <TextView
-                        android:id="@+id/txt_menu_progress"
-                        android:layout_width="match_parent"
+                        android:id="@+id/txt_menu_chat"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:gravity="center_horizontal"
-                        android:text="@string/progreso_menu"
+                        android:fontFamily="@font/play"
+                        android:onClick="goChat"
+                        android:text="@string/chat_menu"
                         android:textColor="#E6000000"
                         android:textSize="36sp" />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -164,22 +166,29 @@
     <FrameLayout
         android:id="@+id/fl_menuSb_footer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/footer_2">
+        android:background="@color/secondary_main"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <ImageView
             android:id="@+id/img_menuSb_footer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="85dp"
             android:layout_marginTop="5dp"
             android:background="@color/secondary_main"
             android:contentDescription="@string/workoutic_brand"
-            app:srcCompat="@drawable/brand_extended" />
+            app:srcCompat="@drawable/brand" />
 
     </FrameLayout>
-</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 
 <!-- <Toolbar
             android:id="@+id/tb_menuSb_footer"

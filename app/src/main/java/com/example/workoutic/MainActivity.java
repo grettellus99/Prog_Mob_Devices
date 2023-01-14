@@ -8,6 +8,11 @@ import android.view.View;
 
 import com.example.workoutic.activity.UserActivity;
 
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
 
 public class MainActivity extends AppCompatActivity {
     private View exercisesView;
@@ -19,11 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
     }
-
 
     public void goExercises(View view) {
         Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intUser);
     }
 
-    public void setStatus (String status){
-
+    public void goRoutines(View view) {
+        Intent intRoutines= new Intent(getApplicationContext(),Routine_Main.class);
+        startActivity(intRoutines);
     }
 }

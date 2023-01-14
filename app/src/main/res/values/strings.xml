@@ -5,7 +5,7 @@
     <string name="menu">Menu</string>
     <string name="exercises">Exercises</string>
     <string name="rutinas">Rutinas</string>
-    <string name="progreso">Progreso</string>
+    <string name="chat">Chat</string>
     <string name="footer">Footer</string>
     <string name="seleccionar_parte_ejercicios">Selecciona una parte del cuerpo para ver los ejercicios</string>
     <string name="go_back">Go Back</string>
@@ -14,7 +14,7 @@
     <string name="mi_cuenta">Mi Cuenta</string>
     <string name="log_in_sing_up">Log In</string>
     <string name="ejercicios">Ejercicios</string>
-    <string name="progreso_menu">Progreso</string>
+    <string name="chat_menu">Chat</string>
     <string name="rutina">Rutina</string>
     <string name="hombro_izquierdo">Hombro Izquierdo</string>
     <string name="hombro_derecho">Hombro Derecho</string>
@@ -25,11 +25,12 @@
     <string name="muslos">Muslos</string>
     <string name="caderas">Caderas</string>
     <string name="gemelos">Gemelos</string>
-    <string name="cuadriceps">Cuadriceps</string>
+    <string name="cuadriceps">Cuádriceps</string>
     <string name="h">H</string>
     <string name="brazo">B</string>
     <string name="deltoides">Deltoides</string>
     <string name="espalda">Espalda</string>
+<<<<<<< HEAD
     <string name="abductores">Abductores</string>
     <string name="gluteos">Gluteos</string>
     <string name="username">username</string>
@@ -38,4 +39,37 @@
     <string name="Chats">Chats</string>
     <string name="message">Escriba un mensaje...</string>
     <string name="Buscar_usuario">Buscar usuario...</string>
+=======
+    <string name="abductores">Aductores</string>
+    <string name="gluteos">Glúteos</string>
+    <string name="img_abs_descrip">Imagen enfocada en Abdominales</string>
+    <string name="img_arms_descrip">Imagen enfocada en Brazos</string>
+    <string name="img_back_descrip">Imagen enfocada en Espalda</string>
+    <string name="img_glutes_descrip">Imagen enfocada en Glúteos</string>
+    <string name="img_waist_descrip">Imagen enfocada en Caderas</string>
+    <string name="img_chest_descrip">Imagen enfocada en Pecho</string>
+    <string name="img_legs_descrip">Imagen enfocada en Piernas</string>
+    <string name="categoria">Categoria</string>
+    <string name="info_icon" />
+    <string name="information_icon">information icon</string>
+    <string name="con_equipamiento">CON EQUIPAMIENTO</string>
+    <string name="sin_equipamiento">SIN EQUIPAMIENTO</string>
+    <string name="equipo">Equipo:</string>
+    <string name="muscles">Músculos:</string>
+    <string name="dificultad">Dificultad:</string>
+    <string name="todo">TODO</string>
+    <string name="welcome_screen_img">hombre y mujer levantando pesas</string>
+    <string name="img_ejercicio_especifico">Imagen de demostración del ejercicio</string>
+    <string name="nivel">Nivel:</string>
+    <string name="equipamiento_se">Equipamiento:</string>
+    <string name="add_exercise">Adicionar ejercicio a una rutina</string>
+    <string name="welcome_img">Imagen de bienbenia a Workoutic</string>
+    <string name="bienvenido_a_workoutic">Bienvenido a WORKOUTIC</string>
+    <string name="dont">Do not exist</string>
+    <string name="boton_mi_rutina">Boton Mi Rutina</string>
+    <string name="boton_nueva_rutina">Boton Nueva Rutina</string>
+    <string name="db_drop">DROP TABLE IF EXISTS</string>
+    <string name="buscar_por_nombre">Buscar por nombre</string>
+    <string name="ordenacion_descendente">Ordenacion Descendente</string>
+>>>>>>> b7ad63619dfda392576f5b453fa023c57c5fba76
 </resources>
