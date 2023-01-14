@@ -8,4 +8,10 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView" >
+        <!-- Query Text Color -->
+        <item name="android:textColorPrimary">@color/black</item>
+        
+    </style>
 </resources>

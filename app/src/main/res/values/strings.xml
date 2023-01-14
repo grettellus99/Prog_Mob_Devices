@@ -32,4 +32,10 @@
     <string name="espalda">Espalda</string>
     <string name="abductores">Abductores</string>
     <string name="gluteos">Gluteos</string>
+    <string name="username">username</string>
+    <string name="email">email</string>
+    <string name="Usuarios">Usuarios</string>
+    <string name="Chats">Chats</string>
+    <string name="message">Escriba un mensaje...</string>
+    <string name="Buscar_usuario">Buscar usuario...</string>
 </resources>

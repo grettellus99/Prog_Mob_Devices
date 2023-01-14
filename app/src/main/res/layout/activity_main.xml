@@ -95,6 +95,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:contentDescription="@string/progreso"
+                android:onClick="goRegister"
                 app:srcCompat="@drawable/progreso" />
 
             <FrameLayout

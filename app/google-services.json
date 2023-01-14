@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "292752848330",
+    "firebase_url": "https://workoutic-db-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "workoutic-db",
+    "storage_bucket": "workoutic-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292752848330:android:a3d2505faca413602b0b33",
+        "android_client_info": {
+          "package_name": "com.example.workoutic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292752848330-h0i3erc2qa15llj15kis6mcc1v8jpb13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSn1mk2vUmd4ccu4-ZBv-mKiz8PCoTy80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292752848330-h0i3erc2qa15llj15kis6mcc1v8jpb13.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

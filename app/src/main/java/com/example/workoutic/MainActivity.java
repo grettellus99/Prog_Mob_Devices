@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.workoutic.activity.UserActivity;
+
 
 public class MainActivity extends AppCompatActivity {
     private View exercisesView;
@@ -32,5 +34,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intMenu= new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("caller","MainActivity");
         startActivity(intMenu);
+    }
+
+    public void goRegister(View view) {
+        Intent intUser = new Intent(getApplicationContext(), RegisterActivity.class);
+        startActivity(intUser);
+    }
+
+    public void setStatus (String status){
+
     }
 }
