@@ -18,8 +18,6 @@ public class Menu extends AppCompatActivity {
         caller= i.getStringExtra("caller");
 
     }
-
-
     public void goBack(View view) {
         switch (caller){
             case "MainActivity":
@@ -51,6 +49,9 @@ public class Menu extends AppCompatActivity {
             case "RoutineSelection":
                 Intent intRoutSel = new Intent(getApplicationContext(),Routine_Selection.class);
                 startActivity(intRoutSel);
+            case "New_Routine":
+                Intent intMenu = new Intent(getApplicationContext(),NewRoutine.class);
+                startActivity(intMenu);
         }
     }
 

@@ -31,6 +31,8 @@ public class Routine_Main extends AppCompatActivity {
     }
 
     public void newRoutine(View view) {
+        Intent intNewRoutine = new Intent(this.getApplicationContext(),NewRoutine.class);
+        startActivity(intNewRoutine);
     }
 
     public void myRoutine(View view) {

@@ -18,4 +18,7 @@
     <color name="footer">#E5BEBC</color>
     <color name="footer_2">#F0ECE3</color>
     <color name="font_grid">#E1F5FE</color>
+    <color name="acept">#129A49</color>
+    <color name="edit">#DDFF9100</color>
+    <color name="new_button">#FF1D89</color>
 </resources>

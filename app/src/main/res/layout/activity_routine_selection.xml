@@ -112,7 +112,8 @@
                     android:inputType="textPersonName"
                     android:minHeight="48dp"
                     android:textColor="@color/black"
-                    android:textColorHint="#B3000000" />
+                    android:textColorHint="#B3000000"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:id="@+id/imageView9"

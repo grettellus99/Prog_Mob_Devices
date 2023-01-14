@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_MenuBar"
+    tools:context=".ExercisesManage">
+
+    <LinearLayout
+        android:id="@+id/tb_exercises_manage_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_MenuBar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_exercises_manage_icon_brand"
+            android:layout_width="76dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/workoutic_brand"
+            android:onClick="goMain"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/ic_brand_background"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/img_exercises_manage_icon_user"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/user_profile"
+            app:srcCompat="@drawable/ic_user_account_45" />
+
+        <ImageView
+            android:id="@+id/img_exercises_manage_icon_menu"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/menu"
+            android:minHeight="48dp"
+            android:onClick="goMenu"
+            app:srcCompat="@drawable/ic_menu_45"
+            tools:ignore="ImageContrastCheck" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview_exercises_manage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_menu"
+        android:nestedScrollingEnabled="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/fl_exercises_manage_footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_exercises_manage_menu"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:id="@+id/ly_exercises_manage_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_images"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_exercises_manage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/primary_MenuBar"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/img_exercises_manage_principal"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="#E5E5E5"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="fitCenter"
+                    tools:srcCompat="@drawable/deportista" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-25dp"
+                android:background="@drawable/shape_1"
+                android:isScrollContainer="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_exercises_main"
+                    android:isScrollContainer="true"
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginEnd="40dp"
+                        app:cardBackgroundColor="@color/main_Home"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    style="@style/exercises_managment_txt_views"
+                                    android:text="@string/ejercicio" />
+
+                                <TextView
+
+                                    android:id="@+id/txt_exercises_manage_exercise"
+                                    style="@style/exercises_managment_txt_views"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/play"
+                                    android:gravity="end"
+                                    android:text="@string/todo" />
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/divider5"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="?android:attr/listDivider"
+                                android:backgroundTint="@color/secondary_MenuBar" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    style="@style/exercises_managment_txt_views"
+                                    android:text="@string/categor_a" />
+
+                                <TextView
+
+                                    android:id="@+id/txt_exercises_manage_category"
+                                    style="@style/exercises_managment_txt_views"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/play"
+                                    android:gravity="end"
+                                    android:text="@string/todo" />
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/divider4"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="?android:attr/listDivider"
+                                android:backgroundTint="@color/secondary_MenuBar" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    style="@style/exercises_managment_txt_views"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="@string/series_e_r" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/decrease"
+                                        android:onClick="decreaseSeries"
+                                        android:rotation="-90"
+                                        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
+                                        tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+
+                                    <TextView
+
+                                        android:id="@+id/txt_exercises_manage_series"
+                                        style="@style/exercises_managment_txt_views"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/play"
+                                        android:gravity="end"
+                                        android:text="@string/todo" />
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/add"
+                                        android:onClick="addSeries"
+                                        android:rotation="90"
+                                        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
+                                        tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/divider3"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="?android:attr/listDivider"
+                                android:backgroundTint="@color/secondary_MenuBar" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    style="@style/exercises_managment_txt_views"
+                                    android:text="@string/repeticiones" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/decrease"
+                                        android:onClick="decreaseRep"
+                                        android:rotation="-90"
+                                        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
+                                        tools:ignore="TouchTargetSizeCheck" />
+
+                                    <TextView
+
+                                        android:id="@+id/txt_exercises_manage_repetitions"
+                                        style="@style/exercises_managment_txt_views"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/play"
+                                        android:gravity="end"
+                                        android:text="@string/todo" />
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/add"
+                                        android:onClick="addRep"
+                                        android:rotation="90"
+                                        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
+                                        tools:ignore="TouchTargetSizeCheck" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/divider2"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="?android:attr/listDivider"
+                                android:backgroundTint="@color/secondary_MenuBar" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    style="@style/exercises_managment_txt_views"
+                                    android:text="@string/peso_en_kg" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:id="@+id/imageView12"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/decrease"
+                                        android:onClick="decreaseWeight"
+                                        android:rotation="-90"
+                                        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
+                                        tools:ignore="TouchTargetSizeCheck" />
+
+                                    <TextView
+
+                                        android:id="@+id/txt_exercises_manage_weight"
+                                        style="@style/exercises_managment_txt_views"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/play"
+                                        android:gravity="end"
+                                        android:text="@string/todo" />
+
+                                    <ImageView
+                                        android:id="@+id/imageView11"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/add"
+                                        android:onClick="addWeight"
+                                        android:rotation="90"
+                                        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
+                                        tools:ignore="TouchTargetSizeCheck" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/secondary_main"
+                    android:orientation="horizontal"
+                    android:paddingStart="30dp"
+                    android:paddingTop="50dp"
+                    android:paddingEnd="30dp">
+
+                    <Button
+                        android:id="@+id/btn_new_routine_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/brand_c2"
+                        android:drawableEnd="@drawable/ic_baseline_close"
+                        android:drawablePadding="5dp"
+                        android:fontFamily="@font/play"
+                        android:onClick="goBack"
+                        android:text="@string/descartar"
+                        android:textColor="@color/font_grid"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/btn_new_routine_add_routine"
+                        style="@style/acept_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:onClick="addExercise"
+                        android:text="@string/finalizar"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fl_exercises_manage_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_exercises_manage_footer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/footer_2"
+            android:foregroundGravity="center|fill_vertical"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <ImageView
+            android:id="@+id/img_exercises_manage_footer"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/workoutic_brand"
+            app:srcCompat="@drawable/brand" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

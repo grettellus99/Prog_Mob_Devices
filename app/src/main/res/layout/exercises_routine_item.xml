@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_item_exercises"
+        android:id="@+id/card_item_exercises_routine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -28,11 +28,12 @@
             android:padding="5dp">
 
             <ImageView
-                android:id="@+id/img_card_item_exercises"
+                android:id="@+id/img_card_item_exercises_routine"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginEnd="10dp"
                 android:contentDescription="@string/todo"
+                tools:ignore="ImageContrastCheck"
                 tools:srcCompat="@drawable/burpies" />
 
             <LinearLayout
@@ -43,7 +44,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txt_card_item_exercises_title"
+                    android:id="@+id/txt_card_item_exercises_routine_title"
                     style="@style/card_item_text_2_bold"
                     android:layout_marginBottom="10dp"
                     android:text="@string/todo" />
@@ -55,52 +56,111 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txt_card_item_exercises_cat_1"
+                        android:id="@+id/txt_card_item_exercises_routine_cat_1"
                         style="@style/card_item_text_2_bold"
                         android:text="@string/equipo"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/txt_card_item_exercises_equip"
+                        android:id="@+id/txt_card_item_exercises_routine_equip"
                         style="@style/card_item_inf"
                         android:text="@string/todo" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txt_card_item_exercises_cat_2"
+                        android:id="@+id/txt_card_item_exercises_routine_cat_2"
                         style="@style/card_item_text_2_bold"
-                        android:text="@string/muscles"
+                        android:text="@string/series"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/txt_card_item_exercises_muscles"
+                        android:id="@+id/txt_card_item_exercises_routine_series"
                         style="@style/card_item_inf"
+                        android:layout_width="wrap_content"
                         android:text="@string/todo" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_card_item_exercises_routine_cat_4"
+                        style="@style/card_item_text_2_bold"
+                        android:layout_height="wrap_content"
+                        android:text="@string/repeticiones"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_card_item_exercises_routine_rep"
+                        style="@style/card_item_inf"
+                        android:layout_height="wrap_content"
+                        android:text="@string/todo" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/txt_card_item_exercises_cat_3"
-                        style="@style/card_item_text_2_bold"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dificultad"
-                        android:textSize="14sp" />
+                        android:layout_gravity="end"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/txt_card_item_exercises_level"
-                        style="@style/card_item_inf"
+                        <TextView
+                            android:id="@+id/txt_card_item_exercises_routine_cat_3"
+                            style="@style/card_item_text_2_bold"
+                            android:text="@string/peso"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txt_card_item_exercises_weight"
+                            style="@style/card_item_inf"
+                            android:text="@string/todo" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/todo" />
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:id="@+id/ly_exercise_routine_especific_exercise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/play_bold"
+                            android:text="@string/detalles"
+                            android:textColor="@color/brand_c2" />
+
+                        <ImageView
+                            android:id="@+id/imageView13"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_baseline_add_details" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
