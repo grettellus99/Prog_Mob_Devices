@@ -102,7 +102,7 @@
     <string name="sugeridos">Sugeridos:</string>
     <string name="series">Series:</string>
     <string name="peso">Peso:</string>
-    <string name="repeticiones">Repeticiones</string>
+    <string name="repeticiones">Repeticiones:</string>
     <string name="detalles">Detalles</string>
     <string name="helper_sel_exercises">Selecciona un ejercicio haciendo click sobre él</string>
     <string name="ejercicio">Ejercicio</string>
@@ -131,4 +131,7 @@
     <string name="modificar_rutina">Modificar Rutina</string>
     <string name="compartir_rutina">Compartir Rutina</string>
     <string name="menu_de_rutinas">Menu de rutinas</string>
+    <string name="msg_nombre_rutina_toast">Debes darle un nombre a la rutina antes de añadir ejercicios</string>
+    <string name="tiempo_en_min">Tiempo en min</string>
+    <string name="tiempo">Tiempo:</string>
 </resources>

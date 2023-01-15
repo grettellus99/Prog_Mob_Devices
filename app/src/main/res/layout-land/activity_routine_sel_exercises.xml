@@ -179,7 +179,7 @@
                         android:orientation="vertical">
 
                         <ProgressBar
-                            android:id="@+id/progressBar_welcome"
+                            android:id="@+id/progressBar_routine_sel_exerc"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="50dp"
@@ -187,7 +187,7 @@
                             android:indeterminate="true"
                             android:indeterminateTint="@color/secondary_MenuBar"
                             android:indeterminateTintMode="src_atop"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                         <ListView
                             android:id="@+id/lv_routine_sel_exerc"
@@ -196,7 +196,8 @@
                             android:dividerHeight="1dp"
                             android:nestedScrollingEnabled="true"
                             tools:listfooter="@layout/footer_2_row"
-                            tools:listheader="@layout/helper_selection_exercises" />
+                            tools:listheader="@layout/helper_selection_exercises"
+                            tools:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

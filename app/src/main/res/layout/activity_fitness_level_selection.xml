@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_MenuBar"
-    tools:context=".Routine_Main">
+    tools:context=".FitnessLevelSelection">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -106,6 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_margin="30dp"
+                android:onClick="goRookie"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="3dp"
@@ -158,6 +159,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_margin="30dp"
+                        android:onClick="goMedium"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp"
                         app:cardElevation="3dp"
@@ -196,6 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_margin="30dp"
+                        android:onClick="goExpert"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp"
                         app:cardElevation="3dp"

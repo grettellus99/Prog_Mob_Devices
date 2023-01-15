@@ -28,9 +28,9 @@ public class SelectionExercises extends AppCompatActivity {
     TextView txtCategoria;
     ImageView imgCategory;
     String description;
-    public static Boolean EQUIPAMIENTO = true;
     LinearLayout botonCE;
     LinearLayout botonSE;
+    public static Boolean EQUIPAMIENTO = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,6 +21,8 @@ public class Exercises extends AppCompatActivity {
     public static final String ADUCT = "Aductores";
     public static final String GLUTES = "Glúteos";
     public static final String BACK = "Espalda";
+    public static final String TOR = "Torso";
+    public static final String LEGS = "Piernas";
 
 
     @Override

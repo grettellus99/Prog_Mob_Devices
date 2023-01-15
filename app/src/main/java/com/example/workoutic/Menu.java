@@ -19,6 +19,7 @@ public class Menu extends AppCompatActivity {
 
     }
     public void goBack(View view) {
+        Intent i;
         switch (caller){
             case "MainActivity":
                 Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
@@ -30,18 +31,23 @@ public class Menu extends AppCompatActivity {
                 break;
             case "SelectionExercises":
                 Intent intSelExercises = new Intent(getApplicationContext(),SelectionExercises.class);
-                Intent i = getIntent();
-                String category = i.getStringExtra("category");
-                intSelExercises.putExtra("caller",category);
+                i = getIntent();
+                intSelExercises.putExtra("caller",i.getStringExtra("category"));
                 startActivity(intSelExercises);
                 break;
             case "EspecificExercises":
                 Intent intExercEspec = new Intent(getApplicationContext(),SelExerEspecific.class);
-                Intent i2 = getIntent();
-                ExercisesModel exercise = (ExercisesModel) i2.getSerializableExtra("exercise");
-                String cateExer = i2.getStringExtra("category");
-                intExercEspec.putExtra("exercise",exercise);
-                intExercEspec.putExtra("caller",cateExer);
+                i = getIntent();
+                intExercEspec.putExtra("exercise",(ExercisesModel) i.getSerializableExtra("exercise"));
+                String fit = i.getStringExtra("fitnessLevel");
+                if(fit != null || fit.equals("")){
+                    intExercEspec.putExtra("caller","RoutineSelExercises");
+                    intExercEspec.putExtra("fitnessLevel",fit);
+                    intExercEspec.putExtra("category",i.getStringExtra("category"));
+                }else{
+                    intExercEspec.putExtra("caller",i.getStringExtra("category"));
+                }
+
                 startActivity(intExercEspec);
             case "RoutineMain":
                 Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
@@ -50,8 +56,22 @@ public class Menu extends AppCompatActivity {
                 Intent intRoutSel = new Intent(getApplicationContext(),Routine_Selection.class);
                 startActivity(intRoutSel);
             case "New_Routine":
-                Intent intMenu = new Intent(getApplicationContext(),NewRoutine.class);
-                startActivity(intMenu);
+                Intent intNewRoutine = new Intent(getApplicationContext(),NewRoutine.class);
+                startActivity(intNewRoutine);
+            case "CategorySelection":
+                Intent intCategory = new Intent(getApplicationContext(),CategorySelection.class);
+                startActivity(intCategory);
+            case "FitnessLevel":
+                Intent intFit = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+                i = getIntent();
+                intFit.putExtra("category",i.getStringExtra("category"));
+                startActivity(intFit);
+            case "RoutineSelExercises":
+                Intent intRoutSelExer = new Intent(getApplicationContext(),RoutineSelExercises.class);
+                i = getIntent();
+                intRoutSelExer.putExtra("category",i.getStringExtra("category"));
+                i.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+                startActivity(intRoutSelExer);
         }
     }
 

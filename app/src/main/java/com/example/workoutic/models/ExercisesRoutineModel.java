@@ -1,6 +1,8 @@
 package com.example.workoutic.models;
 
-public class ExercisesRoutineModel {
+import java.io.Serializable;
+
+public class ExercisesRoutineModel implements Serializable {
     private int id;
     private int exercise_id;
     private int series;

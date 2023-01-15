@@ -65,9 +65,15 @@ public class SelExerEspecific extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intMenu= new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("caller","EspecificExercises");
-        intMenu.putExtra("category",caller);
         intMenu.putExtra("exercise",exercise);
-        startActivity(intMenu);
+        if(!caller.equals("RoutineSelExercises")){
+            intMenu.putExtra("category",caller);
+        }else{
+            Intent i = getIntent();
+            intMenu.putExtra("category",i.getStringExtra("category"));
+            intMenu.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+            startActivity(intMenu);
+        }
     }
 
     public void goMain(View view) {
@@ -95,8 +101,17 @@ public class SelExerEspecific extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        Intent intBack = new Intent(getApplicationContext(),SelectionExercises.class);
-        intBack.putExtra("caller",caller);
-        startActivity(intBack);
+        if(!caller.equals("RoutineSelExercises")){
+            Intent intBack = new Intent(getApplicationContext(),SelectionExercises.class);
+            intBack.putExtra("caller",caller);
+            startActivity(intBack);
+        }else{
+
+            Intent intBack = new Intent(getApplicationContext(),RoutineSelExercises.class);
+            Intent i = getIntent();
+            intBack.putExtra("category",i.getStringExtra("category"));
+            intBack.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+            startActivity(intBack);
+        }
     }
 }

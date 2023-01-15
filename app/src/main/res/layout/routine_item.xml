@@ -45,7 +45,7 @@
                     android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/txt_card_item_exercises_equip"
+                    android:id="@+id/txt_card_routine_item_fecha"
                     style="@style/card_item_inf"
                     android:layout_width="wrap_content"
                     android:layout_marginStart="0dp"

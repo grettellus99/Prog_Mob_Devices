@@ -1,11 +1,12 @@
 package com.example.workoutic.models;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class RoutineModel {
+public class RoutineModel implements Serializable {
     private int id;
     private String name;
     private Long timestamp;

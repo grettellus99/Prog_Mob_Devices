@@ -32,6 +32,7 @@ public class Routine_Main extends AppCompatActivity {
 
     public void newRoutine(View view) {
         Intent intNewRoutine = new Intent(this.getApplicationContext(),NewRoutine.class);
+        intNewRoutine.putExtra("caller","Routine_Main");
         startActivity(intNewRoutine);
     }
 

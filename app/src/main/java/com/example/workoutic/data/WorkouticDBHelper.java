@@ -73,12 +73,18 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-
         String DROP_TABLE = String.valueOf(R.string.db_drop);
         db.execSQL(DROP_TABLE, new String[]{DatabasesUtil.DATABASE_NAME});
         // Create a table
         onCreate(db);
 
+    }
+
+    public void deleteDB(){
+        String DROP_TABLE = String.valueOf(R.string.db_drop);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(DROP_TABLE, new String[]{DatabasesUtil.NR_DATABASE_NAME});
+        db.close(); // closing db connection!
     }
 
     /* CRUD = Create, Read, Update, Delete */
@@ -244,11 +250,11 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     // GET ALL
     // Routine
-    public List<RoutineModel> getAllRoutines() {
+    public List<RoutineModel> getAllRoutines(int metodord) {
         List<RoutineModel> routineList = new ArrayList<RoutineModel>();
-
         // Select all
-        String selectAll = "SELECT * FROM " + DatabasesUtil.ROUTINES_TABLE_NAME;
+
+        String selectAll = "SELECT * FROM " + DatabasesUtil.ROUTINES_TABLE_NAME + " ORDER BY " + DatabasesUtil.ROUTINES_KEY_TIMESTAMP + (metodord == 0?" DESC":" ASC");
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
@@ -273,6 +279,34 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
         // Select all
         String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectAll,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                ExercisesRoutineModel exercise_routine = new ExercisesRoutineModel();
+                exercise_routine.setId(Integer.parseInt(cursor.getString(0)));
+                exercise_routine.setSeries(Integer.parseInt(cursor.getString(3)));
+                exercise_routine.setRepetitions(Integer.parseInt(cursor.getString(4)));
+                exercise_routine.setTimeMinutes(Float.parseFloat(cursor.getString(6)));
+                exercise_routine.setDayOfWeek(cursor.getString(7));
+                exercise_routine.setWeightKg(Float.parseFloat(cursor.getString(5)));
+                exercise_routine.setExercise_id(Integer.parseInt(cursor.getString(1)));
+                exercise_routine.setRoutine_id(Integer.parseInt(cursor.getString(2)));
+                exercisesRoutineList.add(exercise_routine);   // add a la lista
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return exercisesRoutineList;
+    }
+
+    // ExerciseRoutine x Days
+    public List<ExercisesRoutineModel> getAllExercisesRoutinesDays(String day) {
+        List<ExercisesRoutineModel> exercisesRoutineList = new ArrayList<ExercisesRoutineModel>();
+
+        // Select all
+        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
@@ -425,6 +459,17 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         cursor.close();
         return res;
 
+    }
+
+    // GET COUNT x DAYS
+    public int getCountExercisesRoutinesDays(String day){
+        String countQuery = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery,null);
+
+        int res = cursor.getCount();
+        cursor.close();
+        return res;
     }
 
 
