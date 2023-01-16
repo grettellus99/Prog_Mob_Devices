@@ -78,7 +78,7 @@ public class ExerciseRoutineAdapter extends BaseAdapter {
         super.notifyDataSetChanged();
     }
 
-    public ExercisesModel findIdExercises(int id){
+    public ExercisesModel findIdExercises(long id){
         for(ExercisesModel e : exercisesModelData){
             if(e.getId() == id){
                 return e;

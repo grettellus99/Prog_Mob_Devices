@@ -33,7 +33,6 @@ public class NewRoutine extends AppCompatActivity {
     Map<String, List<ExercisesRoutineModel>> exercises;
     RoutineModel routine;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +47,7 @@ public class NewRoutine extends AppCompatActivity {
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             initializeExercisesRoutine(dbExtra);
         }
+
         editName = findViewById(R.id.ly_routine_name_edit);
         editName.setVisibility(View.VISIBLE);
         showName = findViewById(R.id.ly_routine_name_display);
@@ -70,14 +70,22 @@ public class NewRoutine extends AppCompatActivity {
     }
 
     public void goBack(View view) {
+        WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+        dbExtra.deleteDB(); // borrar la BD extra
         Intent intRoutineMain = new Intent(getApplicationContext(),Routine_Main.class);
         startActivity(intRoutineMain);
     }
 
     public void addRoutine(View view) {
         WorkouticDBHelper dbHelper = new WorkouticDBHelper(this, DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
+        long idR = dbHelper.addRoutine(routine);
+        WorkouticDBHelper dbHelperExtra = new WorkouticDBHelper(this,DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
         for (String k : exercises.keySet()){
            for (ExercisesRoutineModel e : Objects.requireNonNull(exercises.get(k))){
+               ExercisesModel exer = dbHelperExtra.getExercise(e.getExercise_id());
+               long idE = dbHelper.addExercises(exer);
+               e.setExercise_id(idE);
+               e.setRoutine_id(idR);
                dbHelper.addExerciseRoutine(e);
            }
         }
@@ -134,11 +142,29 @@ public class NewRoutine extends AppCompatActivity {
     public void newExercise(View view) {
         if(routine.getName() != null) {
             Intent intent = new Intent(getApplicationContext(),CategorySelection.class);
+            String day = "";
+            if(view.getId() == R.id.btn_new_routine_new_monday){
+                day = "Lunes";
+            }else if(view.getId() == R.id.btn_new_routine_new_tuesday){
+                day = "Martes";
+            }else if(view.getId() == R.id.btn_new_routine_new_wednesday){
+                day = "Miércoles";
+            }else if(view.getId() == R.id.btn_new_routine_new_thursday){
+                day = "Jueves";
+            }else if(view.getId() == R.id.txt_new_routine_count_friday){
+                day = "Viernes";
+            }else if(view.getId() == R.id.btn_new_routine_new_saturday){
+                day = "Sábado";
+            }else if(view.getId() == R.id.txt_new_routine_count_sunday){
+                day = "Domingo";
+            }
+            intent.putExtra("day",day);
             startActivity(intent);
         }else{
             Toast.makeText(this, getResources().getString(R.string.msg_nombre_rutina_toast), Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void initializeExercisesRoutine(WorkouticDBHelper helper){
 

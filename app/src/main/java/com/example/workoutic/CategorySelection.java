@@ -20,6 +20,7 @@ public class CategorySelection extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intMenu = new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("caller","CategorySelection");
+        intMenu.putExtra("day",getIntent().getStringExtra("day"));
         startActivity(intMenu);
     }
 
@@ -37,30 +38,35 @@ public class CategorySelection extends AppCompatActivity {
 
     public void goArms(View view) {
         Intent intent = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("category",Exercises.ARMS);
         startActivity(intent);
     }
 
     public void goTorso(View view) {
         Intent intent = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("category",Exercises.TOR);
         startActivity(intent);
     }
 
     public void goAbs(View view) {
         Intent intent = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("category",Exercises.ABS);
         startActivity(intent);
     }
 
     public void goLegs(View view) {
         Intent intent = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("category",Exercises.LEGS);
         startActivity(intent);
     }
 
     public void goGlutes(View view) {
         Intent intent = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("category",Exercises.GLUTES);
         startActivity(intent);
     }

@@ -34,6 +34,7 @@ public class FitnessLevelSelection extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intMenu = new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("category",category);
+        intMenu.putExtra("day",getIntent().getStringExtra("day"));
         intMenu.putExtra("caller","FitnessLevel");
         startActivity(intMenu);
     }
@@ -46,6 +47,7 @@ public class FitnessLevelSelection extends AppCompatActivity {
     public void goRookie(View view) {
         Intent intent = new Intent(getApplicationContext(),RoutineSelExercises.class);
         intent.putExtra("category",category);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("fitnessLevel",ROOKIE);
         startActivity(intent);
 
@@ -54,6 +56,7 @@ public class FitnessLevelSelection extends AppCompatActivity {
     public void goMedium(View view) {
         Intent intent = new Intent(getApplicationContext(),RoutineSelExercises.class);
         intent.putExtra("category",category);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("fitnessLevel",MEDIUM);
         startActivity(intent);
     }
@@ -61,6 +64,7 @@ public class FitnessLevelSelection extends AppCompatActivity {
     public void goExpert(View view) {
         Intent intent = new Intent(getApplicationContext(),RoutineSelExercises.class);
         intent.putExtra("category",category);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("fitnessLevel",EXPERT);
         startActivity(intent);
     }

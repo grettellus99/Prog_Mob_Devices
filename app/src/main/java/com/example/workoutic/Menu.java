@@ -6,17 +6,28 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.workoutic.data.WorkouticDBHelper;
 import com.example.workoutic.models.ExercisesModel;
+import com.example.workoutic.util.DatabasesUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Menu extends AppCompatActivity {
     private String caller;
+    List<String> casesDeleteBD;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_sidebar);
         Intent i = getIntent();
         caller= i.getStringExtra("caller");
-
+        casesDeleteBD = new ArrayList<String>();
+        casesDeleteBD.add("New_Routine");
+        casesDeleteBD.add("CategorySelection");
+        casesDeleteBD.add("FitnessLevel");
+        casesDeleteBD.add("RoutineSelExercises");
+        casesDeleteBD.add("ExercisesManage");
     }
     public void goBack(View view) {
         Intent i;
@@ -40,14 +51,15 @@ public class Menu extends AppCompatActivity {
                 i = getIntent();
                 intExercEspec.putExtra("exercise",(ExercisesModel) i.getSerializableExtra("exercise"));
                 String fit = i.getStringExtra("fitnessLevel");
-                if(fit != null || fit.equals("")){
+                if(fit != null || !fit.equals("")){
                     intExercEspec.putExtra("caller","RoutineSelExercises");
+                    intExercEspec.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
                     intExercEspec.putExtra("fitnessLevel",fit);
+                    intExercEspec.putExtra("day",i.getStringExtra("day"));
                     intExercEspec.putExtra("category",i.getStringExtra("category"));
                 }else{
                     intExercEspec.putExtra("caller",i.getStringExtra("category"));
                 }
-
                 startActivity(intExercEspec);
             case "RoutineMain":
                 Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
@@ -60,39 +72,73 @@ public class Menu extends AppCompatActivity {
                 startActivity(intNewRoutine);
             case "CategorySelection":
                 Intent intCategory = new Intent(getApplicationContext(),CategorySelection.class);
+                intCategory.putExtra("day",getIntent().getStringExtra("day"));
                 startActivity(intCategory);
             case "FitnessLevel":
                 Intent intFit = new Intent(getApplicationContext(),FitnessLevelSelection.class);
                 i = getIntent();
                 intFit.putExtra("category",i.getStringExtra("category"));
+                intFit.putExtra("day",i.getStringExtra("day"));
                 startActivity(intFit);
             case "RoutineSelExercises":
                 Intent intRoutSelExer = new Intent(getApplicationContext(),RoutineSelExercises.class);
                 i = getIntent();
                 intRoutSelExer.putExtra("category",i.getStringExtra("category"));
+                intRoutSelExer.putExtra("day",i.getStringExtra("day"));
                 i.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
                 startActivity(intRoutSelExer);
+            case "ExercisesManage":
+                Intent intExercisManage = new Intent(getApplicationContext(),ExercisesManage.class);
+                intExercisManage.putExtra("exerciseRoutine",getIntent().getSerializableExtra("exerciseRoutine"));
+                intExercisManage.putExtra("exercise",getIntent().getSerializableExtra("exercise"));
+                intExercisManage.putExtra("category",getIntent().getStringExtra("category"));
+                intExercisManage.putExtra("fitnessLevel",getIntent().getStringExtra("fitnessSelection"));
+                startActivity(intExercisManage);
         }
     }
 
     public void goExercises(View view) {
+        if(casesDeleteBD.contains(caller)){
+            WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+            dbExtra.deleteDB(); // borrar la BD extra
+        }
         Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
         startActivity(intExercises);
     }
 
     public void goMain(View view) {
+        if(casesDeleteBD.contains(caller)){
+            WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+            dbExtra.deleteDB(); // borrar la BD extra
+        }
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
     }
 
     public void goLogin(View view) {
+        if(casesDeleteBD.contains(caller)){
+            WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+            dbExtra.deleteDB(); // borrar la BD extra
+        }
+
+        //////////////////// TODO /////////////////////
     }
 
     public void goRoutine(View view) {
+        if(casesDeleteBD.contains(caller)){
+            WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+            dbExtra.deleteDB(); // borrar la BD extra
+        }
         Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
         startActivity(intRoutine);
     }
 
     public void goChat(View view) {
+        if(casesDeleteBD.contains(caller)){
+            WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+            dbExtra.deleteDB(); // borrar la BD extra
+        }
+
+        //////////////////// TODO /////////////////////
     }
 }

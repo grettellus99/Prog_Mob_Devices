@@ -11,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.workoutic.data.WorkouticDBHelper;
 import com.example.workoutic.models.ExercisesModel;
+import com.example.workoutic.util.DatabasesUtil;
 import com.example.workoutic.util.NetUtil;
 
 import java.util.Arrays;
@@ -70,15 +72,47 @@ public class SelExerEspecific extends AppCompatActivity {
             intMenu.putExtra("category",caller);
         }else{
             Intent i = getIntent();
+            intMenu.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
             intMenu.putExtra("category",i.getStringExtra("category"));
+            intMenu.putExtra("day",getIntent().getStringExtra("day"));
             intMenu.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
             startActivity(intMenu);
         }
     }
 
     public void goMain(View view) {
+        if(caller.equals("RoutineSelExercises")){
+            WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+            dbExtra.deleteDB(); // borrar la BD extra
+        }
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
+    }
+    public void goBack(View view) {
+        if(!caller.equals("RoutineSelExercises")){
+            Intent intBack = new Intent(getApplicationContext(),SelectionExercises.class);
+            intBack.putExtra("caller",caller);
+            startActivity(intBack);
+        }else{
+            Intent intBack = new Intent(getApplicationContext(),RoutineSelExercises.class);
+            Intent i = getIntent();
+            intBack.putExtra("category",i.getStringExtra("category"));
+            intBack.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+            intBack.putExtra("day",getIntent().getStringExtra("day"));
+            startActivity(intBack);
+        }
+    }
+
+    public void addRoutine(View view) {
+        if(caller.equals("RoutineSelExercises")){
+            Intent i = getIntent();
+            Intent intent = new Intent(this,ExercisesManage.class);
+            intent.putExtra("category",i.getStringExtra("category"));
+            intent.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
+            intent.putExtra("exercise",exercise);
+            intent.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+            startActivity(intent);
+        }
     }
 
     public String concatenarLista(String [] lista) {
@@ -95,23 +129,5 @@ public class SelExerEspecific extends AppCompatActivity {
             }
         }
         return res;
-    }
-
-    public void addRoutine(View view) {
-    }
-
-    public void goBack(View view) {
-        if(!caller.equals("RoutineSelExercises")){
-            Intent intBack = new Intent(getApplicationContext(),SelectionExercises.class);
-            intBack.putExtra("caller",caller);
-            startActivity(intBack);
-        }else{
-
-            Intent intBack = new Intent(getApplicationContext(),RoutineSelExercises.class);
-            Intent i = getIntent();
-            intBack.putExtra("category",i.getStringExtra("category"));
-            intBack.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
-            startActivity(intBack);
-        }
     }
 }

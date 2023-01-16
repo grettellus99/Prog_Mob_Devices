@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class RoutineModel implements Serializable {
-    private int id;
+    private long id;
     private String name;
     private Long timestamp;
 
@@ -20,11 +20,11 @@ public class RoutineModel implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

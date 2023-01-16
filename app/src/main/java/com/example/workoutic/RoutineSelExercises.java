@@ -58,6 +58,7 @@ public class RoutineSelExercises extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ExercisesRoutineModel exerciseRoutine = (ExercisesRoutineModel) adapterView.getAdapter().getItem(i);
                 ExercisesModel exercise = (ExercisesModel) ((ExerciseRoutineAdapter) adapterView.getAdapter()).findIdExercises(exerciseRoutine.getExercise_id());
+                exerciseRoutine.setDayOfWeek(getIntent().getStringExtra("day"));
                 if(view.getId() != R.id.ly_exercise_routine_especific_exercise){
                     Intent intNewExercise = new Intent(getApplicationContext(),ExercisesManage.class);
                     intNewExercise.putExtra("exerciseRoutine",exerciseRoutine);
@@ -68,8 +69,10 @@ public class RoutineSelExercises extends AppCompatActivity {
                 }else{
                     Intent intSpeExercise = new Intent(getApplicationContext(),SelExerEspecific.class);
                     intSpeExercise.putExtra("caller","RoutineSelExercises");
+                    intSpeExercise.putExtra("exerciseRoutine",exerciseRoutine);
                     intSpeExercise.putExtra("exercise",exercise);
                     intSpeExercise.putExtra("category",category);
+                    intSpeExercise.putExtra("day",getIntent().getStringExtra("day"));
                     intSpeExercise.putExtra("fitnessLevel",fitnessLevel);
                     startActivity(intSpeExercise);
                 }
@@ -118,6 +121,7 @@ public class RoutineSelExercises extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intMenu = new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("category",category);
+        intMenu.putExtra("day",getIntent().getStringExtra("day"));
         intMenu.putExtra("fitnessLevel",fitnessLevel);
         intMenu.putExtra("caller","RoutineSelExercises");
         startActivity(intMenu);
@@ -125,6 +129,7 @@ public class RoutineSelExercises extends AppCompatActivity {
 
     public void goBack(View view) {
         Intent intent = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+        intent.putExtra("day",getIntent().getStringExtra("day"));
         intent.putExtra("category",category);
         startActivity(intent);
     }

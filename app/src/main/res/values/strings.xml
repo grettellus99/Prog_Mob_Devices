@@ -134,4 +134,8 @@
     <string name="msg_nombre_rutina_toast">Debes darle un nombre a la rutina antes de añadir ejercicios</string>
     <string name="tiempo_en_min">Tiempo en min</string>
     <string name="tiempo">Tiempo:</string>
+    <string name="msg_err_series_no_int">El valor introducido en SERIES debe ser un número entero</string>
+    <string name="msg_err_rep_no_int">El número de repeticiones debe ser un número entero</string>
+    <string name="msg_err_peso_no_number">El peso debe ser un número</string>
+    <string name="msg_err_time_no_number">El tiempo debe ser un número</string>
 </resources>

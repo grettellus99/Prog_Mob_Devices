@@ -222,6 +222,7 @@
 
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/decrease"
                                         android:onClick="decreaseSeries"
@@ -229,20 +230,25 @@
                                         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
                                         tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
-                                    <TextView
+                                    <EditText
 
                                         android:id="@+id/txt_exercises_manage_series"
                                         style="@style/exercises_managment_txt_views"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:backgroundTint="#4D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
-                                        android:text="@string/todo" />
+                                        android:inputType="number"
+                                        android:text="@string/todo"
+                                        android:textColorHint="@color/black"
+                                        tools:ignore="TouchTargetSizeCheck" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/add"
                                         android:onClick="addSeries"
@@ -272,6 +278,7 @@
                                 <TextView
 
                                     style="@style/exercises_managment_txt_views"
+                                    android:layout_gravity="center_vertical"
                                     android:text="@string/repeticiones" />
 
                                 <LinearLayout
@@ -282,6 +289,7 @@
                                     <ImageView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/decrease"
                                         android:onClick="decreaseRep"
@@ -289,20 +297,25 @@
                                         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
                                         tools:ignore="TouchTargetSizeCheck" />
 
-                                    <TextView
+                                    <EditText
 
                                         android:id="@+id/txt_exercises_manage_repetitions"
                                         style="@style/exercises_managment_txt_views"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:backgroundTint="#4D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
-                                        android:text="@string/todo" />
+                                        android:inputType="number"
+                                        android:text="@string/todo"
+                                        android:textColorHint="@color/black"
+                                        tools:ignore="TouchTargetSizeCheck" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/add"
                                         android:onClick="addRep"
@@ -331,6 +344,7 @@
                                 <TextView
 
                                     style="@style/exercises_managment_txt_views"
+                                    android:layout_gravity="center_vertical"
                                     android:text="@string/peso_en_kg" />
 
                                 <LinearLayout
@@ -342,6 +356,7 @@
                                         android:id="@+id/imageView12"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/decrease"
                                         android:onClick="decreaseWeight"
@@ -349,21 +364,26 @@
                                         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
                                         tools:ignore="TouchTargetSizeCheck" />
 
-                                    <TextView
+                                    <EditText
 
                                         android:id="@+id/txt_exercises_manage_weight"
                                         style="@style/exercises_managment_txt_views"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:backgroundTint="#4D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
-                                        android:text="@string/todo" />
+                                        android:inputType="number"
+                                        android:text="@string/todo"
+                                        android:textColorHint="@color/black"
+                                        tools:ignore="TouchTargetSizeCheck" />
 
                                     <ImageView
                                         android:id="@+id/imageView11"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/add"
                                         android:onClick="addWeight"
@@ -392,6 +412,7 @@
                                 <TextView
 
                                     style="@style/exercises_managment_txt_views"
+                                    android:layout_gravity="center_vertical"
                                     android:text="@string/tiempo_en_min" />
 
                                 <LinearLayout
@@ -402,30 +423,36 @@
                                     <ImageView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/decrease"
-                                        android:onClick="decreaseWeight"
+                                        android:onClick="decreaseTime"
                                         android:rotation="-90"
                                         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
                                         tools:ignore="TouchTargetSizeCheck" />
 
-                                    <TextView
+                                    <EditText
 
                                         android:id="@+id/txt_exercises_manage_time"
                                         style="@style/exercises_managment_txt_views"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:backgroundTint="#4D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
-                                        android:text="@string/todo" />
+                                        android:inputType="number"
+                                        android:text="@string/todo"
+                                        android:textColorHint="@color/black"
+                                        tools:ignore="TouchTargetSizeCheck" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
                                         android:layout_weight="1"
                                         android:contentDescription="@string/add"
-                                        android:onClick="addWeight"
+                                        android:onClick="addTime"
                                         android:rotation="90"
                                         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up"
                                         tools:ignore="TouchTargetSizeCheck" />

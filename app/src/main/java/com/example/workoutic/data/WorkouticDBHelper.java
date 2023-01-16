@@ -90,7 +90,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     /* CRUD = Create, Read, Update, Delete */
     // ADD ITEM
     // Routines
-    public void addRoutine(RoutineModel routine) {
+    public long addRoutine(RoutineModel routine) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -98,16 +98,16 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.ROUTINES_KEY_TIMESTAMP,routine.getTimestamp());
 
         // Insertar
-        db.insert(DatabasesUtil.ROUTINES_TABLE_NAME,null,values);
+        long id = db.insert(DatabasesUtil.ROUTINES_TABLE_NAME,null,values);
         db.close(); // closing db connection!
-
+        return id;
     }
 
     // Exercises
-    public void addExercises(ExercisesModel exercise) {
+    public long addExercises(ExercisesModel exercise) {
 
-        int res = isExerciseInDB(exercise);
-        if (res == -1){
+        List<Long> res = isExerciseInDB(exercise);
+        if (res.get(0) == -1){
             // Se necesita insertar
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -121,19 +121,20 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
             values.put(DatabasesUtil.EXERCISES_KEY_IMAGE_ALT,exercise.getImgAltURL());
             values.put(DatabasesUtil.EXERCISES_KEY_MUSCLES,concatenarLista(exercise.getMuscles()));
             // Insertar
-            db.insert(DatabasesUtil.EXERCISES_TABLE_NAME,null,values);
+            long id = db.insert(DatabasesUtil.EXERCISES_TABLE_NAME,null,values);
             db.close(); // closing db connection!
-
+            return id;
         }
-        else if (res >= 0){
+        else if (res.get(0) >= 0){
             // Update
-            updateExercise(exercise);
+            return updateExercise(exercise);
         }
-        // Si no entra es que el resultado era -2 (no se necesita actualizar)
+        // Si no entra es que el resultado era -2 (no se necesita actualizar) y devolvemos el id que esta en la segunda pos de la lista
+        return res.get(1);
     }
 
     // Exercises Routines
-    public void addExerciseRoutine(ExercisesRoutineModel exercise_routine) {
+    public long addExerciseRoutine(ExercisesRoutineModel exercise_routine) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -146,15 +147,14 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID,exercise_routine.getRoutine_id());
 
         // Insertar
-        db.insert(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,null,values);
+        long id = db.insert(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,null,values);
         db.close(); // closing db connection!
-
+        return id;
     }
-
 
     // GET ID
     // Routines
-    public RoutineModel getRoutine(int id) {
+    public RoutineModel getRoutine(long id) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DatabasesUtil.ROUTINES_TABLE_NAME,new String[]{DatabasesUtil.ROUTINES_KEY_NAME, DatabasesUtil.ROUTINES_KEY_TIMESTAMP}, DatabasesUtil.ROUTINES_KEY_ID + "=?",new String[]{String.valueOf(id)}, null,null,null);
@@ -176,7 +176,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // Exercises
-    public  ExercisesModel getExercise(int id){
+    public  ExercisesModel getExercise(long id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DatabasesUtil.EXERCISES_TABLE_NAME,new String[]{
                         DatabasesUtil.EXERCISES_KEY_NAME,
@@ -213,7 +213,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // Exercises Routines
-    public ExercisesRoutineModel getExerciseRoutine(int id){
+    public ExercisesRoutineModel getExerciseRoutine(long id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,new String[]{
                         DatabasesUtil.EXERCISES_ROUTINES_KEY_SERIES,
@@ -331,7 +331,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     // UPDATE
     // Routine
-    public int updateRoutine(RoutineModel routine) {
+    public long updateRoutine(RoutineModel routine) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -339,7 +339,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.ROUTINES_KEY_TIMESTAMP,routine.getTimestamp());
 
         // update
-        int res = db.update(DatabasesUtil.ROUTINES_TABLE_NAME,values,
+        long res = db.update(DatabasesUtil.ROUTINES_TABLE_NAME,values,
                 DatabasesUtil.ROUTINES_KEY_ID + "=?",
                 new String[]{String.valueOf(routine.getId())});
 
@@ -348,7 +348,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // ExerciseRoutine
-    public int updateExerciseRoutine(ExercisesRoutineModel exercise_routine) {
+    public long updateExerciseRoutine(ExercisesRoutineModel exercise_routine) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -361,7 +361,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID,exercise_routine.getRoutine_id());
 
         // update
-        int res = db.update(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,values,
+        long res = db.update(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,values,
                 DatabasesUtil.EXERCISES_ROUTINES_KEY_ID + "=?",
                 new String[]{String.valueOf(exercise_routine.getId())});
 
@@ -371,7 +371,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // Exercise
-    public int updateExercise(ExercisesModel exercise) {
+    public long updateExercise(ExercisesModel exercise) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -385,7 +385,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.EXERCISES_KEY_MUSCLES,concatenarLista(exercise.getMuscles()));
 
         // update
-        int res= db.update(DatabasesUtil.EXERCISES_TABLE_NAME,values,
+        long res= db.update(DatabasesUtil.EXERCISES_TABLE_NAME,values,
                 DatabasesUtil.EXERCISES_KEY_ID + "=?",
                 new String[]{String.valueOf(exercise.getId())});
 
@@ -475,9 +475,10 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     /* Metodos auxiliares */
 
-    private int isExerciseInDB(ExercisesModel exercise){
-        int resNE = -1; // No esta en la BD
-        int resEA = -2; // Esta y no necesita actualización
+    private List<Long> isExerciseInDB(ExercisesModel exercise){
+        List<Long> res = new ArrayList<Long>();
+        long resNE = -1; // No esta en la BD
+        long resEA = -2; // Esta y no necesita actualización
 
         SQLiteDatabase db = getReadableDatabase();
 
@@ -496,7 +497,8 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
         if (cursor == null) {
             db.close();
-            return resNE;
+            res.add(resNE);
+            return res;
         }
 
         // Comprobar que los ultimos datos recuperados del ejercicio del Servidor API sean los mismos que en BD local
@@ -509,50 +511,21 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
                            if(concatenarLista(exercise.getLevel()).equals(cursor.getString(6))){
                                if(concatenarLista(exercise.getMuscles()).equals(cursor.getString(7))){
                                    db.close();
+                                   res.add(resEA);
+                                   res.add(Long.parseLong(cursor.getString(0))); // Poner el id como segundo item de la lista
                                    cursor.close();
-                                   return resEA;
-                               }
-                               else{
-                                   db.close();
-                                   cursor.close();
-                                   return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
+                                   return res;
                                }
                            }
-                           else{
-                               db.close();
-                               cursor.close();
-                               return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-                           }
-                       }
-                       else{
-                           db.close();
-                           cursor.close();
-                           return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
                        }
                    }
-                   else{
-                       db.close();
-                       cursor.close();
-                       return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-                   }
-               }
-               else{
-                   db.close();
-                   cursor.close();
-                   return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
                }
            }
-           else{
-               db.close();
-               cursor.close();
-               return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-           }
         }
-        else{
-            db.close();
-            cursor.close();
-            return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-        }
+        db.close();
+        cursor.close();
+        res.add(Long.parseLong(cursor.getString(0))); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
+        return  res;
 
     }
 
