@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.workoutic.data.WorkouticDBHelper;
 import com.example.workoutic.models.ExercisesModel;
 import com.example.workoutic.models.ExercisesRoutineModel;
+import com.example.workoutic.models.RoutineModel;
 import com.example.workoutic.util.DatabasesUtil;
 
 public class ExercisesManage extends AppCompatActivity {
@@ -21,6 +23,10 @@ public class ExercisesManage extends AppCompatActivity {
     EditText rep;
     EditText weight;
     EditText time;
+    public static final String MODE_MOD = "Modificar";
+    public static final String MODE_ADD = "Adicionar";
+    public static final String MODE_ADD_R = "Adicionar a rutina";
+    String mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +35,32 @@ public class ExercisesManage extends AppCompatActivity {
         Intent i = getIntent();
         exerciseRoutine = (ExercisesRoutineModel) i.getSerializableExtra("exerciseRoutine");
         exercise = (ExercisesModel) i.getSerializableExtra("exercise");
+
+        if(i.getStringExtra("caller").equals("RoutineEspecific")){
+            mode = MODE_MOD;
+            LinearLayout ly = findViewById(R.id.ly_exer_manage_categoria);
+            ly.setVisibility(View.GONE);
+            View div = findViewById(R.id.dv_exer_manage_categoria);
+            div.setVisibility(View.GONE);
+            ly = findViewById(R.id.ly_day_of_week);
+            ly.setVisibility(View.GONE);
+            div = findViewById(R.id.div_day_of_week);
+            div.setVisibility(View.GONE);
+        }else if(i.getStringExtra("caller").equals("SelExerEspecific")){
+            mode = MODE_ADD_R;
+            TextView txt = findViewById(R.id.txt_exercises_manage_day_of_week);
+            txt.setText(RoutineEspecific.MONDAY);
+            LinearLayout ly = findViewById(R.id.ly_exer_manage_categoria);
+            ly.setVisibility(View.GONE);
+            View div = findViewById(R.id.dv_exer_manage_categoria);
+            div.setVisibility(View.GONE);
+        } else{
+            mode = MODE_ADD;
+            LinearLayout ly = findViewById(R.id.ly_day_of_week);
+            ly.setVisibility(View.GONE);
+            View div = findViewById(R.id.div_day_of_week);
+            div.setVisibility(View.GONE);
+        }
 
         // inicializacion del ejercicio
         TextView name = findViewById(R.id.txt_exercises_manage_exercise);
@@ -49,25 +81,53 @@ public class ExercisesManage extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        Intent intent = new Intent(getApplicationContext(),RoutineSelExercises.class);
-        intent.putExtra("category",getIntent().getStringExtra("category"));
-        intent.putExtra("fitnessSelection",getIntent().getStringExtra("fitnessSelection"));
-        startActivity(intent);
+        if(mode.equals(MODE_MOD)){
+            Intent intent = new Intent(getApplicationContext(),RoutineEspecific.class);
+            intent.putExtra("routine",getIntent().getSerializableExtra("routine"));
+            startActivity(intent);
+        }else if(mode.equals(MODE_ADD_R)){
+            Intent i = getIntent();
+            Intent intent = new Intent(this,Routine_Selection.class);
+            intent.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
+            intent.putExtra("exercise",exercise);
+            intent.putExtra("caller",i.getSerializableExtra("caller"));
+            intent.putExtra("callerActivity","SelExerEspecific");
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(),RoutineSelExercises.class);
+            intent.putExtra("category",getIntent().getStringExtra("category"));
+            intent.putExtra("fitnessSelection",getIntent().getStringExtra("fitnessSelection"));
+            startActivity(intent);
+        }
     }
 
     public void goMenu(View view) {
+
         Intent intMenu = new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("exerciseRoutine",exerciseRoutine);
         intMenu.putExtra("exercise",exercise);
-        intMenu.putExtra("category",getIntent().getStringExtra("category"));
-        intMenu.putExtra("fitnessLevel",getIntent().getStringExtra("fitnessSelection"));
+
+        if(mode.equals(MODE_ADD)){
+            intMenu.putExtra("category",getIntent().getStringExtra("category"));
+            intMenu.putExtra("fitnessLevel",getIntent().getStringExtra("fitnessSelection"));
+        }else if(mode.equals(MODE_ADD_R)){
+            Intent i = getIntent();
+            intMenu.putExtra("routine",i.getSerializableExtra("routine"));
+            intMenu.putExtra("caller2",i.getSerializableExtra("caller"));
+            intMenu.putExtra("callerActivity","SelExerEspecific");
+        } else{
+            intMenu.putExtra("routine",getIntent().getSerializableExtra("routine"));
+        }
         intMenu.putExtra("caller","ExercisesManage");
         startActivity(intMenu);
     }
 
     public void goMain(View view) {
-        WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
-        dbExtra.deleteDB(); // borrar la BD extra
+        if(mode.equals(MODE_ADD)){
+            WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+            dbExtra.deleteDB(); // borrar la BD extra
+        }
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
     }
@@ -85,15 +145,36 @@ public class ExercisesManage extends AppCompatActivity {
                     String timeTxt = time.getText().toString();
                     if(isNumberDouble(timeTxt) || isNumberInteger(timeTxt)){
                         exerciseRoutine.setTimeMinutes(Double.parseDouble(timeTxt));
-                        WorkouticDBHelper helper = new WorkouticDBHelper(this,DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
-                        long idE = helper.addExercises(exercise); // Agregar el ejercicio a la BD extra
-                        exerciseRoutine.setExercise_id(idE);
-                        helper.addExerciseRoutine(exerciseRoutine); // Agregar el EjercicioRutina a la BD extra
-
-                        // Nueva actividad de Nueva Rutina
-                        Intent i = new Intent(this,NewRoutine.class);
-                        i.putExtra("caller","ExercisesManage");
-                        startActivity(i);
+                        if(mode.equals(MODE_ADD)){
+                            WorkouticDBHelper helper = new WorkouticDBHelper(this,DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+                            long idE = helper.addExercises(exercise,false); // Agregar el ejercicio a la BD extra
+                            RoutineModel rout = helper.getFirstRoutine(); // Obtener la rutina para obtener su id.
+                            exerciseRoutine.setRoutine_id(rout.getId());
+                            exerciseRoutine.setExercise_id(idE);
+                            helper.addExerciseRoutine(exerciseRoutine,false); // Agregar el EjercicioRutina a la BD extra
+                            // Nueva actividad de Nueva Rutina
+                            Intent i = new Intent(this,NewRoutine.class);
+                            i.putExtra("caller","ExercisesManage");
+                            Toast.makeText(this, R.string.msg_sucsess_add, Toast.LENGTH_SHORT).show();
+                            startActivity(i);
+                        }else if(mode.equals(MODE_ADD_R)){
+                            if(isDay()){
+                                WorkouticDBHelper helper = new WorkouticDBHelper(this,DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
+                                helper.addExerciseRoutine(exerciseRoutine,false);
+                                Toast.makeText(this, R.string.msg_sucsess_add, Toast.LENGTH_SHORT).show();
+                                goMain(null);
+                            }else{
+                                Toast.makeText(this, R.string.msg_err_day, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            WorkouticDBHelper helper = new WorkouticDBHelper(this,DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
+                            helper.updateExerciseRoutine(exerciseRoutine);
+                            Intent intent = new Intent(getApplicationContext(),RoutineEspecific.class);
+                            intent.putExtra("routine",getIntent().getSerializableExtra("routine"));
+                            Toast.makeText(this, R.string.msg_sucsess_act, Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                        }
                     }else{
                         Toast.makeText(this, R.string.msg_err_time_no_number, Toast.LENGTH_SHORT).show();
                     }
@@ -232,4 +313,81 @@ public class ExercisesManage extends AppCompatActivity {
         }
     }
 
+    public void addDay(View view) {
+        TextView txt = findViewById(R.id.txt_exercises_manage_day_of_week);
+        txt.setText(getDay(true));
+    }
+
+    public void decreaseDay(View view) {
+        TextView txt = findViewById(R.id.txt_exercises_manage_day_of_week);
+        txt.setText(getDay(false));
+    }
+
+    private String getDay(boolean next){
+        TextView txt = findViewById(R.id.txt_exercises_manage_day_of_week);
+        String day = txt.getText().toString();
+        switch (day){
+            case RoutineEspecific.MONDAY:
+                if(next){
+                    return RoutineEspecific.TUESDAY;
+                }else{
+                    return RoutineEspecific.SUNDAY;
+                }
+            case RoutineEspecific.TUESDAY:
+                if(!next){
+                    return RoutineEspecific.MONDAY;
+                }else{
+                    return RoutineEspecific.WEDNESDAY;
+                }
+            case RoutineEspecific.WEDNESDAY:
+                if(!next){
+                    return RoutineEspecific.TUESDAY;
+                }else{
+                    return RoutineEspecific.THURSDAY;
+                }
+            case RoutineEspecific.THURSDAY:
+                if(!next){
+                    return RoutineEspecific.WEDNESDAY;
+                }else{
+                    return RoutineEspecific.FRIDAY;
+                }
+            case RoutineEspecific.FRIDAY:
+                if(!next){
+                    return RoutineEspecific.THURSDAY;
+                }else{
+                    return RoutineEspecific.SATURDAY;
+                }
+            case RoutineEspecific.SATURDAY:
+                if(!next){
+                    return RoutineEspecific.FRIDAY;
+                }else{
+                    return RoutineEspecific.SUNDAY;
+                }
+            default:
+                if(!next){
+                    return RoutineEspecific.SATURDAY;
+                }else{
+                    return RoutineEspecific.MONDAY;
+                }
+        }
+    }
+
+    private boolean isDay(){
+        TextView txt = findViewById(R.id.txt_exercises_manage_day_of_week);
+        String day = txt.getText().toString();
+        switch (day){
+            case RoutineEspecific.MONDAY:
+            case RoutineEspecific.TUESDAY:
+            case RoutineEspecific.WEDNESDAY:
+            case RoutineEspecific.THURSDAY:
+            case RoutineEspecific.FRIDAY:
+            case RoutineEspecific.SATURDAY:
+            case RoutineEspecific.SUNDAY:
+                exerciseRoutine.setDayOfWeek(day);
+                return  true;
+            default:
+               return  false;
+        }
+
+    }
 }

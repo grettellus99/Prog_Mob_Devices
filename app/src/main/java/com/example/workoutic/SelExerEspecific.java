@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.example.workoutic.data.WorkouticDBHelper;
 import com.example.workoutic.models.ExercisesModel;
+import com.example.workoutic.models.ExercisesRoutineModel;
 import com.example.workoutic.util.DatabasesUtil;
 import com.example.workoutic.util.NetUtil;
 
-import java.util.Arrays;
 
 public class SelExerEspecific extends AppCompatActivity {
     String caller;
@@ -29,6 +29,11 @@ public class SelExerEspecific extends AppCompatActivity {
         Intent i = getIntent();
         exercise = (ExercisesModel) i.getSerializableExtra("exercise");
         caller = i.getStringExtra("caller");
+
+        if(caller.equals("RoutineEspecific")){
+            LinearLayout btn = findViewById(R.id.img_sel_exer_add_exercise);
+            btn.setVisibility(View.GONE);
+        }
 
         TextView nameExer = findViewById(R.id.txt_sel_exerc_name_ejer);
         nameExer.setText(exercise.getName());
@@ -89,11 +94,15 @@ public class SelExerEspecific extends AppCompatActivity {
         startActivity(intMain);
     }
     public void goBack(View view) {
-        if(!caller.equals("RoutineSelExercises")){
+        if(caller.equals("RoutineEspecific")){
+            Intent intBack = new Intent(getApplicationContext(),RoutineEspecific.class);
+            intBack.putExtra("routine",getIntent().getSerializableExtra("routine"));
+            startActivity(intBack);
+        }else if(!caller.equals("RoutineSelExercises")){
             Intent intBack = new Intent(getApplicationContext(),SelectionExercises.class);
             intBack.putExtra("caller",caller);
             startActivity(intBack);
-        }else{
+        } else{
             Intent intBack = new Intent(getApplicationContext(),RoutineSelExercises.class);
             Intent i = getIntent();
             intBack.putExtra("category",i.getStringExtra("category"));
@@ -111,6 +120,17 @@ public class SelExerEspecific extends AppCompatActivity {
             intent.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
             intent.putExtra("exercise",exercise);
             intent.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+            startActivity(intent);
+        }else{
+            Intent i = getIntent();
+            Intent intent = new Intent(this,Routine_Selection.class);
+            ExercisesRoutineModel er = new ExercisesRoutineModel();
+            WorkouticDBHelper helper = new WorkouticDBHelper(this,DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
+            er.setExercise_id(helper.addExercises(exercise,false));
+            intent.putExtra("exerciseRoutine",er);
+            intent.putExtra("exercise",exercise);
+            intent.putExtra("caller",caller);
+            intent.putExtra("callerActivity","SelExerEspecific");
             startActivity(intent);
         }
     }

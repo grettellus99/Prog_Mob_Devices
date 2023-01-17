@@ -31,19 +31,38 @@ public class NewRoutine extends AppCompatActivity {
     public static final String PREF_ROUTINE = "new_routine";
 
     Map<String, List<ExercisesRoutineModel>> exercises;
+
     RoutineModel routine;
+
+    public static final String MODO_MOD = "Modificar";
+    public static final String MODO_ADD = "Adicionar";
+
+    public static final String PREF = "pref_size_exercises";
+    String modo;
+    Long size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_routine);
 
-
+        size = 0L;
         exercises =  new HashMap<String,List<ExercisesRoutineModel>>();;
         routine = new RoutineModel();
 
         Intent i = getIntent();
         if(!(i.getStringExtra("caller").equals("Routine_Main"))){
+            if(i.getLongExtra("numElem",-1) != -1){
+                modo = MODO_MOD;
+                // Guardar la cant de elementos para evitar volverlos a adicionar a la BD al final de la mod de la rutina
+                SharedPreferences sp = getSharedPreferences(PREF,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putLong("numElem",getIntent().getLongExtra("numElem",-1));
+                editor.apply();
+
+            }else{
+                modo = MODO_ADD;
+            }
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             initializeExercisesRoutine(dbExtra);
         }
@@ -52,7 +71,6 @@ public class NewRoutine extends AppCompatActivity {
         editName.setVisibility(View.VISIBLE);
         showName = findViewById(R.id.ly_routine_name_display);
         showName.setVisibility(View.GONE);
-
     }
 
     public void goMain(View view) {
@@ -77,18 +95,39 @@ public class NewRoutine extends AppCompatActivity {
     }
 
     public void addRoutine(View view) {
+
         WorkouticDBHelper dbHelper = new WorkouticDBHelper(this, DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
-        long idR = dbHelper.addRoutine(routine);
         WorkouticDBHelper dbHelperExtra = new WorkouticDBHelper(this,DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
+
+        long idR = routine.getId(); // Si la rutina es nueva se cambia por el nuevo id mas adelante. Pero si es mod este es el id que estaba en la BD
+
+        if(modo.equals(MODO_MOD)){
+            SharedPreferences sp = getSharedPreferences(PREF,Context.MODE_PRIVATE);
+            size = sp.getLong("numELem",-1);
+        }else{
+
+            idR = dbHelper.addRoutine(routine,false);
+        }
         for (String k : exercises.keySet()){
            for (ExercisesRoutineModel e : Objects.requireNonNull(exercises.get(k))){
-               ExercisesModel exer = dbHelperExtra.getExercise(e.getExercise_id());
-               long idE = dbHelper.addExercises(exer);
-               e.setExercise_id(idE);
-               e.setRoutine_id(idR);
-               dbHelper.addExerciseRoutine(e);
+                if(modo.equals(MODO_MOD) && size > 0){
+                    size-=1;
+                }else{
+                    ExercisesModel exer = dbHelperExtra.getExercise(e.getExercise_id());
+                    long idE = dbHelper.addExercises(exer,false);
+                    e.setExercise_id(idE);
+                    e.setRoutine_id(idR);
+                    dbHelper.addExerciseRoutine(e,false);
+                }
            }
         }
+
+        if(modo.equals(MODO_MOD)){
+            Toast.makeText(this, R.string.msg_sucsess_rout_mod, Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, R.string.msg_sucsess_rout_add, Toast.LENGTH_SHORT).show();
+        }
+        goMenu(null);
     }
 
     public void validateName(View view) {
@@ -168,9 +207,7 @@ public class NewRoutine extends AppCompatActivity {
 
     private void initializeExercisesRoutine(WorkouticDBHelper helper){
 
-        List<RoutineModel> routineList = helper.getAllRoutines(0);
-
-        routine = routineList.isEmpty() ? null : routineList.get(0); // Obtener la primera rutina que esta en la bd extra q debe ser la unica
+        routine = helper.getFirstRoutine(); // Obtener la primera rutina que esta en la bd extra q debe ser la unica
 
         exercises.clear();
         exercises.put("Lunes",new ArrayList<ExercisesRoutineModel>());
@@ -183,7 +220,7 @@ public class NewRoutine extends AppCompatActivity {
 
         for (String k : exercises.keySet()){
             List<ExercisesRoutineModel> list = new ArrayList<ExercisesRoutineModel>();
-            list = helper.getAllExercisesRoutinesDays(k);
+            list = helper.getAllExercisesRoutinesDays(k,routine.getId());
             if(list.size()>0){
                 Objects.requireNonNull(exercises.get(k)).addAll(list);
             }
@@ -216,6 +253,7 @@ public class NewRoutine extends AppCompatActivity {
 
     private void addRoutineDBExtra(){
         WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
-        dbExtra.addRoutine(routine);
+        long id = dbExtra.addRoutine(routine,false);
+        routine.setId(id);
     }
 }

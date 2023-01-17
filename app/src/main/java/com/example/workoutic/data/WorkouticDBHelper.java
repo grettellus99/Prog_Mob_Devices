@@ -90,10 +90,13 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     /* CRUD = Create, Read, Update, Delete */
     // ADD ITEM
     // Routines
-    public long addRoutine(RoutineModel routine) {
+    public long addRoutine(RoutineModel routine,boolean addId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        if(addId){
+            values.put(DatabasesUtil.ROUTINES_KEY_ID,routine.getId());
+        }
         values.put(DatabasesUtil.ROUTINES_KEY_NAME,routine.getName());
         values.put(DatabasesUtil.ROUTINES_KEY_TIMESTAMP,routine.getTimestamp());
 
@@ -104,7 +107,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // Exercises
-    public long addExercises(ExercisesModel exercise) {
+    public long addExercises(ExercisesModel exercise,boolean addId) {
 
         List<Long> res = isExerciseInDB(exercise);
         if (res.get(0) == -1){
@@ -112,6 +115,9 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
+            if(addId){
+                values.put(DatabasesUtil.EXERCISES_KEY_ID,exercise.getId());
+            }
             values.put(DatabasesUtil.EXERCISES_KEY_NAME,exercise.getName());
             values.put(DatabasesUtil.EXERCISES_KEY_DESCRIPTION,exercise.getDescription());
             values.put(DatabasesUtil.EXERCISES_KEY_EXECUTION,exercise.getExecution());
@@ -134,10 +140,13 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // Exercises Routines
-    public long addExerciseRoutine(ExercisesRoutineModel exercise_routine) {
+    public long addExerciseRoutine(ExercisesRoutineModel exercise_routine,boolean addId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        if(addId){
+            values.put(DatabasesUtil.ROUTINES_KEY_ID,exercise_routine.getId());
+        }
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_REPETITIONS,exercise_routine.getRepetitions());
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_SERIES,exercise_routine.getSeries());
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK,exercise_routine.getDayOfWeek());
@@ -174,6 +183,28 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
         return routine;
     }
+
+    public RoutineModel getFirstRoutine() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabasesUtil.ROUTINES_TABLE_NAME,null);
+
+        if (cursor != null){
+            cursor.moveToFirst();
+        }
+
+        RoutineModel routine = new RoutineModel();
+        assert cursor != null;
+        routine.setId(Long.parseLong(cursor.getString(0)));
+        routine.setName(cursor.getString(1));
+        routine.setTimestamp(Long.parseLong(cursor.getString(2)));
+
+        cursor.close();
+        db.close();
+
+        return routine;
+    }
+
 
     // Exercises
     public  ExercisesModel getExercise(long id){
@@ -238,12 +269,11 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         exercise_routine.setTimeMinutes(Float.parseFloat(cursor.getString(2)));
         exercise_routine.setDayOfWeek(cursor.getString(3));
         exercise_routine.setWeightKg(Float.parseFloat(cursor.getString(4)));
-        exercise_routine.setExercise_id(Integer.parseInt(cursor.getString(5)));
-        exercise_routine.setRoutine_id(Integer.parseInt(cursor.getString(6)));
+        exercise_routine.setExercise_id(Long.parseLong(cursor.getString(5)));
+        exercise_routine.setRoutine_id(Long.parseLong(cursor.getString(6)));
 
         cursor.close();
         db.close();
-
         return exercise_routine;
 
     }
@@ -261,7 +291,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 RoutineModel routine = new RoutineModel();
-                routine.setId(Integer.parseInt(cursor.getString(0)));
+                routine.setId(Long.parseLong(cursor.getString(0)));
                 routine.setName(cursor.getString(1));
                 routine.setTimestamp(Long.parseLong(cursor.getString(2)));
                 routineList.add(routine);   // add a la lista
@@ -274,25 +304,25 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // ExerciseRoutine
-    public List<ExercisesRoutineModel> getAllExercisesRoutines() {
+    public List<ExercisesRoutineModel> getAllExercisesRoutines(long idR) {
         List<ExercisesRoutineModel> exercisesRoutineList = new ArrayList<ExercisesRoutineModel>();
 
         // Select all
-        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME;
+        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE ( " + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " =? " + idR +" )";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
         if(cursor.moveToFirst()){
             do{
                 ExercisesRoutineModel exercise_routine = new ExercisesRoutineModel();
-                exercise_routine.setId(Integer.parseInt(cursor.getString(0)));
+                exercise_routine.setId(Long.parseLong(cursor.getString(0)));
                 exercise_routine.setSeries(Integer.parseInt(cursor.getString(3)));
                 exercise_routine.setRepetitions(Integer.parseInt(cursor.getString(4)));
                 exercise_routine.setTimeMinutes(Float.parseFloat(cursor.getString(6)));
                 exercise_routine.setDayOfWeek(cursor.getString(7));
                 exercise_routine.setWeightKg(Float.parseFloat(cursor.getString(5)));
-                exercise_routine.setExercise_id(Integer.parseInt(cursor.getString(1)));
-                exercise_routine.setRoutine_id(Integer.parseInt(cursor.getString(2)));
+                exercise_routine.setExercise_id(Long.parseLong(cursor.getString(1)));
+                exercise_routine.setRoutine_id(Long.parseLong(cursor.getString(2)));
                 exercisesRoutineList.add(exercise_routine);   // add a la lista
             }while(cursor.moveToNext());
         }
@@ -302,25 +332,25 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // ExerciseRoutine x Days
-    public List<ExercisesRoutineModel> getAllExercisesRoutinesDays(String day) {
+    public List<ExercisesRoutineModel> getAllExercisesRoutinesDays(String day,long idRoutine) {
         List<ExercisesRoutineModel> exercisesRoutineList = new ArrayList<ExercisesRoutineModel>();
 
         // Select all
-        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
+        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " =? " + idRoutine + " AND " + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
         if(cursor.moveToFirst()){
             do{
                 ExercisesRoutineModel exercise_routine = new ExercisesRoutineModel();
-                exercise_routine.setId(Integer.parseInt(cursor.getString(0)));
+                exercise_routine.setId(Long.parseLong(cursor.getString(0)));
                 exercise_routine.setSeries(Integer.parseInt(cursor.getString(3)));
                 exercise_routine.setRepetitions(Integer.parseInt(cursor.getString(4)));
                 exercise_routine.setTimeMinutes(Float.parseFloat(cursor.getString(6)));
                 exercise_routine.setDayOfWeek(cursor.getString(7));
                 exercise_routine.setWeightKg(Float.parseFloat(cursor.getString(5)));
-                exercise_routine.setExercise_id(Integer.parseInt(cursor.getString(1)));
-                exercise_routine.setRoutine_id(Integer.parseInt(cursor.getString(2)));
+                exercise_routine.setExercise_id(Long.parseLong(cursor.getString(1)));
+                exercise_routine.setRoutine_id(Long.parseLong(cursor.getString(2)));
                 exercisesRoutineList.add(exercise_routine);   // add a la lista
             }while(cursor.moveToNext());
         }

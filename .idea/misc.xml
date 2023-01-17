@@ -38,7 +38,7 @@
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/font/play.xml" value="0.279296875" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/font/roboto.xml" value="0.3734375" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/font/roboto_mono_bold.xml" value="0.3734375" />
-        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout-land/activity_exercises_manage.xml" value="0.67" />
+        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout-land/activity_exercises_manage.xml" value="0.5" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout-land/activity_new_routine.xml" value="0.2817703768624014" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout-land/activity_routine_especific.xml" value="0.2817703768624014" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout-land/activity_routine_sel_exercises.xml" value="0.3082901554404145" />
@@ -50,7 +50,7 @@
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_fitness_level_selection.xml" value="0.25" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_new_routine.xml" value="0.20454545454545456" />
-        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_routine_especific.xml" value="0.25" />
+        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_routine_especific.xml" value="0.33" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_routine_main.xml" value="0.25" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_routine_sel_exercises.xml" value="0.22" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_routine_selection.xml" value="0.25" />
@@ -58,7 +58,7 @@
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/activity_selection_exercises.xml" value="0.33" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/exercises_item.xml" value="0.5" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/exercises_routine_item.xml" value="0.5" />
-        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/exercises_routine_item_view.xml" value="0.67" />
+        <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/exercises_routine_item_view.xml" value="0.5189393939393939" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/exercises_routine_view.xml" value="0.274903805044891" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/footer_2_row.xml" value="0.274903805044891" />
         <entry key="..\:/Grettell/Universidad/UPM/Segundo Curso/Primer Semestre/PMD/Proyecto/app/src/main/res/layout/footer_row.xml" value="0.22" />

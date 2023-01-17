@@ -116,6 +116,7 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_routine_esp_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -149,6 +150,7 @@
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/compartir_ejercicio"
                                 app:srcCompat="@drawable/ic_baseline_share"
@@ -177,6 +179,7 @@
                                 android:id="@+id/imageView17"
                                 android:layout_width="40dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/mod_ejercicio"
                                 app:srcCompat="@drawable/ic_baseline_edit_items_menu"
@@ -205,6 +208,7 @@
                                 android:id="@+id/imageView18"
                                 android:layout_width="40dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/eliminar"
                                 app:srcCompat="@drawable/ic_baseline_delete_outline"
@@ -224,6 +228,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
+                    android:id="@+id/ly_routine_esp_exercises_ly"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -479,7 +484,7 @@
                     android:orientation="vertical">
 
                     <ProgressBar
-                        android:id="@+id/progressBar_welcome"
+                        android:id="@+id/progressBar_routine_esp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="50dp"

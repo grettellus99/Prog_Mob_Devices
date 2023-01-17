@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_MenuBar"
     tools:context=".RoutineEspecific"
     tools:visibility="visible">
 
@@ -57,7 +58,6 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/primary_MenuBar"
         android:nestedScrollingEnabled="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/fl_routine_esp_footer"
@@ -109,18 +109,21 @@
                     android:layout_gravity="end"
                     android:layout_marginStart="30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_menu_routines"
-                    android:contentDescription="@string/menu_de_rutinas" />
+                    android:contentDescription="@string/menu_de_rutinas"
+                    android:minHeight="48dp"
+                    android:onClick="toggleMenuRoutine"
+                    app:srcCompat="@drawable/ic_menu_routines" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/shape_combined_2"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_routine_esp_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|end"
@@ -229,6 +232,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
+                    android:id="@+id/ly_routine_esp_exercises_ly"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -245,6 +249,7 @@
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:onClick="getExercisesMonday"
                             android:orientation="horizontal">
 
                             <TextView
@@ -265,7 +270,9 @@
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:onClick="getExercisesTuesday"
+                            android:orientation="horizontal"
+                            tools:ignore="DuplicateSpeakableTextCheck">
 
                             <TextView
 
@@ -286,6 +293,7 @@
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:onClick="getExercisesWednesday"
                             android:orientation="horizontal">
 
                             <TextView
@@ -306,6 +314,7 @@
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:onClick="getExercisesThursday"
                             android:orientation="horizontal">
 
                             <TextView
@@ -327,6 +336,7 @@
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:onClick="getExercisesFriday"
                             android:orientation="horizontal">
 
                             <TextView
@@ -347,6 +357,7 @@
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:onClick="getExercisesSaturday"
                             android:orientation="horizontal">
 
                             <TextView
@@ -367,6 +378,7 @@
                             android:layout_width="50dp"
                             android:layout_height="60dp"
                             android:gravity="center"
+                            android:onClick="getExercisesSunday"
                             android:orientation="horizontal">
 
                             <TextView
@@ -390,6 +402,7 @@
                             android:id="@+id/ly_routines_esp_monday_colored"
                             android:layout_width="50dp"
                             android:layout_height="5dp"
+                            android:background="@color/primary_MenuBar"
                             android:orientation="horizontal">
 
                         </LinearLayout>
@@ -484,7 +497,7 @@
                     android:orientation="vertical">
 
                     <ProgressBar
-                        android:id="@+id/progressBar_welcome"
+                        android:id="@+id/progressBar_routine_esp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="50dp"

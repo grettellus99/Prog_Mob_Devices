@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import com.example.workoutic.data.WorkouticDBHelper;
 import com.example.workoutic.models.ExercisesModel;
+import com.example.workoutic.models.ExercisesRoutineModel;
 import com.example.workoutic.models.RoutineModel;
 import com.example.workoutic.models.RoutinesAdapter;
 import com.example.workoutic.util.DatabasesUtil;
@@ -23,7 +24,9 @@ public class Routine_Selection extends AppCompatActivity {
 
     ListView lv;
     ProgressBar pb;
-
+    public static final String MOD_VIEW = "Ver";
+    public static final String MOD_MOD = "Modificar";
+    String modo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +35,37 @@ public class Routine_Selection extends AppCompatActivity {
         lv = findViewById(R.id.lv_routine_sel_routines);
         lv.setAdapter(new RoutinesAdapter(new LinkedList<RoutineModel>()));
 
+        Intent i = getIntent();
+        if(i.getStringExtra("callerActivity").equals("SelExerEspecific")){
+            modo = MOD_MOD;
+        }else{
+            modo = MOD_VIEW;
+        }
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 RoutineModel routines = (RoutineModel) adapterView.getAdapter().getItem(i);
-                Intent intRoutineSp = new Intent(getApplicationContext(),RoutineEspecific.class);
-                intRoutineSp.putExtra("routine",routines);
-                startActivity(intRoutineSp);
+                if(modo.equals(MOD_VIEW)){
+                    Intent intRoutineSp = new Intent(getApplicationContext(),RoutineEspecific.class);
+                    intRoutineSp.putExtra("routine",routines);
+                    startActivity(intRoutineSp);
+                }else{
+                    Intent in = getIntent();
+                    ExercisesRoutineModel er = (ExercisesRoutineModel) in.getSerializableExtra("exerciseRoutine");
+                    er.setRoutine_id(((RoutineModel) adapterView.getAdapter().getItem(i)).getId());
+                    er.setTimeMinutes(0);
+                    er.setSeries(0);
+                    er.setWeightKg(0);
+                    er.setRepetitions(0);
+                    Intent intent = new Intent(getApplicationContext(),ExercisesManage.class);
+                    intent.putExtra("routine",routines);
+                    intent.putExtra("exerciseRoutine",er);
+                    intent.putExtra("exercise",in.getSerializableExtra("exercise"));
+                    intent.putExtra("caller",in.getSerializableExtra("caller"));
+                    intent.putExtra("callerActivity","SelExerEspecific");
+                    startActivity(intent);
+                }
             }
         });
         getRoutines(0);
@@ -47,6 +74,13 @@ public class Routine_Selection extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intMenu= new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("caller","RoutineSelection");
+        if(modo.equals(MOD_MOD)){
+            Intent i = getIntent();
+            intMenu.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
+            intMenu.putExtra("exercise",i.getSerializableExtra("exercise"));
+            intMenu.putExtra("caller",i.getStringExtra("caller"));
+            intMenu.putExtra("callerActivity","SelExerEspecific");
+        }
         startActivity(intMenu);
     }
 
@@ -56,8 +90,18 @@ public class Routine_Selection extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        Intent intRoutineMain = new Intent(getApplicationContext(),Routine_Main.class);
-        startActivity(intRoutineMain);
+        if(modo.equals(MOD_MOD)){
+            Intent intent = new Intent(getApplicationContext(),SelExerEspecific.class);
+            Intent i = getIntent();
+            intent.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
+            intent.putExtra("exercise",i.getSerializableExtra("exercise"));
+            intent.putExtra("caller",i.getStringExtra("caller"));
+            startActivity(intent);
+        }else{
+            Intent intRoutineMain = new Intent(getApplicationContext(),Routine_Main.class);
+            startActivity(intRoutineMain);
+        }
+
     }
 
     public void getRoutines(int met){

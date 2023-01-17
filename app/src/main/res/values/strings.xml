@@ -138,4 +138,10 @@
     <string name="msg_err_rep_no_int">El número de repeticiones debe ser un número entero</string>
     <string name="msg_err_peso_no_number">El peso debe ser un número</string>
     <string name="msg_err_time_no_number">El tiempo debe ser un número</string>
+    <string name="d_a_de_la_semana">Día de la semana</string>
+    <string name="msg_err_day">Día de la semana incorrecto</string>
+    <string name="msg_sucsess_act">Ejercicio Actualizado</string>
+    <string name="msg_sucsess_add">Ejercicio añadido a la rutina</string>
+    <string name="msg_sucsess_rout_add">Rutina añadida</string>
+    <string name="msg_sucsess_rout_mod">Rutina modificada</string>
 </resources>
