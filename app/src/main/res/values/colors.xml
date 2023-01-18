@@ -17,6 +17,9 @@
     <color name="brand_c2">#8F1457</color>
     <color name="footer">#E5BEBC</color>
     <color name="footer_2">#F0ECE3</color>
+    <color name="grey">#979797</color>
+    <color name="greylight">#D3D3D3</color>
+    <color name="rose">#AE3A3A</color>
     <color name="font_grid">#E1F5FE</color>
     <color name="acept">#129A49</color>
     <color name="edit">#DDFF9100</color>

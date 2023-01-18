@@ -96,6 +96,7 @@
                 android:layout_height="210dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
+                android:onClick="goChat"
                 android:contentDescription="@string/chat"
                 app:srcCompat="@drawable/chat" />
 

@@ -30,6 +30,12 @@
     <string name="brazo">B</string>
     <string name="deltoides">Deltoides</string>
     <string name="espalda">Espalda</string>
+    <string name="username">username</string>
+    <string name="email">email</string>
+    <string name="Usuarios">Usuarios</string>
+    <string name="Chats">Chats</string>
+    <string name="message">Escriba un mensaje...</string>
+    <string name="Buscar_usuario">Buscar usuario...</string>
     <string name="abductores">Aductores</string>
     <string name="gluteos">Glúteos</string>
     <string name="img_abs_descrip">Imagen enfocada en Abdominales</string>
@@ -144,4 +150,7 @@
     <string name="msg_sucsess_add">Ejercicio añadido a la rutina</string>
     <string name="msg_sucsess_rout_add">Rutina añadida</string>
     <string name="msg_sucsess_rout_mod">Rutina modificada</string>
+=======
+>>>>>>> b7ad63619dfda392576f5b453fa023c57c5fba76
+>>>>>>> 3c5bab6bdc15194f6624338b8ccff96fc9a61c30
 </resources>

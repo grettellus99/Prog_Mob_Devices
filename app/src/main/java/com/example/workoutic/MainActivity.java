@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.workoutic.activity.UserActivity;
+
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,8 +37,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intMenu);
     }
 
+    public void goRegister(View view) {
+        Intent intUser = new Intent(getApplicationContext(), RegisterActivity.class);
+        startActivity(intUser);
+    }
+
     public void goRoutines(View view) {
         Intent intRoutines= new Intent(getApplicationContext(),Routine_Main.class);
         startActivity(intRoutines);
+    }
+
+    public void goChat(View view) {
     }
 }
