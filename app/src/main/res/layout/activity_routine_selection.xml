@@ -97,33 +97,31 @@
                     android:onClick="goBack"
                     app:srcCompat="@drawable/ic_arrow_45" />
 
-                <EditText
-                    android:id="@+id/et_routine_sel_finder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:backgroundTint="#B3000000"
-                    android:drawableStart="@drawable/ic_baseline_search"
-                    android:ems="10"
-                    android:fontFamily="@font/play_regular"
-                    android:hint="@string/buscar_por_nombre"
-                    android:inputType="textPersonName"
-                    android:minHeight="48dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="#B3000000"
-                    android:visibility="invisible" />
+                <SearchView
+                    android:id="@+id/sv_routine_selection_routines"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/round_message_bottom"
+                    android:backgroundTint="@color/main_Home"
+                    android:closeIcon="@drawable/ic_baseline_close_black"
+                    android:goIcon="@drawable/ic_baseline_arrow_forward"
+                    android:iconifiedByDefault="false"
+                    android:inputType="text"
+                    android:maxWidth="280dp"
+                    android:queryHint="@string/buscar_por_nombre"
+                    android:searchHintIcon="@drawable/ic_baseline_search"
+                    android:searchIcon="@drawable/ic_baseline_search"
+                    android:voiceIcon="@drawable/ic_baseline_keyboard_voice" />
 
                 <ImageView
                     android:id="@+id/imageView9"
-                    android:layout_width="11dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:contentDescription="@string/ordenacion_descendente"
                     android:onClick="getRoutinesMethod"
-                    app:srcCompat="@drawable/ic_baseline_filter_list" />
+                    app:srcCompat="@drawable/ic_baseline_filter_list"
+                    android:layout_width="0dp" />
 
             </LinearLayout>
 

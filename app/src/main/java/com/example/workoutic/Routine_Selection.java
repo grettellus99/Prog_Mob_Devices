@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.workoutic.data.WorkouticDBHelper;
 import com.example.workoutic.models.ExercisesModel;
@@ -27,6 +30,7 @@ public class Routine_Selection extends AppCompatActivity {
     public static final String MOD_VIEW = "Ver";
     public static final String MOD_MOD = "Modificar";
     String modo;
+    SearchView sv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,20 @@ public class Routine_Selection extends AppCompatActivity {
 
         lv = findViewById(R.id.lv_routine_sel_routines);
         lv.setAdapter(new RoutinesAdapter(new LinkedList<RoutineModel>()));
+
+        sv = findViewById(R.id.sv_routine_selection_routines);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                ((RoutinesAdapter)lv.getAdapter()).getFilter().filter(s);
+                return true;
+            }
+        });
 
         Intent i = getIntent();
         if(i.getStringExtra("callerActivity").equals("SelExerEspecific")){
@@ -70,6 +88,7 @@ public class Routine_Selection extends AppCompatActivity {
         });
         getRoutines(0);
     }
+
 
     public void goMenu(View view) {
         Intent intMenu= new Intent(getApplicationContext(),Menu.class);

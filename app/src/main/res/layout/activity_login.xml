@@ -4,64 +4,194 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/bar_layout"/>
+    android:background="@color/primary_MenuBar"
+    tools:context=".LoginActivity"
+    tools:ignore="MissingDefaultResource">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:id="@+id/tb_login_menu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_MenuBar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.003">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/img_login_icon_brand"
+            android:layout_width="76dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/workoutic_brand"
+            android:onClick="goMain"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/ic_brand_background"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_weight="1" />
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:hint="Password"
-            android:inputType="textPassword" />
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/img_login_icon_user"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/black"
-            android:text="login"
-            android:textColor="#fff" />
+            android:contentDescription="@string/user_profile"
+            app:srcCompat="@drawable/ic_user_account_45" />
 
-        <TextView
-            android:id="@+id/forgot_password"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/img_main_icon_menu"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Forgot you password?"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
+            android:contentDescription="@string/menu"
+            android:minHeight="48dp"
+            android:onClick="goMenu"
+            app:srcCompat="@drawable/ic_menu_45"
+            tools:ignore="ImageContrastCheck" />
 
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_combined_login"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/fl_login_footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_login_menu">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <ImageView
+                android:id="@+id/img_exercises_ic_arrow_back2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:contentDescription="@string/go_back"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:onClick="goBack"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_log" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/categorias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_txt"
+                    android:textColor="@color/secondary_MenuBar"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_baseline_login_24" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/items_login"
+                android:layout_width="match_parent"
+                android:hint="@string/email_txt"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/items_login"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/brand_c2"
+                android:fontFamily="@font/play_bold"
+                android:text="@string/login"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/forgot_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="50dp"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:onClick="forgotPassword"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/olvidaste_tu_contrase_a"
+                    android:textColor="@color/secondary_MenuBar"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fl_login_footer"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom|center|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_login_footer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/primary_MenuBar"
+            android:foregroundGravity="center|fill_vertical"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <ImageView
+            android:id="@+id/img_login_footer"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/workoutic_brand"
+            app:srcCompat="@drawable/brand" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

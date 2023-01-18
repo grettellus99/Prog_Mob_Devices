@@ -150,7 +150,25 @@
     <string name="msg_sucsess_add">Ejercicio añadido a la rutina</string>
     <string name="msg_sucsess_rout_add">Rutina añadida</string>
     <string name="msg_sucsess_rout_mod">Rutina modificada</string>
-=======
+    <string name="login_txt">Login</string>
+    <string name="email_txt">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="login">login</string>
+    <string name="olvidaste_tu_contrase_a">¿Olvidaste tu contraseña?</string>
+    <string name="auth_failed">Fallo de autenticación!</string>
+    <string name="log_success">TE HAS LOGEADO CRUCK</string>
+    <string name="email_pass_void">Debes rellenar los campos de email y contraseña</string>
+    <string name="enviar">Enviar</string>
+    <string name="foto">Foto</string>
+    <string name="crear_nueva_cuenta">Crear nueva cuenta</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="repetir_contrase_a">Repetir contraseña</string>
+    <string name="msg_regist_void">Debes llenar todos los campos pedidos</string>
+    <string name="msg_six_caracters">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="msg_dif_password">Las contraseñas introducidas son diferentes</string>
+    <string name="buscar_rutina">Buscar rutina</string>
+    =======
 >>>>>>> b7ad63619dfda392576f5b453fa023c57c5fba76
 >>>>>>> 3c5bab6bdc15194f6624338b8ccff96fc9a61c30
 </resources>

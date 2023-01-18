@@ -4,7 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,12 +17,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RoutinesAdapter extends BaseAdapter {
+public class RoutinesAdapter extends BaseAdapter implements Filterable {
     private List<RoutineModel> routinesData;
+    private List<RoutineModel> routinesDataFiltered;
 
     public RoutinesAdapter(List<RoutineModel> listaRutinas) {
         this.routinesData = new LinkedList<RoutineModel>();
         this.routinesData.addAll(listaRutinas);
+        this.routinesDataFiltered.addAll(listaRutinas);
     }
 
     @Override
@@ -44,9 +49,9 @@ public class RoutinesAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.routine_item,null);
         }
         TextView name = view.findViewById(R.id.txt_card_routine_item_title);
-        name.setText(routinesData.get(i).getName());
+        name.setText(routinesDataFiltered.get(i).getName());
         TextView timestamp = view.findViewById(R.id.txt_card_routine_item_fecha);
-        timestamp.setText(Long.toString(routinesData.get(i).getTimestamp()));
+        timestamp.setText(Long.toString(routinesDataFiltered.get(i).getTimestamp()));
         return view;
     }
 
@@ -54,5 +59,40 @@ public class RoutinesAdapter extends BaseAdapter {
         this.routinesData.clear();
         this.routinesData.addAll(routines);
         super.notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                FilterResults filterResults = new FilterResults();
+                if(constraint == null || constraint.length() == 0){
+                    filterResults.count = routinesData.size();
+                    filterResults.values = routinesData;
+
+                }else{
+                    List<RoutineModel> resultsModel = new ArrayList<RoutineModel>();
+                    String searchStr = constraint.toString().toLowerCase();
+
+                    for(RoutineModel itemsModel:routinesData){
+                        if(itemsModel.getName().contains(searchStr)){
+                            resultsModel.add(itemsModel);
+                        }
+                        filterResults.count = resultsModel.size();
+                        filterResults.values = resultsModel;
+                    }
+                }
+                return filterResults;
+            }
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                routinesDataFiltered = (List<RoutineModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
     }
 }

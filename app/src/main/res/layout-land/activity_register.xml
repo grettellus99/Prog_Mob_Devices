@@ -56,7 +56,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/shape_combined_login"
+        android:background="@drawable/round_outline"
         app:layout_constraintBottom_toTopOf="@+id/fl_messages_footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,13 +68,13 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="786dp"
-                tools:ignore="UselessParent">
+                tools:ignore="UselessParent"
+                tools:layout_editor_absoluteY="786dp">
 
                 <Space
                     android:layout_width="match_parent"
@@ -94,11 +94,12 @@
                     app:srcCompat="@drawable/ic_baseline_arrow_back_log" />
 
                 <LinearLayout
-                    android:layout_width="409dp"
-                    android:layout_height="752dp"
+                    android:layout_width="550dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="30dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -120,8 +121,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_baseline_login_24"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            app:srcCompat="@drawable/ic_baseline_login_24" />
 
                     </LinearLayout>
 

@@ -91,6 +91,7 @@
                 android:id="@+id/txt_menu_profile"
                 style="@style/text_menu"
                 android:layout_width="wrap_content"
+                android:minHeight="48dp"
                 android:onClick="goLogin"
                 android:text="@string/log_in_sing_up" />
 
@@ -139,6 +140,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/play"
                         android:gravity="center_horizontal"
+                        android:minHeight="48dp"
                         android:onClick="goRoutine"
                         android:text="@string/rutina"
                         android:textColor="#E6000000"
@@ -153,6 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/play"
+                        android:minHeight="48dp"
                         android:onClick="goChat"
                         android:text="@string/chat_menu"
                         android:textColor="#E6000000"

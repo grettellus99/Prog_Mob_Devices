@@ -124,6 +124,7 @@ public class RoutineEspecific extends AppCompatActivity {
 
     public void goMenu(View view) {
         Intent intent = new Intent(getApplicationContext(),Menu.class);
+        intent.putExtra("caller","RoutineEspecific");
         intent.putExtra("routine",routine);
         startActivity(intent);
     }

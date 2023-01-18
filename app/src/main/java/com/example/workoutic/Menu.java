@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.workoutic.activity.MessageActivity;
+import com.example.workoutic.activity.UserActivity;
 import com.example.workoutic.data.WorkouticDBHelper;
 import com.example.workoutic.models.ExercisesModel;
 import com.example.workoutic.models.RoutineModel;
@@ -86,6 +88,10 @@ public class Menu extends AppCompatActivity {
                     intRoutSel.putExtra("callerActivity","SelExerEspecific");
                 }
                 startActivity(intRoutSel);
+            case "RoutineEspecific":
+                Intent routEspe = new Intent(getApplicationContext(),RoutineEspecific.class);
+                routEspe.putExtra("routine",getIntent().getStringExtra("routine"));
+                startActivity(routEspe);
             case "New_Routine":
                 Intent intNewRoutine = new Intent(getApplicationContext(),NewRoutine.class);
                 startActivity(intNewRoutine);
@@ -113,6 +119,18 @@ public class Menu extends AppCompatActivity {
                 intExercisManage.putExtra("category",getIntent().getStringExtra("category"));
                 intExercisManage.putExtra("fitnessLevel",getIntent().getStringExtra("fitnessSelection"));
                 startActivity(intExercisManage);
+            case "Login":
+                Intent intLog = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intLog);
+            case "Register":
+                Intent intReg = new Intent(getApplicationContext(),RegisterActivity.class);
+                startActivity(intReg);
+            case "User":
+                Intent intUser = new Intent(getApplicationContext(), UserActivity.class);
+                startActivity(intUser);
+            case "Message":
+                Intent intMessage = new Intent(getApplicationContext(), MessageActivity.class);
+                startActivity(intMessage);
         }
     }
 
@@ -139,8 +157,8 @@ public class Menu extends AppCompatActivity {
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
         }
-
-        //////////////////// TODO /////////////////////
+        Intent intLog = new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intLog);
     }
 
     public void goRoutine(View view) {
