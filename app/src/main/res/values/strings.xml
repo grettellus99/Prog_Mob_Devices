@@ -30,7 +30,7 @@
     <string name="brazo">B</string>
     <string name="deltoides">Deltoides</string>
     <string name="espalda">Espalda</string>
-<<<<<<< HEAD
+
     <string name="abductores">Abductores</string>
     <string name="gluteos">Gluteos</string>
     <string name="username">username</string>
@@ -39,9 +39,8 @@
     <string name="Chats">Chats</string>
     <string name="message">Escriba un mensaje...</string>
     <string name="Buscar_usuario">Buscar usuario...</string>
-=======
-    <string name="abductores">Aductores</string>
-    <string name="gluteos">Glúteos</string>
+
+
     <string name="img_abs_descrip">Imagen enfocada en Abdominales</string>
     <string name="img_arms_descrip">Imagen enfocada en Brazos</string>
     <string name="img_back_descrip">Imagen enfocada en Espalda</string>
@@ -71,5 +70,5 @@
     <string name="db_drop">DROP TABLE IF EXISTS</string>
     <string name="buscar_por_nombre">Buscar por nombre</string>
     <string name="ordenacion_descendente">Ordenacion Descendente</string>
->>>>>>> b7ad63619dfda392576f5b453fa023c57c5fba76
+
 </resources>
