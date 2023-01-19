@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText username, email, password;
+    EditText username, email, password, passwordValidation;
     Button btn_register;
 
     FirebaseAuth auth;
@@ -35,14 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Register");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         username = findViewById(R.id.usernameRe);
         email = findViewById(R.id.emailRe);
         password = findViewById(R.id.passwordRe);
+        passwordValidation = findViewById(R.id.passwordRe2);
         btn_register = findViewById(R.id.btn_registerRe);
 
         auth = FirebaseAuth.getInstance();
@@ -53,16 +49,20 @@ public class RegisterActivity extends AppCompatActivity {
                 String txt_username = username.getText().toString();
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
+                String txt_valid_password = passwordValidation.getText().toString();
 
-                if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(RegisterActivity.this, "All fileds are required", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password) || TextUtils.isEmpty(txt_valid_password) ){
+                    Toast.makeText(RegisterActivity.this, R.string.msg_regist_void, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
                 } else if (txt_password.length() < 6 ){
-                    Toast.makeText(RegisterActivity.this, "password must be at least 6 characters", Toast.LENGTH_SHORT).show();
-                } else {
+                    Toast.makeText(RegisterActivity.this, R.string.msg_six_caracters, Toast.LENGTH_SHORT).show();
+                }else if(!txt_password.equals(txt_valid_password)){
+                    Toast.makeText(RegisterActivity.this, R.string.msg_dif_password, Toast.LENGTH_SHORT).show();
+                }
+                else {
                     register(txt_username, txt_email, txt_password);
                 }
             }
@@ -113,8 +113,18 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    public void goMain(View view) {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 
+    public void goMenu(View view) {
+        Intent intent = new Intent(getApplicationContext(),Menu.class);
+        intent.putExtra("caller","Register");
+        startActivity(intent);
+    }
 
-
-
+    public void goBack(View view) {
+        /////// TODO
+    }
 }

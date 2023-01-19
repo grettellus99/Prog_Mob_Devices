@@ -1,14 +1,16 @@
 package com.example.workoutic.models;
 
-public class ExercisesRoutineModel {
-    private int id;
-    private int exercise_id;
+import java.io.Serializable;
+
+public class ExercisesRoutineModel implements Serializable {
+    private long id;
+    private long exercise_id;
     private int series;
     private int repetitions;
     private double weightKg;
     private double timeMinutes;
     private String dayOfWeek;
-    private int routine_id;
+    private long routine_id;
 
     public ExercisesRoutineModel() {
     }
@@ -24,19 +26,19 @@ public class ExercisesRoutineModel {
         this.routine_id = routine_id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getExercise_id() {
+    public long getExercise_id() {
         return exercise_id;
     }
 
-    public void setExercise_id(int exercise_id) {
+    public void setExercise_id(long exercise_id) {
         this.exercise_id = exercise_id;
     }
 
@@ -80,11 +82,11 @@ public class ExercisesRoutineModel {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public int getRoutine_id() {
+    public long getRoutine_id() {
         return routine_id;
     }
 
-    public void setRoutine_id(int routine_id) {
+    public void setRoutine_id(long routine_id) {
         this.routine_id = routine_id;
     }
 }

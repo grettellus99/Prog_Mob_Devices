@@ -5,6 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.workoutic.R;
 
 public class DatabasesUtil {
+    // Database New Routine
+    public static final int NR_DATABASE_VERSION = 1;
+    public static final String NR_DATABASE_NAME = "new_routines_db";
+
+
+    // Database Workoutic
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "workoutic_db";
 

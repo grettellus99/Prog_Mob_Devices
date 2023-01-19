@@ -73,7 +73,6 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-
         String DROP_TABLE = String.valueOf(R.string.db_drop);
         db.execSQL(DROP_TABLE, new String[]{DatabasesUtil.DATABASE_NAME});
         // Create a table
@@ -81,31 +80,44 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     }
 
+    public void deleteDB(){
+        String DROP_TABLE = String.valueOf(R.string.db_drop);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(DROP_TABLE, new String[]{DatabasesUtil.NR_DATABASE_NAME});
+        db.close(); // closing db connection!
+    }
+
     /* CRUD = Create, Read, Update, Delete */
     // ADD ITEM
     // Routines
-    public void addRoutine(RoutineModel routine) {
+    public long addRoutine(RoutineModel routine,boolean addId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        if(addId){
+            values.put(DatabasesUtil.ROUTINES_KEY_ID,routine.getId());
+        }
         values.put(DatabasesUtil.ROUTINES_KEY_NAME,routine.getName());
         values.put(DatabasesUtil.ROUTINES_KEY_TIMESTAMP,routine.getTimestamp());
 
         // Insertar
-        db.insert(DatabasesUtil.ROUTINES_TABLE_NAME,null,values);
+        long id = db.insert(DatabasesUtil.ROUTINES_TABLE_NAME,null,values);
         db.close(); // closing db connection!
-
+        return id;
     }
 
     // Exercises
-    public void addExercises(ExercisesModel exercise) {
+    public long addExercises(ExercisesModel exercise,boolean addId) {
 
-        int res = isExerciseInDB(exercise);
-        if (res == -1){
+        List<Long> res = isExerciseInDB(exercise);
+        if (res.get(0) == -1){
             // Se necesita insertar
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
+            if(addId){
+                values.put(DatabasesUtil.EXERCISES_KEY_ID,exercise.getId());
+            }
             values.put(DatabasesUtil.EXERCISES_KEY_NAME,exercise.getName());
             values.put(DatabasesUtil.EXERCISES_KEY_DESCRIPTION,exercise.getDescription());
             values.put(DatabasesUtil.EXERCISES_KEY_EXECUTION,exercise.getExecution());
@@ -115,22 +127,26 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
             values.put(DatabasesUtil.EXERCISES_KEY_IMAGE_ALT,exercise.getImgAltURL());
             values.put(DatabasesUtil.EXERCISES_KEY_MUSCLES,concatenarLista(exercise.getMuscles()));
             // Insertar
-            db.insert(DatabasesUtil.EXERCISES_TABLE_NAME,null,values);
+            long id = db.insert(DatabasesUtil.EXERCISES_TABLE_NAME,null,values);
             db.close(); // closing db connection!
-
+            return id;
         }
-        else if (res >= 0){
+        else if (res.get(0) >= 0){
             // Update
-            updateExercise(exercise);
+            return updateExercise(exercise);
         }
-        // Si no entra es que el resultado era -2 (no se necesita actualizar)
+        // Si no entra es que el resultado era -2 (no se necesita actualizar) y devolvemos el id que esta en la segunda pos de la lista
+        return res.get(1);
     }
 
     // Exercises Routines
-    public void addExerciseRoutine(ExercisesRoutineModel exercise_routine) {
+    public long addExerciseRoutine(ExercisesRoutineModel exercise_routine,boolean addId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        if(addId){
+            values.put(DatabasesUtil.ROUTINES_KEY_ID,exercise_routine.getId());
+        }
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_REPETITIONS,exercise_routine.getRepetitions());
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_SERIES,exercise_routine.getSeries());
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK,exercise_routine.getDayOfWeek());
@@ -140,15 +156,14 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID,exercise_routine.getRoutine_id());
 
         // Insertar
-        db.insert(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,null,values);
+        long id = db.insert(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,null,values);
         db.close(); // closing db connection!
-
+        return id;
     }
-
 
     // GET ID
     // Routines
-    public RoutineModel getRoutine(int id) {
+    public RoutineModel getRoutine(long id) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DatabasesUtil.ROUTINES_TABLE_NAME,new String[]{DatabasesUtil.ROUTINES_KEY_NAME, DatabasesUtil.ROUTINES_KEY_TIMESTAMP}, DatabasesUtil.ROUTINES_KEY_ID + "=?",new String[]{String.valueOf(id)}, null,null,null);
@@ -169,8 +184,30 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         return routine;
     }
 
+    public RoutineModel getFirstRoutine() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabasesUtil.ROUTINES_TABLE_NAME,null);
+
+        if (cursor != null){
+            cursor.moveToFirst();
+        }
+
+        RoutineModel routine = new RoutineModel();
+        assert cursor != null;
+        routine.setId(Long.parseLong(cursor.getString(0)));
+        routine.setName(cursor.getString(1));
+        routine.setTimestamp(Long.parseLong(cursor.getString(2)));
+
+        cursor.close();
+        db.close();
+
+        return routine;
+    }
+
+
     // Exercises
-    public  ExercisesModel getExercise(int id){
+    public  ExercisesModel getExercise(long id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DatabasesUtil.EXERCISES_TABLE_NAME,new String[]{
                         DatabasesUtil.EXERCISES_KEY_NAME,
@@ -207,7 +244,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // Exercises Routines
-    public ExercisesRoutineModel getExerciseRoutine(int id){
+    public ExercisesRoutineModel getExerciseRoutine(long id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,new String[]{
                         DatabasesUtil.EXERCISES_ROUTINES_KEY_SERIES,
@@ -232,30 +269,29 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         exercise_routine.setTimeMinutes(Float.parseFloat(cursor.getString(2)));
         exercise_routine.setDayOfWeek(cursor.getString(3));
         exercise_routine.setWeightKg(Float.parseFloat(cursor.getString(4)));
-        exercise_routine.setExercise_id(Integer.parseInt(cursor.getString(5)));
-        exercise_routine.setRoutine_id(Integer.parseInt(cursor.getString(6)));
+        exercise_routine.setExercise_id(Long.parseLong(cursor.getString(5)));
+        exercise_routine.setRoutine_id(Long.parseLong(cursor.getString(6)));
 
         cursor.close();
         db.close();
-
         return exercise_routine;
 
     }
 
     // GET ALL
     // Routine
-    public List<RoutineModel> getAllRoutines() {
+    public List<RoutineModel> getAllRoutines(int metodord) {
         List<RoutineModel> routineList = new ArrayList<RoutineModel>();
-
         // Select all
-        String selectAll = "SELECT * FROM " + DatabasesUtil.ROUTINES_TABLE_NAME;
+
+        String selectAll = "SELECT * FROM " + DatabasesUtil.ROUTINES_TABLE_NAME + " ORDER BY " + DatabasesUtil.ROUTINES_KEY_TIMESTAMP + (metodord == 0?" DESC":" ASC");
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
         if(cursor.moveToFirst()){
             do{
                 RoutineModel routine = new RoutineModel();
-                routine.setId(Integer.parseInt(cursor.getString(0)));
+                routine.setId(Long.parseLong(cursor.getString(0)));
                 routine.setName(cursor.getString(1));
                 routine.setTimestamp(Long.parseLong(cursor.getString(2)));
                 routineList.add(routine);   // add a la lista
@@ -268,25 +304,53 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // ExerciseRoutine
-    public List<ExercisesRoutineModel> getAllExercisesRoutines() {
+    public List<ExercisesRoutineModel> getAllExercisesRoutines(long idR) {
         List<ExercisesRoutineModel> exercisesRoutineList = new ArrayList<ExercisesRoutineModel>();
 
         // Select all
-        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME;
+        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE ( " + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " =? " + idR +" )";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
         if(cursor.moveToFirst()){
             do{
                 ExercisesRoutineModel exercise_routine = new ExercisesRoutineModel();
-                exercise_routine.setId(Integer.parseInt(cursor.getString(0)));
+                exercise_routine.setId(Long.parseLong(cursor.getString(0)));
                 exercise_routine.setSeries(Integer.parseInt(cursor.getString(3)));
                 exercise_routine.setRepetitions(Integer.parseInt(cursor.getString(4)));
                 exercise_routine.setTimeMinutes(Float.parseFloat(cursor.getString(6)));
                 exercise_routine.setDayOfWeek(cursor.getString(7));
                 exercise_routine.setWeightKg(Float.parseFloat(cursor.getString(5)));
-                exercise_routine.setExercise_id(Integer.parseInt(cursor.getString(1)));
-                exercise_routine.setRoutine_id(Integer.parseInt(cursor.getString(2)));
+                exercise_routine.setExercise_id(Long.parseLong(cursor.getString(1)));
+                exercise_routine.setRoutine_id(Long.parseLong(cursor.getString(2)));
+                exercisesRoutineList.add(exercise_routine);   // add a la lista
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return exercisesRoutineList;
+    }
+
+    // ExerciseRoutine x Days
+    public List<ExercisesRoutineModel> getAllExercisesRoutinesDays(String day,long idRoutine) {
+        List<ExercisesRoutineModel> exercisesRoutineList = new ArrayList<ExercisesRoutineModel>();
+
+        // Select all
+        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " =? " + idRoutine + " AND " + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectAll,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                ExercisesRoutineModel exercise_routine = new ExercisesRoutineModel();
+                exercise_routine.setId(Long.parseLong(cursor.getString(0)));
+                exercise_routine.setSeries(Integer.parseInt(cursor.getString(3)));
+                exercise_routine.setRepetitions(Integer.parseInt(cursor.getString(4)));
+                exercise_routine.setTimeMinutes(Float.parseFloat(cursor.getString(6)));
+                exercise_routine.setDayOfWeek(cursor.getString(7));
+                exercise_routine.setWeightKg(Float.parseFloat(cursor.getString(5)));
+                exercise_routine.setExercise_id(Long.parseLong(cursor.getString(1)));
+                exercise_routine.setRoutine_id(Long.parseLong(cursor.getString(2)));
                 exercisesRoutineList.add(exercise_routine);   // add a la lista
             }while(cursor.moveToNext());
         }
@@ -297,7 +361,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     // UPDATE
     // Routine
-    public int updateRoutine(RoutineModel routine) {
+    public long updateRoutine(RoutineModel routine) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -305,7 +369,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.ROUTINES_KEY_TIMESTAMP,routine.getTimestamp());
 
         // update
-        int res = db.update(DatabasesUtil.ROUTINES_TABLE_NAME,values,
+        long res = db.update(DatabasesUtil.ROUTINES_TABLE_NAME,values,
                 DatabasesUtil.ROUTINES_KEY_ID + "=?",
                 new String[]{String.valueOf(routine.getId())});
 
@@ -314,7 +378,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // ExerciseRoutine
-    public int updateExerciseRoutine(ExercisesRoutineModel exercise_routine) {
+    public long updateExerciseRoutine(ExercisesRoutineModel exercise_routine) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -327,7 +391,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID,exercise_routine.getRoutine_id());
 
         // update
-        int res = db.update(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,values,
+        long res = db.update(DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME,values,
                 DatabasesUtil.EXERCISES_ROUTINES_KEY_ID + "=?",
                 new String[]{String.valueOf(exercise_routine.getId())});
 
@@ -337,7 +401,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
     }
 
     // Exercise
-    public int updateExercise(ExercisesModel exercise) {
+    public long updateExercise(ExercisesModel exercise) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -351,7 +415,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         values.put(DatabasesUtil.EXERCISES_KEY_MUSCLES,concatenarLista(exercise.getMuscles()));
 
         // update
-        int res= db.update(DatabasesUtil.EXERCISES_TABLE_NAME,values,
+        long res= db.update(DatabasesUtil.EXERCISES_TABLE_NAME,values,
                 DatabasesUtil.EXERCISES_KEY_ID + "=?",
                 new String[]{String.valueOf(exercise.getId())});
 
@@ -427,12 +491,24 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     }
 
+    // GET COUNT x DAYS
+    public int getCountExercisesRoutinesDays(String day){
+        String countQuery = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery,null);
+
+        int res = cursor.getCount();
+        cursor.close();
+        return res;
+    }
+
 
     /* Metodos auxiliares */
 
-    private int isExerciseInDB(ExercisesModel exercise){
-        int resNE = -1; // No esta en la BD
-        int resEA = -2; // Esta y no necesita actualización
+    private List<Long> isExerciseInDB(ExercisesModel exercise){
+        List<Long> res = new ArrayList<Long>();
+        long resNE = -1; // No esta en la BD
+        long resEA = -2; // Esta y no necesita actualización
 
         SQLiteDatabase db = getReadableDatabase();
 
@@ -451,7 +527,8 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
         if (cursor == null) {
             db.close();
-            return resNE;
+            res.add(resNE);
+            return res;
         }
 
         // Comprobar que los ultimos datos recuperados del ejercicio del Servidor API sean los mismos que en BD local
@@ -464,50 +541,21 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
                            if(concatenarLista(exercise.getLevel()).equals(cursor.getString(6))){
                                if(concatenarLista(exercise.getMuscles()).equals(cursor.getString(7))){
                                    db.close();
+                                   res.add(resEA);
+                                   res.add(Long.parseLong(cursor.getString(0))); // Poner el id como segundo item de la lista
                                    cursor.close();
-                                   return resEA;
-                               }
-                               else{
-                                   db.close();
-                                   cursor.close();
-                                   return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
+                                   return res;
                                }
                            }
-                           else{
-                               db.close();
-                               cursor.close();
-                               return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-                           }
-                       }
-                       else{
-                           db.close();
-                           cursor.close();
-                           return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
                        }
                    }
-                   else{
-                       db.close();
-                       cursor.close();
-                       return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-                   }
-               }
-               else{
-                   db.close();
-                   cursor.close();
-                   return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
                }
            }
-           else{
-               db.close();
-               cursor.close();
-               return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-           }
         }
-        else{
-            db.close();
-            cursor.close();
-            return Integer.parseInt(cursor.getString(0)); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-        }
+        db.close();
+        cursor.close();
+        res.add(Long.parseLong(cursor.getString(0))); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
+        return  res;
 
     }
 

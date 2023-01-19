@@ -14,6 +14,24 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".RoutineEspecific"
+            android:exported="false" />
+        <activity
+            android:name=".ExercisesManage"
+            android:exported="false" />
+        <activity
+            android:name=".RoutineSelExercises"
+            android:exported="false" />
+        <activity
+            android:name=".CategorySelection"
+            android:exported="false" />
+        <activity
+            android:name=".FitnessLevelSelection"
+            android:exported="false" />
+        <activity
+            android:name=".NewRoutine"
+            android:exported="false" />
+        <activity
             android:name=".activity.MessageActivity"
             android:exported="false" />
         <activity
@@ -53,11 +71,9 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ExercisesModel implements Serializable {
     public static int N_EXERCISES = 0;
-    private int id;
+    private long id;
     @SerializedName("nombre")
     private String name;
     @SerializedName("dificultad")
@@ -35,11 +35,11 @@ public class ExercisesModel implements Serializable {
         ExercisesModel.N_EXERCISES+=1;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

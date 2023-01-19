@@ -110,6 +110,7 @@ public class ChatActivity extends AppCompatActivity {
                     dataSnapshot = it.next();
                     m = dataSnapshot.getValue(Message.class);
 
+                    assert m != null;
                     if(m.getSenderID().equals(firebaseUser.getUid())){
                         listUserID.add(m.getReceiverID());
                     }

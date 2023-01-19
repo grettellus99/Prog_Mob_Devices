@@ -96,14 +96,9 @@
                 android:layout_height="210dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
-<<<<<<< HEAD
-                android:contentDescription="@string/progreso"
-                android:onClick="goRegister"
-                app:srcCompat="@drawable/progreso" />
-=======
+                android:onClick="goChat"
                 android:contentDescription="@string/chat"
                 app:srcCompat="@drawable/chat" />
->>>>>>> b7ad63619dfda392576f5b453fa023c57c5fba76
 
             <FrameLayout
                 android:id="@+id/fl_main_footer"

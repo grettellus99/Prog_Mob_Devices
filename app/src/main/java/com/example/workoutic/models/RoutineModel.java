@@ -1,18 +1,13 @@
 package com.example.workoutic.models;
-
-import com.google.type.DateTime;
-
-
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
 
-public class RoutineModel {
-    private int id;
+public class RoutineModel implements Serializable {
+    private long id;
     private String name;
     private Long timestamp;
 
@@ -25,11 +20,11 @@ public class RoutineModel {
         this.timestamp = timestamp;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

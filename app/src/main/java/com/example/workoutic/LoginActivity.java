@@ -31,11 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Login");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         auth = FirebaseAuth.getInstance();
 
         email = findViewById(R.id.email);
@@ -50,28 +45,43 @@ public class LoginActivity extends AppCompatActivity {
                 String txt_password = password.getText().toString();
 
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(LoginActivity.this, "All fileds are required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.email_pass_void, Toast.LENGTH_SHORT).show();
                 } else {
-
                     auth.signInWithEmailAndPassword(txt_email, txt_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this, "TE HAS LOGEADO CRUCK", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, R.string.log_success, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Toast.makeText(LoginActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }
             }
         });
-
-
     }
 
+    public void goMenu(View view) {
+        Intent intent = new Intent(getApplicationContext(),Menu.class);
+        intent.putExtra("caller","Login");
+        startActivity(intent);
+    }
+
+    public void goBack(View view) {
+        /////// TODO
+    }
+
+    public void forgotPassword(View view) {
+        Toast.makeText(LoginActivity.this, "Funcionalidad no disponible :(", Toast.LENGTH_SHORT).show();
+    }
+
+    public void goMain(View view) {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 }

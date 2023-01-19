@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.workoutic.Exercises;
 import com.example.workoutic.LoginActivity;
 import com.example.workoutic.MainActivity;
+import com.example.workoutic.Menu;
 import com.example.workoutic.R;
 import com.example.workoutic.adapter.MessageAdapter;
 import com.example.workoutic.adapter.UserAdapter;
@@ -73,9 +74,6 @@ public class MessageActivity extends AppCompatActivity {
 
         listMessage = new ArrayList<Message>();
 
-
-
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDB = FirebaseDatabase.getInstance();
 
@@ -131,7 +129,6 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-
         switch (caller){
             case "UserActivity":
                 Intent intUserActivity = new Intent(getApplicationContext(),UserActivity.class);
@@ -185,6 +182,14 @@ public class MessageActivity extends AppCompatActivity {
     }
 
 
+    public void goMain(View view) {
+        Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intMain);
+    }
 
-
+    public void goMenu(View view) {
+        Intent intMenu = new Intent(getApplicationContext(), Menu.class);
+        intMenu.putExtra("caller","Message");
+        startActivity(intMenu);
+    }
 }
