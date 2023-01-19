@@ -70,9 +70,9 @@ public class ExercisesManage extends AppCompatActivity {
 
         // Inicializacion con datos recomendados
         series = findViewById(R.id.txt_exercises_manage_series);
-        series.setText(exerciseRoutine.getSeries());
+        series.setText(String.valueOf(exerciseRoutine.getSeries()));
         rep = findViewById(R.id.txt_exercises_manage_repetitions);
-        rep.setText(exerciseRoutine.getRepetitions());
+        rep.setText(String.valueOf(exerciseRoutine.getRepetitions()));
         weight = findViewById(R.id.txt_exercises_manage_weight);
         weight.setText(String.valueOf(exerciseRoutine.getWeightKg()));
         time = findViewById(R.id.txt_exercises_manage_time);
@@ -195,7 +195,7 @@ public class ExercisesManage extends AppCompatActivity {
         if(isNumberInteger(seriesTxt)){
             int s = Integer.parseInt(seriesTxt);
             s +=1;
-            series.setText(s);
+            series.setText(String.valueOf(s));
         }else{
             Toast.makeText(this, R.string.msg_err_series_no_int, Toast.LENGTH_SHORT).show();
         }
@@ -210,7 +210,7 @@ public class ExercisesManage extends AppCompatActivity {
             }else{
                 s=0;
             }
-            series.setText(s);
+            series.setText(String.valueOf(s));
         }else{
             Toast.makeText(this, R.string.msg_err_series_no_int, Toast.LENGTH_SHORT).show();
         }
@@ -225,7 +225,7 @@ public class ExercisesManage extends AppCompatActivity {
             }else{
                 r=0;
             }
-            rep.setText(r);
+            rep.setText(String.valueOf(r));
         }else{
             Toast.makeText(this, R.string.msg_err_rep_no_int, Toast.LENGTH_SHORT).show();
         }
@@ -237,7 +237,7 @@ public class ExercisesManage extends AppCompatActivity {
         if(isNumberInteger(repTxt)){
             int r = Integer.parseInt(repTxt);
             r +=1;
-            rep.setText(r);
+            rep.setText(String.valueOf(r));
         }else{
             Toast.makeText(this, R.string.msg_err_rep_no_int, Toast.LENGTH_SHORT).show();
         }

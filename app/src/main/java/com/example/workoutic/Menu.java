@@ -55,7 +55,7 @@ public class Menu extends AppCompatActivity {
                 intExercEspec.putExtra("exercise",(ExercisesModel) i.getSerializableExtra("exercise"));
                 String fit = i.getStringExtra("fitnessLevel");
                 RoutineModel rout = (RoutineModel) i.getSerializableExtra("routine");
-                if(fit != null || !fit.equals("")){
+                if(fit != null){
                     intExercEspec.putExtra("caller","RoutineSelExercises");
                     intExercEspec.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
                     intExercEspec.putExtra("fitnessLevel",fit);
@@ -75,36 +75,43 @@ public class Menu extends AppCompatActivity {
                     intExercEspec.putExtra("caller",i.getStringExtra("category"));
                 }
                 startActivity(intExercEspec);
+                break;
             case "RoutineMain":
                 Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
                 startActivity(intRoutine);
+                break;
             case "RoutineSelection":
                 Intent intRoutSel = new Intent(getApplicationContext(),Routine_Selection.class);
                 Intent in = getIntent();
-                if(in.getStringExtra("callerActivity").equals("SelExerEspecific")){
+                if(in.getStringExtra("callerActivity") != null && in.getStringExtra("callerActivity").equals("SelExerEspecific")){
                     intRoutSel.putExtra("exerciseRoutine",in.getSerializableExtra("exerciseRoutine"));
                     intRoutSel.putExtra("exercise",in.getSerializableExtra("exercise"));
                     intRoutSel.putExtra("caller",in.getStringExtra("caller"));
                     intRoutSel.putExtra("callerActivity","SelExerEspecific");
                 }
                 startActivity(intRoutSel);
+                break;
             case "RoutineEspecific":
                 Intent routEspe = new Intent(getApplicationContext(),RoutineEspecific.class);
                 routEspe.putExtra("routine",getIntent().getStringExtra("routine"));
                 startActivity(routEspe);
+                break;
             case "New_Routine":
                 Intent intNewRoutine = new Intent(getApplicationContext(),NewRoutine.class);
                 startActivity(intNewRoutine);
+                break;
             case "CategorySelection":
                 Intent intCategory = new Intent(getApplicationContext(),CategorySelection.class);
                 intCategory.putExtra("day",getIntent().getStringExtra("day"));
                 startActivity(intCategory);
+                break;
             case "FitnessLevel":
                 Intent intFit = new Intent(getApplicationContext(),FitnessLevelSelection.class);
                 i = getIntent();
                 intFit.putExtra("category",i.getStringExtra("category"));
                 intFit.putExtra("day",i.getStringExtra("day"));
                 startActivity(intFit);
+                break;
             case "RoutineSelExercises":
                 Intent intRoutSelExer = new Intent(getApplicationContext(),RoutineSelExercises.class);
                 i = getIntent();
@@ -112,6 +119,7 @@ public class Menu extends AppCompatActivity {
                 intRoutSelExer.putExtra("day",i.getStringExtra("day"));
                 i.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
                 startActivity(intRoutSelExer);
+                break;
             case "ExercisesManage":
                 Intent intExercisManage = new Intent(getApplicationContext(),ExercisesManage.class);
                 intExercisManage.putExtra("exerciseRoutine",getIntent().getSerializableExtra("exerciseRoutine"));
@@ -119,18 +127,24 @@ public class Menu extends AppCompatActivity {
                 intExercisManage.putExtra("category",getIntent().getStringExtra("category"));
                 intExercisManage.putExtra("fitnessLevel",getIntent().getStringExtra("fitnessSelection"));
                 startActivity(intExercisManage);
+                break;
             case "Login":
                 Intent intLog = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intLog);
+                break;
             case "Register":
                 Intent intReg = new Intent(getApplicationContext(),RegisterActivity.class);
                 startActivity(intReg);
+                break;
             case "User":
                 Intent intUser = new Intent(getApplicationContext(), UserActivity.class);
                 startActivity(intUser);
+                break;
             case "Message":
                 Intent intMessage = new Intent(getApplicationContext(), MessageActivity.class);
                 startActivity(intMessage);
+                break;
+
         }
     }
 

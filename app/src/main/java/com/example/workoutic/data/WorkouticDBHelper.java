@@ -1,5 +1,6 @@
 package com.example.workoutic.data;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -45,7 +46,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
                 + DatabasesUtil.EXERCISES_ROUTINES_KEY_REPETITIONS + " INTEGER,"
                 + DatabasesUtil.EXERCISES_ROUTINES_KEY_WEIGHT + " FLOAT,"
                 + DatabasesUtil.EXERCISES_ROUTINES_KEY_TIME + " FLOAT,"
-                + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + "TEXT, "
+                + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " TEXT, "
                 + "FOREIGN KEY "+"(" + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID+ ") REFERENCES "
                 + DatabasesUtil.ROUTINES_TABLE_NAME +"("+DatabasesUtil.ROUTINES_KEY_ID+"),"
                 + "FOREIGN KEY "+"(" + DatabasesUtil.EXERCISES_ROUTINES_KEY_EXERCISE_ID+ ") REFERENCES "
@@ -73,17 +74,26 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        String DROP_TABLE = String.valueOf(R.string.db_drop);
-        db.execSQL(DROP_TABLE, new String[]{DatabasesUtil.DATABASE_NAME});
+        String DROP_TABLE = "DROP TABLE IF EXISTS " + DatabasesUtil.ROUTINES_TABLE_NAME;
+        db.execSQL(DROP_TABLE);
+        DROP_TABLE = "DROP TABLE IF EXISTS " + DatabasesUtil.EXERCISES_TABLE_NAME;
+        db.execSQL(DROP_TABLE);
+        DROP_TABLE = "DROP TABLE IF EXISTS " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME;
+        db.execSQL(DROP_TABLE);
         // Create a table
         onCreate(db);
 
     }
 
     public void deleteDB(){
-        String DROP_TABLE = String.valueOf(R.string.db_drop);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(DROP_TABLE, new String[]{DatabasesUtil.NR_DATABASE_NAME});
+        String DROP_TABLE = "DROP TABLE IF EXISTS " + DatabasesUtil.ROUTINES_TABLE_NAME;
+        db.execSQL(DROP_TABLE);
+        DROP_TABLE = "DROP TABLE IF EXISTS " + DatabasesUtil.EXERCISES_TABLE_NAME;
+        db.execSQL(DROP_TABLE);
+        DROP_TABLE = "DROP TABLE IF EXISTS " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME;
+        db.execSQL(DROP_TABLE);
+        onCreate(db);
         db.close(); // closing db connection!
     }
 
@@ -308,7 +318,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         List<ExercisesRoutineModel> exercisesRoutineList = new ArrayList<ExercisesRoutineModel>();
 
         // Select all
-        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE ( " + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " =? " + idR +" )";
+        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE " + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " = " + idR;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
@@ -336,7 +346,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         List<ExercisesRoutineModel> exercisesRoutineList = new ArrayList<ExercisesRoutineModel>();
 
         // Select all
-        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " =? " + idRoutine + " AND " + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
+        String selectAll = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE " + DatabasesUtil.EXERCISES_ROUTINES_KEY_ROUTINE_ID + " = " + idRoutine + " AND " + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " = '" + day + "';";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectAll,null);
 
@@ -493,7 +503,7 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
 
     // GET COUNT x DAYS
     public int getCountExercisesRoutinesDays(String day){
-        String countQuery = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE (" + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " =? " + day + ");";
+        String countQuery = "SELECT * FROM " + DatabasesUtil.EXERCISES_ROUTINES_TABLE_NAME + " WHERE " + DatabasesUtil.EXERCISES_ROUTINES_KEY_DAY_OF_WEEK + " = '" + day + "';";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery,null);
 
@@ -532,31 +542,37 @@ public class WorkouticDBHelper extends SQLiteOpenHelper {
         }
 
         // Comprobar que los ultimos datos recuperados del ejercicio del Servidor API sean los mismos que en BD local
-        cursor.moveToFirst();
-        if(exercise.getDescription().equals(cursor.getString(1))){
-           if(exercise.getExecution().equals(cursor.getString(2))){
-               if(exercise.getImgAltURL().equals(cursor.getString(3))){
-                   if(exercise.getImgMainURL().equals(cursor.getString(4))){
-                       if(concatenarLista(exercise.getEquipment()).equals(cursor.getString(5))){
-                           if(concatenarLista(exercise.getLevel()).equals(cursor.getString(6))){
-                               if(concatenarLista(exercise.getMuscles()).equals(cursor.getString(7))){
-                                   db.close();
-                                   res.add(resEA);
-                                   res.add(Long.parseLong(cursor.getString(0))); // Poner el id como segundo item de la lista
-                                   cursor.close();
-                                   return res;
+       if(cursor.moveToFirst()){
+           if(exercise.getDescription().equals(cursor.getString(1))){
+               if(exercise.getExecution().equals(cursor.getString(2))){
+                   if(exercise.getImgAltURL().equals(cursor.getString(3))){
+                       if(exercise.getImgMainURL().equals(cursor.getString(4))){
+                           if(concatenarLista(exercise.getEquipment()).equals(cursor.getString(5))){
+                               if(concatenarLista(exercise.getLevel()).equals(cursor.getString(6))){
+                                   if(concatenarLista(exercise.getMuscles()).equals(cursor.getString(7))){
+                                       db.close();
+                                       res.add(resEA);
+                                       res.add(Long.parseLong(cursor.getString(0))); // Poner el id como segundo item de la lista
+                                       cursor.close();
+                                       return res;
+                                   }
                                }
                            }
                        }
                    }
                }
            }
-        }
-        db.close();
-        cursor.close();
-        res.add(Long.parseLong(cursor.getString(0))); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
-        return  res;
+           db.close();
+           res.add(Long.parseLong(cursor.getString(0))); // retornar el id >= 0 para indicar que esta en la BD y se necesita actualizar;
+           cursor.close();
+           return  res;
 
+       }else{
+           db.close();
+           cursor.close();
+           res.add(resNE);
+           return res;
+       }
     }
 
     public String concatenarLista(String [] lista) {

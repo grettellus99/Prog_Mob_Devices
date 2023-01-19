@@ -75,8 +75,8 @@ public class RoutineEspecific extends AppCompatActivity {
                     startActivity(intent);
 
                 }else if(view.getId() == R.id.ic_exercises_routine_item_view_menu_view){
-                    LinearLayout lyMenu = findViewById(R.id.ly_card_item_exercises_routine_menu_view);
-                    LinearLayout lyData = findViewById(R.id.ly_card_item_exercises_routine_data_view);
+                    LinearLayout lyMenu = view.findViewById(R.id.ly_card_item_exercises_routine_menu_view);
+                    LinearLayout lyData = view.findViewById(R.id.ly_card_item_exercises_routine_data_view);
                     if(lyMenu.getVisibility() == View.VISIBLE){
                         lyData.setVisibility(View.VISIBLE);
                         lyMenu.setVisibility(View.GONE);

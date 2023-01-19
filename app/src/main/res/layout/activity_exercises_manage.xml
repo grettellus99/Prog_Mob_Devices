@@ -89,7 +89,7 @@
                     android:background="#E5E5E5"
                     android:contentDescription="@string/todo"
                     android:scaleType="fitCenter"
-                    tools:srcCompat="@drawable/deportista" />
+                    app:srcCompat="@drawable/deportista" />
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -125,6 +125,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="50dp"
                         android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
                         app:cardBackgroundColor="@color/main_Home"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="3dp">
@@ -543,7 +544,7 @@
                     android:paddingEnd="30dp">
 
                     <Button
-                        android:id="@+id/btn_new_routine_cancel"
+                        android:id="@+id/btn_exercises_manage_new_routine_cancel"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_weight="1"
@@ -562,7 +563,7 @@
                         android:layout_weight="1" />
 
                     <Button
-                        android:id="@+id/btn_new_routine_add_routine"
+                        android:id="@+id/btn_exercises_manage_new_routine_add_routine"
                         style="@style/acept_button"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"

@@ -130,6 +130,7 @@
                         android:hint="@string/introduce_el_nombre"
                         android:inputType="textPersonName"
                         android:minHeight="48dp"
+                        android:textColor="@color/black"
                         android:textColorHint="#B3616161" />
 
                 </androidx.cardview.widget.CardView>
@@ -581,7 +582,6 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:alpha="0.6"
-                    android:clickable="false"
                     android:onClick="addRoutine"
                     android:text="@string/finalizar" />
             </LinearLayout>
