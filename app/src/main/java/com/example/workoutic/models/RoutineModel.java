@@ -1,7 +1,9 @@
 package com.example.workoutic.models;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -57,5 +59,17 @@ public class RoutineModel implements Serializable {
 
         LocalDateTime localDate = LocalDateTime.parse(formattedDateTime, formatter);
         return localDate.atOffset(ZoneOffset.UTC).toInstant().toEpochMilli();
+    }
+
+    public String LongToDateTimeString(){
+        LocalDateTime datetime = Instant.ofEpochMilli(this.timestamp).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDateTime = "";
+        try{
+            formattedDateTime=  formatter.format(datetime);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  formattedDateTime;
     }
 }

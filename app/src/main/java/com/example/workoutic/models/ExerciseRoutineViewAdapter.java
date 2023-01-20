@@ -65,9 +65,9 @@ public class ExerciseRoutineViewAdapter extends BaseAdapter {
         TextView title = view.findViewById(R.id.txt_card_item_exercises_routine_title_view);
         title.setText(e.getName());
         TextView series = view.findViewById(R.id.txt_card_item_exercises_routine_series_view);
-        series.setText(exercisesRoutModelData.get(i).getSeries());
+        series.setText(String.valueOf(exercisesRoutModelData.get(i).getSeries()));
         TextView rep = view.findViewById(R.id.txt_card_item_exercises_routine_rep_view);
-        rep.setText(exercisesRoutModelData.get(i).getRepetitions());
+        rep.setText(String.valueOf(exercisesRoutModelData.get(i).getRepetitions()));
         TextView peso = view.findViewById(R.id.txt_card_item_exercises_weight_view);
         String pes = "" + exercisesRoutModelData.get(i).getWeightKg() + " kg";
         peso.setText(pes);

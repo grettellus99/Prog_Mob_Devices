@@ -71,7 +71,7 @@
     <string name="bienvenido_a">Bienvenido a</string>
     <string name="workoutic">WORKOUTIC</string>
     <string name="promotion">La mejor app de fitness para encontrar tu rutina y a tus compis del gym</string>
-    <string name="nombre_de_la_rutina">Nombre de la rutina</string>
+    <string name="nombre_de_la_rutina">Nombre de la rutina:</string>
     <string name="introduce_el_nombre">Introduce el nombre</string>
     <string name="_0">0</string>
     <string name="icon_pesa_cont_ejer">Icon de una pesa junto a un contador de ejercicios introducidos para el día</string>

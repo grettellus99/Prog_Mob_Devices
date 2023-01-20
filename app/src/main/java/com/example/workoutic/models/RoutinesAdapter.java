@@ -24,6 +24,7 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
     public RoutinesAdapter(List<RoutineModel> listaRutinas) {
         this.routinesData = new LinkedList<RoutineModel>();
         this.routinesData.addAll(listaRutinas);
+        this.routinesDataFiltered = new LinkedList<RoutineModel>();
         this.routinesDataFiltered.addAll(listaRutinas);
     }
 
@@ -51,13 +52,15 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
         TextView name = view.findViewById(R.id.txt_card_routine_item_title);
         name.setText(routinesDataFiltered.get(i).getName());
         TextView timestamp = view.findViewById(R.id.txt_card_routine_item_fecha);
-        timestamp.setText(Long.toString(routinesDataFiltered.get(i).getTimestamp()));
+        timestamp.setText((routinesDataFiltered.get(i).LongToDateTimeString()));
         return view;
     }
 
     public void updateRoutines(List<RoutineModel> routines){
         this.routinesData.clear();
+        this.routinesDataFiltered.clear();
         this.routinesData.addAll(routines);
+        this.routinesDataFiltered.addAll(routines);
         super.notifyDataSetChanged();
     }
 

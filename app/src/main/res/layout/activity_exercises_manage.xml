@@ -238,7 +238,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:backgroundTint="#4D922727"
+                                        android:backgroundTint="#0D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
                                         android:inputType="number"
@@ -306,7 +306,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:backgroundTint="#4D922727"
+                                        android:backgroundTint="#0D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
                                         android:inputType="number"
@@ -373,7 +373,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:backgroundTint="#4D922727"
+                                        android:backgroundTint="#0D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
                                         android:inputType="number"
@@ -440,7 +440,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:backgroundTint="#4D922727"
+                                        android:backgroundTint="#0D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
                                         android:inputType="number"
@@ -507,7 +507,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:backgroundTint="#4D922727"
+                                        android:backgroundTint="#0D922727"
                                         android:fontFamily="@font/play"
                                         android:gravity="end"
                                         android:inputType="number"
@@ -555,7 +555,7 @@
                         android:onClick="goBack"
                         android:text="@string/descartar"
                         android:textColor="@color/font_grid"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -571,7 +571,8 @@
                         android:clickable="false"
                         android:onClick="addExercise"
                         android:text="@string/finalizar"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/font_grid"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
             </LinearLayout>

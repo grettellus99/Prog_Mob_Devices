@@ -1,6 +1,7 @@
 package com.example.workoutic;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class RoutineEspecific extends AppCompatActivity {
     RoutineModel routine;
     String day;
     ListView lv;
-    LinearLayout menu;
+    CardView menu;
     LinearLayout ly_data;
 
     private final static String MODE_MENU = "menu";
