@@ -30,12 +30,12 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public int getCount() {
-        return this.routinesData.size();
+        return this.routinesDataFiltered.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return this.routinesData.get(i);
+        return this.routinesDataFiltered.get(i);
     }
 
     @Override
@@ -78,10 +78,11 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
 
                 }else{
                     List<RoutineModel> resultsModel = new ArrayList<RoutineModel>();
-                    String searchStr = constraint.toString().toLowerCase();
+                    String searchStr = constraint.toString().toLowerCase().replaceAll(" ","");
 
                     for(RoutineModel itemsModel:routinesData){
-                        if(itemsModel.getName().contains(searchStr)){
+                        String name = itemsModel.getName().toLowerCase().replaceAll(" ","");
+                        if(name.contains(searchStr)){
                             resultsModel.add(itemsModel);
                         }
                         filterResults.count = resultsModel.size();

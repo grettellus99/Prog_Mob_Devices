@@ -87,7 +87,7 @@ public class Routine_Selection extends AppCompatActivity {
                     intent.putExtra("routine",routines);
                     intent.putExtra("exerciseRoutine",er);
                     intent.putExtra("exercise",in.getSerializableExtra("exercise"));
-                    intent.putExtra("caller",in.getSerializableExtra("caller"));
+                    intent.putExtra("caller",in.getStringExtra("caller"));
                     intent.putExtra("callerActivity","SelExerEspecific");
                     startActivity(intent);
                 }
@@ -102,7 +102,7 @@ public class Routine_Selection extends AppCompatActivity {
             Intent i = getIntent();
             intMenu.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
             intMenu.putExtra("exercise",i.getSerializableExtra("exercise"));
-            intMenu.putExtra("caller",i.getStringExtra("caller"));
+            intMenu.putExtra("caller2",i.getStringExtra("caller"));
             intMenu.putExtra("callerActivity","SelExerEspecific");
         }
         startActivity(intMenu);

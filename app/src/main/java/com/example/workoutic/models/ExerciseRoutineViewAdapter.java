@@ -1,6 +1,7 @@
 package com.example.workoutic.models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.workoutic.R;
+import com.example.workoutic.util.NetUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,13 +47,12 @@ public class ExerciseRoutineViewAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.exercises_routine_item,null);
+            view = inflater.inflate(R.layout.exercises_routine_item_view,null);
         }
         ImageView menu = view.findViewById(R.id.ic_exercises_routine_item_view_menu_view);
         LinearLayout share = view.findViewById(R.id.btn_menu_item_exercise_routine_share);
         LinearLayout mod = view.findViewById(R.id.btn_menu_item_exercise_routine_edit);
         LinearLayout delete = view.findViewById(R.id.btn_menu_item_exercise_routine_delete);
-
         setOnClickListener(menu,i,viewGroup);
         setOnClickListener(share,i,viewGroup);
         setOnClickListener(mod,i,viewGroup);
@@ -61,7 +62,7 @@ public class ExerciseRoutineViewAdapter extends BaseAdapter {
 
         ImageView image = view.findViewById(R.id.img_card_item_exercises_routine_view);
         assert e != null;
-        image.setImageBitmap(e.getImageAlt()) ;
+        image.setImageBitmap(e.getImageAlt());
         TextView title = view.findViewById(R.id.txt_card_item_exercises_routine_title_view);
         title.setText(e.getName());
         TextView series = view.findViewById(R.id.txt_card_item_exercises_routine_series_view);

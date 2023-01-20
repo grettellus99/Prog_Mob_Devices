@@ -32,9 +32,7 @@ public class NewRoutine extends AppCompatActivity {
     public static final String PREF_ROUTINE = "new_routine";
 
     Map<String, List<ExercisesRoutineModel>> exercises;
-
     RoutineModel routine;
-
     public static final String MODO_MOD = "Modificar";
     public static final String MODO_ADD = "Adicionar";
 
@@ -96,8 +94,15 @@ public class NewRoutine extends AppCompatActivity {
     public void goBack(View view) {
         WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
         dbExtra.deleteDB(); // borrar la BD extra
-        Intent intRoutineMain = new Intent(getApplicationContext(),Routine_Main.class);
-        startActivity(intRoutineMain);
+        if(modo.equals(MODO_MOD)){
+            Intent intent = new Intent(getApplicationContext(),RoutineEspecific.class);
+            intent.putExtra("routine",routine);
+            startActivity(intent);
+        }else{
+            Intent intRoutineMain = new Intent(getApplicationContext(),Routine_Main.class);
+            startActivity(intRoutineMain);
+        }
+
     }
 
     public void addRoutine(View view) {

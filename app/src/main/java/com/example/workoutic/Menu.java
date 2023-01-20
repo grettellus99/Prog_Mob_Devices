@@ -86,14 +86,14 @@ public class Menu extends AppCompatActivity {
                 if(in.getStringExtra("callerActivity") != null && in.getStringExtra("callerActivity").equals("SelExerEspecific")){
                     intRoutSel.putExtra("exerciseRoutine",in.getSerializableExtra("exerciseRoutine"));
                     intRoutSel.putExtra("exercise",in.getSerializableExtra("exercise"));
-                    intRoutSel.putExtra("caller",in.getStringExtra("caller"));
+                    intRoutSel.putExtra("caller",in.getStringExtra("caller2"));
                     intRoutSel.putExtra("callerActivity","SelExerEspecific");
                 }
                 startActivity(intRoutSel);
                 break;
             case "RoutineEspecific":
                 Intent routEspe = new Intent(getApplicationContext(),RoutineEspecific.class);
-                routEspe.putExtra("routine",getIntent().getStringExtra("routine"));
+                routEspe.putExtra("routine",getIntent().getSerializableExtra("routine"));
                 startActivity(routEspe);
                 break;
             case "New_Routine":
