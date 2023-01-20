@@ -96,16 +96,18 @@
             <TextView
                 android:id="@+id/textView3"
                 style="@style/routine_text_view"
-                android:text="@string/nombre_de_la_rutina" />
+                android:text="@string/nombre_de_la_rutina"
+                android:textColor="@color/secondary_MenuBar" />
 
             <LinearLayout
                 android:id="@+id/ly_routine_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="30dp"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="visible"
+                tools:visibility="visible">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -125,20 +127,26 @@
                         android:id="@+id/txt_edit_new_routine_name_routine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#4D000000"
+                        android:backgroundTint="#9945526C"
                         android:ems="10"
                         android:hint="@string/introduce_el_nombre"
                         android:inputType="textPersonName"
                         android:minHeight="48dp"
-                        android:textColorHint="#B3616161" />
+                        android:textColor="@color/secondary_MenuBar"
+                        android:textColorHint="#9945526C" />
 
                 </androidx.cardview.widget.CardView>
 
                 <Button
                     android:id="@+id/btn_new_routine_nombar_rutina"
                     style="@style/acept_button"
+                    android:layout_gravity="center_vertical"
+                    android:backgroundTint="@color/acept"
                     android:onClick="validateName"
-                    android:text="@string/validar" />
+                    android:paddingStart="20dp"
+                    android:text="@string/validar"
+                    android:textColor="@color/font_grid"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -147,16 +155,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="30dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="gone">
 
                 <TextView
                     android:id="@+id/txt_new_routine_routine_name_display"
                     style="@style/routine_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/todo" />
+                    android:layout_marginStart="60dp"
+                    android:text="@string/todo"
+                    android:textColor="@color/secondary_MenuBar" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/btn_new_routine_edit_nombre_rutina"
@@ -164,15 +180,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
-                    android:layout_marginStart="10dp"
-                    android:backgroundTint="@color/edit"
+                    android:layout_marginStart="20dp"
+                    android:backgroundTint="@color/secondary_MenuBar"
                     android:drawableEnd="@drawable/ic_baseline_edit"
                     android:drawablePadding="5dp"
                     android:elevation="3dp"
                     android:onClick="editName"
+                    android:paddingStart="20dp"
                     android:text="@string/editar"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textColor="@color/font_grid"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -581,9 +603,9 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:alpha="0.6"
-                    android:clickable="false"
                     android:onClick="addRoutine"
-                    android:text="@string/finalizar" />
+                    android:text="@string/finalizar"
+                    android:textColor="@color/font_grid" />
             </LinearLayout>
 
         </LinearLayout>

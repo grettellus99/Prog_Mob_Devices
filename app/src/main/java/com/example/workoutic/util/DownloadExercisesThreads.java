@@ -7,14 +7,13 @@ import android.graphics.Bitmap;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Locale;
+
 
 import com.example.workoutic.R;
 import com.example.workoutic.SelectionExercises;
 import com.example.workoutic.models.ExercisesModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.type.DateTime;
 
 public class DownloadExercisesThreads implements Runnable{
     private SelectionExercises actSE;

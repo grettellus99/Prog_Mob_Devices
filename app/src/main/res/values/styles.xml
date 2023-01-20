@@ -25,7 +25,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/play_regular</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/secondary_MenuBar</item>
         <item name="android:textSize">36sp</item>
     </style>
 
@@ -33,7 +33,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/play_bold</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/secondary_MenuBar</item>
         <item name="android:textSize">20sp</item>
     </style>
 
@@ -43,12 +43,12 @@
         <item name="android:layout_marginStart">5dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:fontFamily">@font/play_regular</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/secondary_MenuBar</item>
     </style>
 
     <style name="text_exercise_especifico">
         <item name="android:fontFamily">@font/play_regular</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/secondary_MenuBar</item>
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -77,7 +77,7 @@
         <item name="android:layout_marginStart">40dp</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:fontFamily">@font/play</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/secondary_MenuBar</item>
         <item name="android:textSize">20sp</item>
     </style>
 
@@ -90,8 +90,8 @@
         <item name="android:drawableEnd">@drawable/ic_baseline_check</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:elevation">3dp</item>
-        <item name="android:textColor">#000000</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/font_grid</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="exercises_managment_txt_views">
@@ -99,7 +99,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:fontFamily">@font/play_bold</item>
-        <item name="android:textColor">#99000000</item>
+        <item name="android:textColor">@color/secondary_MenuBar</item>
         <item name="android:textSize">18sp</item>
     </style>
 
@@ -114,7 +114,7 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:backgroundTint">#9945526C</item>
         <item name="android:fontFamily">@font/play</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/secondary_MenuBar</item>
         <item name="android:textColorHint">#9945526C</item>
     </style>
 </resources>

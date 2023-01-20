@@ -24,17 +24,18 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
     public RoutinesAdapter(List<RoutineModel> listaRutinas) {
         this.routinesData = new LinkedList<RoutineModel>();
         this.routinesData.addAll(listaRutinas);
+        this.routinesDataFiltered = new LinkedList<RoutineModel>();
         this.routinesDataFiltered.addAll(listaRutinas);
     }
 
     @Override
     public int getCount() {
-        return this.routinesData.size();
+        return this.routinesDataFiltered.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return this.routinesData.get(i);
+        return this.routinesDataFiltered.get(i);
     }
 
     @Override
@@ -51,13 +52,15 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
         TextView name = view.findViewById(R.id.txt_card_routine_item_title);
         name.setText(routinesDataFiltered.get(i).getName());
         TextView timestamp = view.findViewById(R.id.txt_card_routine_item_fecha);
-        timestamp.setText(Long.toString(routinesDataFiltered.get(i).getTimestamp()));
+        timestamp.setText((routinesDataFiltered.get(i).LongToDateTimeString()));
         return view;
     }
 
     public void updateRoutines(List<RoutineModel> routines){
         this.routinesData.clear();
+        this.routinesDataFiltered.clear();
         this.routinesData.addAll(routines);
+        this.routinesDataFiltered.addAll(routines);
         super.notifyDataSetChanged();
     }
 
@@ -75,10 +78,11 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
 
                 }else{
                     List<RoutineModel> resultsModel = new ArrayList<RoutineModel>();
-                    String searchStr = constraint.toString().toLowerCase();
+                    String searchStr = constraint.toString().toLowerCase().replaceAll(" ","");
 
                     for(RoutineModel itemsModel:routinesData){
-                        if(itemsModel.getName().contains(searchStr)){
+                        String name = itemsModel.getName().toLowerCase().replaceAll(" ","");
+                        if(name.contains(searchStr)){
                             resultsModel.add(itemsModel);
                         }
                         filterResults.count = resultsModel.size();

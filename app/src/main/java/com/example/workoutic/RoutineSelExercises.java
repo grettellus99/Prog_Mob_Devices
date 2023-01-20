@@ -65,6 +65,7 @@ public class RoutineSelExercises extends AppCompatActivity {
                     intNewExercise.putExtra("exercise",exercise);
                     intNewExercise.putExtra("category",category);
                     intNewExercise.putExtra("fitnessLevel",fitnessLevel);
+                    intNewExercise.putExtra("caller","RoutineSelExercises");
                     startActivity(intNewExercise);
                 }else{
                     Intent intSpeExercise = new Intent(getApplicationContext(),SelExerEspecific.class);
@@ -209,8 +210,8 @@ public class RoutineSelExercises extends AppCompatActivity {
             ExercisesRoutineModel er = new ExercisesRoutineModel();
             er.setId(id);
             id++;
-            er.setSeries(Integer.parseInt(String.valueOf(datos.get(0))));
-            er.setRepetitions(Integer.parseInt(String.valueOf(datos.get(1))));
+            er.setSeries(Integer.parseInt(String.valueOf(Math.round(datos.get(0)))));
+            er.setRepetitions(Integer.parseInt(String.valueOf(Math.round(datos.get(1)))));
             er.setWeightKg(datos.get(2));
             er.setTimeMinutes(datos.get(3));
             er.setExercise_id(e.getId());

@@ -69,6 +69,7 @@
         android:background="@drawable/round_menu"
         app:layout_constraintBottom_toTopOf="@+id/fl_routine_selection_footer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -115,13 +116,13 @@
 
                 <ImageView
                     android:id="@+id/imageView9"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:contentDescription="@string/ordenacion_descendente"
                     android:onClick="getRoutinesMethod"
-                    app:srcCompat="@drawable/ic_baseline_filter_list"
-                    android:layout_width="0dp" />
+                    app:srcCompat="@drawable/ic_baseline_filter_list" />
 
             </LinearLayout>
 
@@ -129,8 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_combined"
-                android:orientation="vertical"
-                android:paddingBottom="130dp">
+                android:orientation="vertical">
 
                 <ProgressBar
                     android:id="@+id/progressBar_routine_selection"
@@ -141,13 +141,13 @@
                     android:indeterminateTint="@color/secondary_MenuBar"
                     android:indeterminateTintMode="src_atop"
                     android:padding="30dp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ListView
                     android:id="@+id/lv_routine_sel_routines"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/round_exercises_white"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
                     tools:visibility="gone" />
 
 

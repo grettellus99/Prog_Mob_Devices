@@ -6,11 +6,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_item_exercises"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="10dp"

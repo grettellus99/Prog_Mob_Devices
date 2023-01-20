@@ -35,17 +35,24 @@ public class Routine_Selection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routine_selection);
+        pb = findViewById(R.id.progressBar_routine_selection);
+
 
         lv = findViewById(R.id.lv_routine_sel_routines);
         lv.setAdapter(new RoutinesAdapter(new LinkedList<RoutineModel>()));
 
+        // Inicializar Search View
         sv = findViewById(R.id.sv_routine_selection_routines);
+        int id = sv.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) sv.findViewById(id);
+        textView.setHintTextColor(getColor(R.color.hint));
+        textView.setTextColor(getColor(R.color.secondary_MenuBar));
+
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                return false;
+                return onQueryTextChange(s);
             }
-
             @Override
             public boolean onQueryTextChange(String s) {
                 ((RoutinesAdapter)lv.getAdapter()).getFilter().filter(s);
@@ -54,7 +61,7 @@ public class Routine_Selection extends AppCompatActivity {
         });
 
         Intent i = getIntent();
-        if(i.getStringExtra("callerActivity").equals("SelExerEspecific")){
+        if(i.getStringExtra("callerActivity") != null && i.getStringExtra("callerActivity").equals("SelExerEspecific")){
             modo = MOD_MOD;
         }else{
             modo = MOD_VIEW;
@@ -80,16 +87,14 @@ public class Routine_Selection extends AppCompatActivity {
                     intent.putExtra("routine",routines);
                     intent.putExtra("exerciseRoutine",er);
                     intent.putExtra("exercise",in.getSerializableExtra("exercise"));
-                    intent.putExtra("caller",in.getSerializableExtra("caller"));
+                    intent.putExtra("caller",in.getStringExtra("caller"));
                     intent.putExtra("callerActivity","SelExerEspecific");
                     startActivity(intent);
                 }
             }
         });
-        getRoutines(0);
+       getRoutines(0);
     }
-
-
     public void goMenu(View view) {
         Intent intMenu= new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("caller","RoutineSelection");
@@ -97,7 +102,7 @@ public class Routine_Selection extends AppCompatActivity {
             Intent i = getIntent();
             intMenu.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
             intMenu.putExtra("exercise",i.getSerializableExtra("exercise"));
-            intMenu.putExtra("caller",i.getStringExtra("caller"));
+            intMenu.putExtra("caller2",i.getStringExtra("caller"));
             intMenu.putExtra("callerActivity","SelExerEspecific");
         }
         startActivity(intMenu);
@@ -129,7 +134,8 @@ public class Routine_Selection extends AppCompatActivity {
         pb.setVisibility(View.VISIBLE);
 
         WorkouticDBHelper DBhelper = new WorkouticDBHelper(this, DatabasesUtil.DATABASE_NAME, null, DatabasesUtil.DATABASE_VERSION);
-        ((RoutinesAdapter) lv.getAdapter()).updateRoutines(DBhelper.getAllRoutines(met));
+        List<RoutineModel> r = DBhelper.getAllRoutines(met);
+        ((RoutinesAdapter) lv.getAdapter()).updateRoutines(r);
 
         pb.setVisibility(View.GONE);
         lv.setVisibility(View.VISIBLE);

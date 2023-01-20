@@ -70,7 +70,7 @@
         <LinearLayout
             android:id="@+id/ly_routines_esp_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/round_routine_white"
             android:orientation="vertical">
 
@@ -88,7 +88,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -125,14 +125,15 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_routine_esp_menu"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|end"
                     android:layout_margin="5dp"
                     android:visibility="gone"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="3dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="5dp"
+                    tools:visibility="visible">
 
                     <LinearLayout
                         android:id="@+id/ly_routine_esp_menu_routine"
@@ -158,6 +159,7 @@
                                 android:layout_width="40dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:contentDescription="@string/compartir_ejercicio"
                                 app:srcCompat="@drawable/ic_baseline_share"
                                 tools:ignore="InefficientWeight" />
@@ -185,6 +187,7 @@
                                 android:id="@+id/imageView17"
                                 android:layout_width="40dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/mod_ejercicio"
                                 app:srcCompat="@drawable/ic_baseline_edit_items_menu"
@@ -213,6 +216,7 @@
                                 android:id="@+id/imageView18"
                                 android:layout_width="40dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/eliminar"
                                 app:srcCompat="@drawable/ic_baseline_delete_outline"
@@ -234,7 +238,7 @@
                 <LinearLayout
                     android:id="@+id/ly_routine_esp_exercises_ly"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -492,7 +496,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:isScrollContainer="true"
                     android:orientation="vertical">
 
@@ -507,13 +511,29 @@
                         android:padding="30dp"
                         android:visibility="visible" />
 
+                    <TextView
+                        android:id="@+id/txt_header_liv_no_item"
+                        style="@style/categorias"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/no_se_encontraron_ejercicios"
+                        android:textSize="20sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <ListView
                         android:id="@+id/lv_routine_esp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:dividerHeight="1dp"
                         android:nestedScrollingEnabled="true"
-                        tools:visibility="invisible" />
+                        tools:visibility="gone" />
 
                 </LinearLayout>
 

@@ -9,6 +9,10 @@
         android:id="@+id/card_item_exercises_routine_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,8 +63,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_menu_routines"
-                        android:contentDescription="@string/menu_exer" />
+                        android:contentDescription="@string/menu_exer"
+                        app:srcCompat="@drawable/ic_baseline_menu_routines" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -69,7 +73,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical"
-                    tools:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/btn_menu_item_exercise_routine_share"
@@ -152,7 +156,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    tools:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="wrap_content"

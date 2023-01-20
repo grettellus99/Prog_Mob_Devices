@@ -1,10 +1,16 @@
 package com.example.workoutic;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,12 +24,15 @@ import com.example.workoutic.models.ExercisesModel;
 import com.example.workoutic.models.ExercisesRoutineModel;
 import com.example.workoutic.models.RoutineModel;
 import com.example.workoutic.util.DatabasesUtil;
+import com.example.workoutic.util.NetUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.Inflater;
 
 public class RoutineEspecific extends AppCompatActivity {
     public static final String MONDAY = "Lunes";
@@ -37,8 +46,10 @@ public class RoutineEspecific extends AppCompatActivity {
     RoutineModel routine;
     String day;
     ListView lv;
-    LinearLayout menu;
+    CardView menu;
     LinearLayout ly_data;
+
+    TextView headerLv;
 
     private final static String MODE_MENU = "menu";
     private final static String MODE_DATA = "data";
@@ -61,8 +72,14 @@ public class RoutineEspecific extends AppCompatActivity {
         mode = MODE_DATA;
         changeMode();
 
+        // Inicializando list view
+        headerLv = findViewById(R.id.txt_header_liv_no_item);
+        headerLv.setVisibility(View.GONE);
 
         lv = findViewById(R.id.lv_routine_esp);
+        lv.setVisibility(View.INVISIBLE);
+
+        LayoutInflater inflater = getLayoutInflater();
         lv.setAdapter(new ExerciseRoutineViewAdapter(new LinkedList<ExercisesRoutineModel>(),new LinkedList<ExercisesModel>()));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,8 +92,8 @@ public class RoutineEspecific extends AppCompatActivity {
                     startActivity(intent);
 
                 }else if(view.getId() == R.id.ic_exercises_routine_item_view_menu_view){
-                    LinearLayout lyMenu = findViewById(R.id.ly_card_item_exercises_routine_menu_view);
-                    LinearLayout lyData = findViewById(R.id.ly_card_item_exercises_routine_data_view);
+                    LinearLayout lyMenu = adapterView.getRootView().findViewById(R.id.ly_card_item_exercises_routine_menu_view);
+                    LinearLayout lyData = adapterView.getRootView().findViewById(R.id.ly_card_item_exercises_routine_data_view);
                     if(lyMenu.getVisibility() == View.VISIBLE){
                         lyData.setVisibility(View.VISIBLE);
                         lyMenu.setVisibility(View.GONE);
@@ -115,6 +132,8 @@ public class RoutineEspecific extends AppCompatActivity {
 
             }
         });
+       getExercisesFromDB();
+
     }
 
     public void goMain(View view) {
@@ -161,7 +180,7 @@ public class RoutineEspecific extends AppCompatActivity {
         }
         Intent intShare = new Intent(Intent.ACTION_SEND);
         intShare.setType("text/plain");
-        String subject = "Rutina : " + routine.getName() + "\nFecha de creación: " + routine.getTimestamp() +"\n\n";
+        String subject = "Rutina : " + routine.getName() + "\nFecha de creación: " + routine.LongToDateTimeString();
         intShare.putExtra(Intent.EXTRA_SUBJECT,subject);
         intShare.putExtra(Intent.EXTRA_TEXT,message);
         startActivity(intShare);
@@ -186,7 +205,7 @@ public class RoutineEspecific extends AppCompatActivity {
             dbExtra.addExercises(findIdExercises(e.getExercise_id(),exer),true);
         }
         Intent intent = new Intent(getApplicationContext(),NewRoutine.class);
-        intent.putExtra("numElem",exeRoutList.size());
+        intent.putExtra("numElem",Long.parseLong(String.valueOf(exeRoutList.size())));
         startActivity(intent);
     }
 
@@ -283,6 +302,7 @@ public class RoutineEspecific extends AppCompatActivity {
 
     public void getExercisesFromDB(){
         lv.setVisibility(View.INVISIBLE);
+        headerLv.setVisibility(View.GONE);
         ProgressBar pb = findViewById(R.id.progressBar_routine_esp);
         pb.setVisibility(View.VISIBLE);
 
@@ -291,21 +311,51 @@ public class RoutineEspecific extends AppCompatActivity {
         List<ExercisesRoutineModel> exerRoutList = helper.getAllExercisesRoutinesDays(day,routine.getId());
         List<ExercisesModel> exercisesModList = new LinkedList<ExercisesModel>();
 
-        for(ExercisesRoutineModel e : exerRoutList){
-            exercisesModList.add(helper.getExercise(e.getExercise_id()));
+        if(exerRoutList.size() == 0){
+            pb.setVisibility(View.GONE);
+            headerLv.setVisibility(View.VISIBLE);
+            lv.setVisibility(View.INVISIBLE);
+            ((ExerciseRoutineViewAdapter) lv.getAdapter()).updateExercises(exerRoutList,exercisesModList);
+        }else{
+            for(ExercisesRoutineModel e : exerRoutList){
+                exercisesModList.add(helper.getExercise(e.getExercise_id()));
+            }
+            RoutineEspecific re = this;
+            for (ExercisesModel e : exercisesModList){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap imgAlt;
+                        try {
+                            e.setImageAlt(NetUtil.getURLBitmap(e.getImgAltURL()));
+                            re.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    re.updateExercises(exerRoutList,exercisesModList);
+                                }
+                            });
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }).start();
+            }
         }
-        ((ExerciseRoutineViewAdapter) lv.getAdapter()).updateExercises(exerRoutList,exercisesModList);
+    }
 
+    private void updateExercises(List<ExercisesRoutineModel> er,List<ExercisesModel> e){
+        ((ExerciseRoutineViewAdapter) lv.getAdapter()).updateExercises(er,e);
+        ProgressBar pb = findViewById(R.id.progressBar_routine_esp);
         pb.setVisibility(View.GONE);
+        headerLv.setVisibility(View.GONE);
         lv.setVisibility(View.VISIBLE);
-
     }
 
     private void changeMode(){
         LinearLayout.LayoutParams p = (LinearLayout.LayoutParams) ly_data.getLayoutParams();
         if(mode.equals(MODE_MENU)){
             menu.setVisibility(View.VISIBLE);
-            p.setMargins(0,-155,0,0);
+            p.setMargins(0,-400,0,0);
         }else{
             menu.setVisibility(View.GONE);
             p.setMargins(0,0,0,0);
@@ -331,6 +381,7 @@ public class RoutineEspecific extends AppCompatActivity {
         message +="\n";
         return  message;
     }
+
     private String concatenarLista(String [] lista) {
         String res = "";
         int len = lista.length;

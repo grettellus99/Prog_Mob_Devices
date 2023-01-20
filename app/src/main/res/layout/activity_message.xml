@@ -157,8 +157,8 @@
             android:fontFamily="@font/play"
             android:hint="@string/message"
             android:minHeight="48dp"
-            android:textColor="@color/black"
-            android:textColorHint="#9945526C" />
+            android:textColor="@color/secondary_MenuBar"
+            android:textColorHint="@color/hint" />
 
 
     </LinearLayout>

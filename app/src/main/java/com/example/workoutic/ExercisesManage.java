@@ -36,7 +36,7 @@ public class ExercisesManage extends AppCompatActivity {
         exerciseRoutine = (ExercisesRoutineModel) i.getSerializableExtra("exerciseRoutine");
         exercise = (ExercisesModel) i.getSerializableExtra("exercise");
 
-        if(i.getStringExtra("caller").equals("RoutineEspecific")){
+        if(i.getStringExtra("caller") != null && i.getStringExtra("caller").equals("RoutineEspecific")){
             mode = MODE_MOD;
             LinearLayout ly = findViewById(R.id.ly_exer_manage_categoria);
             ly.setVisibility(View.GONE);
@@ -46,7 +46,7 @@ public class ExercisesManage extends AppCompatActivity {
             ly.setVisibility(View.GONE);
             div = findViewById(R.id.div_day_of_week);
             div.setVisibility(View.GONE);
-        }else if(i.getStringExtra("caller").equals("SelExerEspecific")){
+        }else if(i.getStringExtra("callerActivity")!= null && i.getStringExtra("callerActivity").equals("SelExerEspecific")){
             mode = MODE_ADD_R;
             TextView txt = findViewById(R.id.txt_exercises_manage_day_of_week);
             txt.setText(RoutineEspecific.MONDAY);
@@ -70,9 +70,9 @@ public class ExercisesManage extends AppCompatActivity {
 
         // Inicializacion con datos recomendados
         series = findViewById(R.id.txt_exercises_manage_series);
-        series.setText(exerciseRoutine.getSeries());
+        series.setText(String.valueOf(exerciseRoutine.getSeries()));
         rep = findViewById(R.id.txt_exercises_manage_repetitions);
-        rep.setText(exerciseRoutine.getRepetitions());
+        rep.setText(String.valueOf(exerciseRoutine.getRepetitions()));
         weight = findViewById(R.id.txt_exercises_manage_weight);
         weight.setText(String.valueOf(exerciseRoutine.getWeightKg()));
         time = findViewById(R.id.txt_exercises_manage_time);
@@ -90,14 +90,14 @@ public class ExercisesManage extends AppCompatActivity {
             Intent intent = new Intent(this,Routine_Selection.class);
             intent.putExtra("exerciseRoutine",i.getSerializableExtra("exerciseRoutine"));
             intent.putExtra("exercise",exercise);
-            intent.putExtra("caller",i.getSerializableExtra("caller"));
+            intent.putExtra("caller",i.getStringExtra("caller"));
             intent.putExtra("callerActivity","SelExerEspecific");
             startActivity(intent);
         }
         else{
             Intent intent = new Intent(getApplicationContext(),RoutineSelExercises.class);
             intent.putExtra("category",getIntent().getStringExtra("category"));
-            intent.putExtra("fitnessSelection",getIntent().getStringExtra("fitnessSelection"));
+            intent.putExtra("fitnessLevel",getIntent().getStringExtra("fitnessLevel"));
             startActivity(intent);
         }
     }
@@ -195,7 +195,7 @@ public class ExercisesManage extends AppCompatActivity {
         if(isNumberInteger(seriesTxt)){
             int s = Integer.parseInt(seriesTxt);
             s +=1;
-            series.setText(s);
+            series.setText(String.valueOf(s));
         }else{
             Toast.makeText(this, R.string.msg_err_series_no_int, Toast.LENGTH_SHORT).show();
         }
@@ -210,7 +210,7 @@ public class ExercisesManage extends AppCompatActivity {
             }else{
                 s=0;
             }
-            series.setText(s);
+            series.setText(String.valueOf(s));
         }else{
             Toast.makeText(this, R.string.msg_err_series_no_int, Toast.LENGTH_SHORT).show();
         }
@@ -225,7 +225,7 @@ public class ExercisesManage extends AppCompatActivity {
             }else{
                 r=0;
             }
-            rep.setText(r);
+            rep.setText(String.valueOf(r));
         }else{
             Toast.makeText(this, R.string.msg_err_rep_no_int, Toast.LENGTH_SHORT).show();
         }
@@ -237,7 +237,7 @@ public class ExercisesManage extends AppCompatActivity {
         if(isNumberInteger(repTxt)){
             int r = Integer.parseInt(repTxt);
             r +=1;
-            rep.setText(r);
+            rep.setText(String.valueOf(r));
         }else{
             Toast.makeText(this, R.string.msg_err_rep_no_int, Toast.LENGTH_SHORT).show();
         }

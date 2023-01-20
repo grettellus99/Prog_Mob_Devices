@@ -100,7 +100,7 @@
                     android:gravity="center_horizontal"
                     android:padding="10dp"
                     android:text="@string/seleccionar_parte_ejercicios"
-                    android:textColor="@color/black"
+                    android:textColor="@color/secondary_MenuBar"
                     android:textSize="20sp" />
 
                 <LinearLayout
