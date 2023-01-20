@@ -51,10 +51,6 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
         super.onMessageReceived(message);
 
         String sented = message.getData().get("sented");
-        String user = message.getData().get("user");
-
-        SharedPreferences preferences = getSharedPreferences("PREFS", MODE_PRIVATE);
-        String currentUser = preferences.getString("currentuser", "none");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
