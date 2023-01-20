@@ -4,12 +4,14 @@ public class Message {
     private String senderID;
     private String receiverID;
     private String message;
+    private String imageURL;
     private String time;
 
-    public Message(String senderID, String receiverID, String message, String time) {
+    public Message(String senderID, String receiverID, String message, String imageURL, String time) {
         this.senderID = senderID;
         this.receiverID = receiverID;
         this.message = message;
+        this.imageURL = imageURL;
         this.time = time;
     }
     public Message(){
@@ -46,5 +48,13 @@ public class Message {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

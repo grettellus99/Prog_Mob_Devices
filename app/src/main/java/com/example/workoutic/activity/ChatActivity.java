@@ -16,8 +16,10 @@ import com.example.workoutic.Menu;
 import com.example.workoutic.R;
 import com.example.workoutic.adapter.MessageAdapter;
 import com.example.workoutic.adapter.UserAdapter;
+import com.example.workoutic.model.Chatlist;
 import com.example.workoutic.model.Message;
 import com.example.workoutic.model.User;
+import com.example.workoutic.notification.Token;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +28,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,9 +44,10 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
     private List<User> listUser;
-    private List<String> listUserID;
+    //private List<String> listUserID;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
+    private List<Chatlist> listUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +63,39 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        listUserID = new ArrayList<String>();
-        listUser = new ArrayList<User>();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
-        addFrequentChat();
+        listUserID = new ArrayList<>();
+
+        databaseReference = firebaseDB.getReference("Chatlist").child(firebaseUser.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listUserID.clear();
+                Iterable<DataSnapshot> children = snapshot.getChildren();
+                Iterator<DataSnapshot> it = children.iterator();
+                DataSnapshot dataSnapshot;
+                Chatlist chatlist;
+                while(it.hasNext()){
+                    dataSnapshot = it.next();
+                    chatlist = dataSnapshot.getValue(Chatlist.class);
+                    listUserID.add(chatlist);
+                }
+
+                mostrarChatList();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+        updateToken(FirebaseMessaging.getInstance().getToken().toString());
+
 
         floatingActionButton = findViewById(R.id.fab_add_user);
         goUser();
@@ -95,7 +130,46 @@ public class ChatActivity extends AppCompatActivity {
         startActivity(intMenu);
     }
 
+    private void updateToken(String token){
+        DatabaseReference reference = firebaseDB.getReference("Tokens");
+        Token t = new Token(token);
+        reference.child(firebaseUser.getUid()).setValue(t);
+    }
+
+    public void mostrarChatList(){
+        listUser = new ArrayList<User>();
+        databaseReference = firebaseDB.getReference("Users");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listUser.clear();
+                Iterable<DataSnapshot> children = snapshot.getChildren();
+                Iterator<DataSnapshot> it = children.iterator();
+                DataSnapshot dataSnapshot;
+                User u;
+                while(it.hasNext()){
+                    dataSnapshot = it.next();
+                    u = dataSnapshot.getValue(User.class);
+                    for(Chatlist chatlist:listUserID){
+                        if(u.getId().equals(chatlist.getId())){
+                            listUser.add(u);
+                        }
+                    }
+                }
+                userAdapter = new UserAdapter(getApplicationContext(), listUser, 1);
+                recyclerView.setAdapter(userAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void addFrequentChat(){
+        /*
         firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference = firebaseDB.getReference("Chats");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -127,7 +201,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        })*/
     }
 
     public void getMessagesFromFirebase(){
