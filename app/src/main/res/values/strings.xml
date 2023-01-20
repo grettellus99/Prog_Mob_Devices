@@ -30,14 +30,19 @@
     <string name="brazo">B</string>
     <string name="deltoides">Deltoides</string>
     <string name="espalda">Espalda</string>
+
+
+    <string name="abductores">Abductores</string>
+    <string name="gluteos">Gluteos</string>
+
     <string name="username">username</string>
     <string name="email">email</string>
     <string name="Usuarios">Usuarios</string>
     <string name="Chats">Chats</string>
     <string name="message">Escriba un mensaje...</string>
     <string name="Buscar_usuario">Buscar usuario...</string>
-    <string name="abductores">Aductores</string>
-    <string name="gluteos">Glúteos</string>
+
+
     <string name="img_abs_descrip">Imagen enfocada en Abdominales</string>
     <string name="img_arms_descrip">Imagen enfocada en Brazos</string>
     <string name="img_back_descrip">Imagen enfocada en Espalda</string>
@@ -67,6 +72,7 @@
     <string name="db_drop">DROP TABLE IF EXISTS</string>
     <string name="buscar_por_nombre">Buscar por nombre</string>
     <string name="ordenacion_descendente">Ordenacion Descendente</string>
+
     <string name="nombre_rutina">Introduce el nombre de la rutina</string>
     <string name="bienvenido_a">Bienvenido a</string>
     <string name="workoutic">WORKOUTIC</string>
@@ -168,8 +174,12 @@
     <string name="msg_six_caracters">La contraseña debe tener al menos 6 caracteres</string>
     <string name="msg_dif_password">Las contraseñas introducidas son diferentes</string>
     <string name="buscar_rutina">Buscar rutina</string>
+<<<<<<< HEAD
+
+=======
     <string name="no_se_encontraron_ejercicios">No se encontraron ejercicios</string>
     =======
 >>>>>>> b7ad63619dfda392576f5b453fa023c57c5fba76
 >>>>>>> 3c5bab6bdc15194f6624338b8ccff96fc9a61c30
+>>>>>>> 05771b885371bdf0eac15514c4aaacdab81398a4
 </resources>

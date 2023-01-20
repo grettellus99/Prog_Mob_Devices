@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,18 +54,72 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if(getItemViewType(position) == 0){
             MessageSendItem msi = ((MessageSendItem) holder);
-            msi.setMessage(m.getMessage());
-            msi.setTime(m.getTime());
+
+
+
+            if(!m.getImageURL().equals("")){
+                msi.setTime1(m.getTime());
+                msi.getTime1().setVisibility(View.GONE);
+                msi.setTime2(m.getTime());
+                msi.getTime2().setVisibility(View.VISIBLE);
+                System.out.println("GETIMAGEURL1: "+m.getImageURL());
+                msi.getMessage().setVisibility(View.GONE);
+                msi.getImgMessage().setVisibility(View.VISIBLE);
+                System.out.println("hola: "+m.getImageURL());
+                Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(msi.imgMessage);
+
+            }
+            else if(!m.getMessage().equals("")){
+                System.out.println("GETIMAGEURL2: "+m.getImageURL());
+                msi.setTime1(m.getTime());
+                msi.getTime1().setVisibility(View.VISIBLE);
+                msi.setTime2(m.getTime());
+                msi.getTime2().setVisibility(View.GONE);
+                msi.setMessage(m.getMessage());
+                msi.getMessage().setVisibility(View.VISIBLE);
+                msi.getImgMessage().setVisibility(View.GONE);
+            }
+
         }
         else {
             MessageReceiveItem mri = ((MessageReceiveItem) holder);
             mri.setMessage(m.getMessage());
-            mri.setTime(m.getTime());
+
             if (usericon.equals("default")){
                 mri.setCusericon();
             } else {
                 Glide.with(context).load(usericon).into(mri.getCusericon());
             }
+
+            if(!m.getImageURL().equals("")){
+
+                mri.setTime1(m.getTime());
+                mri.getTime1().setVisibility(View.GONE);
+                mri.setTime2(m.getTime());
+                mri.getTime2().setVisibility(View.VISIBLE);
+
+                System.out.println("GETIMAGEURL3: "+m.getImageURL());
+                mri.getMessage().setVisibility(View.GONE);
+                mri.getImgMessage().setVisibility(View.VISIBLE);
+                System.out.println("hola: "+m.getImageURL());
+                Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(mri.imgMessage);
+
+            }
+            else if(!m.getMessage().equals("")){
+                System.out.println("GETIMAGEURL4: "+m.getImageURL());
+
+                mri.setTime1(m.getTime());
+                mri.getTime1().setVisibility(View.VISIBLE);
+                mri.setTime2(m.getTime());
+                mri.getTime2().setVisibility(View.GONE);
+
+
+                mri.setMessage(m.getMessage());
+                mri.getMessage().setVisibility(View.VISIBLE);
+                mri.getImgMessage().setVisibility(View.GONE);
+            }
+
+
         }
 
     }

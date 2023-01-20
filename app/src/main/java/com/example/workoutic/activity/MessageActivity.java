@@ -1,12 +1,15 @@
 package com.example.workoutic.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -14,22 +17,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.workoutic.Exercises;
-import com.example.workoutic.LoginActivity;
 import com.example.workoutic.MainActivity;
 import com.example.workoutic.Menu;
 import com.example.workoutic.R;
 import com.example.workoutic.adapter.MessageAdapter;
-import com.example.workoutic.adapter.UserAdapter;
 import com.example.workoutic.model.Message;
 import com.example.workoutic.model.User;
+import com.example.workoutic.notification.APIService;
+import com.example.workoutic.notification.Client;
+import com.example.workoutic.notification.Data;
+import com.example.workoutic.notification.Sender;
+import com.example.workoutic.notification.Token;
+import com.example.workoutic.notification.WKResponse;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +52,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -56,9 +70,18 @@ public class MessageActivity extends AppCompatActivity {
     private ImageButton cam;
     private EditText message;
 
-    RecyclerView recyclerView;
-    MessageAdapter messageAdapter;
-    List<Message> listMessage;
+    private RecyclerView recyclerView;
+    private MessageAdapter messageAdapter;
+    private List<Message> listMessage;
+
+    private String userid;
+
+    private static final int PHOTO_SEND = 1;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+
+    private APIService apiService;
+    private boolean notify = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +99,7 @@ public class MessageActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDB = FirebaseDatabase.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
 
         username = findViewById(R.id.txt_message_username);
         usericon = findViewById(R.id.cimg_message_icon_user);
@@ -84,17 +108,22 @@ public class MessageActivity extends AppCompatActivity {
         cam = findViewById(R.id.imgbtn_message_cam);
         message = findViewById(R.id.txt_message_message);
 
+
+
         Intent i = getIntent();
-        String userid = i.getStringExtra("userid");
+        userid = i.getStringExtra("userid");
         caller = i.getStringExtra("caller");
 
         firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference = firebaseDB.getReference("Users").child(userid);
 
 
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                notify = true;
                 String msg = message.getText().toString();
                 if (msg.length() == 0){
                     Toast.makeText(MessageActivity.this, "El texto está vacío", Toast.LENGTH_SHORT).show();
@@ -104,6 +133,27 @@ public class MessageActivity extends AppCompatActivity {
                 message.setText("");
             }
         });
+
+        cam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent,"Seleccione una imagen"),PHOTO_SEND);
+
+            }
+        });
+
+/*
+        ActivityResultLauncher<Intent> camLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode() == RESULT_OK){
+
+                }
+            }
+        });*/
 
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -126,6 +176,28 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("hola");
+        if(requestCode == PHOTO_SEND && resultCode == RESULT_OK){
+            System.out.println("hola2");
+            Uri uri = data.getData();
+            storageReference = firebaseStorage.getReference("chat_images");
+            final StorageReference imageID = storageReference.child(uri.getLastPathSegment());
+            imageID.putFile(uri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    System.out.println("hola3");
+
+                    sendImage(firebaseUser.getUid(), userid, uri.toString());
+                }
+            });
+        }
     }
 
     public void goBack(View view) {
@@ -139,16 +211,125 @@ public class MessageActivity extends AppCompatActivity {
                 startActivity(intChatActivity);
         }
     }
+    public void sendImage(String senderID, String receiverID, String imageURL){
+        DatabaseReference databaseReference = firebaseDB.getReference();
 
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("senderID", senderID);
+        map.put("receiverID", receiverID);
+        map.put("message", "");
+        map.put("imageURL", imageURL);
+        map.put("time", new SimpleDateFormat("dd/MM/yyyy - HH:mm a", Locale.getDefault()).format(new Date()));
+        databaseReference.child("Chats").push().setValue(map);
+
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(firebaseUser.getUid()).child(userid);
+
+        chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    chatRef.child("id").setValue(userid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     public void sendMessage(String senderID, String receiverID, String message){
         DatabaseReference databaseReference = firebaseDB.getReference();
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("senderID", senderID);
         map.put("receiverID", receiverID);
+        map.put("imageURL", "");
         map.put("message", message);
         map.put("time", new SimpleDateFormat("dd/MM/yyyy - HH:mm a", Locale.getDefault()).format(new Date()));
         databaseReference.child("Chats").push().setValue(map);
+
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(firebaseUser.getUid()).child(userid);
+
+        chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    chatRef.child("id").setValue(userid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        final DatabaseReference chatRefReceiver = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(userid)
+                .child(firebaseUser.getUid());
+        chatRefReceiver.child("id").setValue(firebaseUser.getUid());
+
+
+        final String msg = message;
+
+        databaseReference = firebaseDB.getReference("Users").child(firebaseUser.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (notify) {
+                    sendNotification(receiverID, user.getUsername(), msg);
+                }
+                notify = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    private void sendNotification(String receiver, final String username, final String message){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Data data = new Data(firebaseUser.getUid(), R.drawable.ic_user_account_45, username+": "+message, "New Message",
+                            userid);
+
+                    Sender sender = new Sender(data, token.getToken());
+
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<WKResponse>() {
+                                @Override
+                                public void onResponse(Call<WKResponse> call, Response<WKResponse> response) {
+                                    if (response.code() == 200){
+                                        if (response.body().success != 1){
+                                            Toast.makeText(MessageActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<WKResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void getMessagesFromFirebase(String id1, String id2, String usericon){

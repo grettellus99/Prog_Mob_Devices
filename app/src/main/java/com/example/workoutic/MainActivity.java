@@ -48,5 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goChat(View view) {
+        Intent intRoutines= new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intRoutines);
     }
 }
