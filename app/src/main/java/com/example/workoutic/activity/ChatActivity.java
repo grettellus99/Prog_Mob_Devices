@@ -115,8 +115,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        Intent intMain = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intMain);
+       goMain(view);
     }
 
     public void goMain(View view) {

@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        /////// TODO
+        goMain(view);
     }
 
     public void forgotPassword(View view) {
@@ -82,6 +82,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goMain(View view) {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void noAccount(View view) {
+        Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+        intent.putExtra("caller","Login");
         startActivity(intent);
     }
 }

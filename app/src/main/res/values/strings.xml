@@ -175,4 +175,5 @@
     <string name="msg_dif_password">Las contraseñas introducidas son diferentes</string>
     <string name="buscar_rutina">Buscar rutina</string>
     <string name="no_se_encontraron_ejercicios">No se encontraron ejercicios</string>
+    <string name="new_acount">Crear un cuenta</string>
 </resources>

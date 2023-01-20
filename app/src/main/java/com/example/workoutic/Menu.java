@@ -136,6 +136,7 @@ public class Menu extends AppCompatActivity {
                 break;
             case "Register":
                 Intent intReg = new Intent(getApplicationContext(),RegisterActivity.class);
+                intReg.putExtra("caller",getIntent().getStringExtra("caller2"));
                 startActivity(intReg);
                 break;
             case "User":

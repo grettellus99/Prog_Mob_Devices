@@ -121,10 +121,17 @@ public class RegisterActivity extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intent = new Intent(getApplicationContext(),Menu.class);
         intent.putExtra("caller","Register");
+        String caller = getIntent().getStringExtra("caller");
+        intent.putExtra("caller2",caller);
         startActivity(intent);
     }
 
     public void goBack(View view) {
+        String caller = getIntent().getStringExtra("caller");
+        if(caller != null && caller.equals("Login")){
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
+        }
         /////// TODO
     }
 }
