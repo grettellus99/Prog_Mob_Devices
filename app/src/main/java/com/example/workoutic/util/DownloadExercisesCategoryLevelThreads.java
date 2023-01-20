@@ -5,8 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
 import com.example.workoutic.R;
-import com.example.workoutic.RoutineSelExercises;
-import com.example.workoutic.SelectionExercises;
+import com.example.workoutic.routines.RoutineSelExercises;
 import com.example.workoutic.models.ExercisesModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

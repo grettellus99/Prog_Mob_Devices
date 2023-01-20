@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SelectionExercises">
+    tools:context=".exercises.SelectionExercises">
 
     <LinearLayout
         android:id="@+id/tb_sel_exerc_menu"

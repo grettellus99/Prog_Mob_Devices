@@ -161,7 +161,7 @@
     <string name="password">Contraseña</string>
     <string name="login">login</string>
     <string name="olvidaste_tu_contrase_a">¿Olvidaste tu contraseña?</string>
-    <string name="auth_failed">Fallo de autenticación!</string>
+    <string name="auth_failed">!Usuario o contraseña incorrectos!</string>
     <string name="log_success">TE HAS LOGEADO CRUCK</string>
     <string name="email_pass_void">Debes rellenar los campos de email y contraseña</string>
     <string name="enviar">Enviar</string>
