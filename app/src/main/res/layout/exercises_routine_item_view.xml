@@ -9,9 +9,9 @@
         android:id="@+id/card_item_exercises_routine_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="10dp"
@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="horizontal"
             android:padding="5dp">
@@ -30,7 +30,7 @@
             <ImageView
                 android:id="@+id/img_card_item_exercises_routine_view"
                 android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_height="140dp"
                 android:layout_marginEnd="10dp"
                 android:contentDescription="@string/todo"
                 tools:ignore="ImageContrastCheck"
@@ -38,7 +38,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -49,6 +49,7 @@
                     <TextView
                         android:id="@+id/txt_card_item_exercises_routine_title_view"
                         style="@style/card_item_text_2_bold"
+                        android:layout_width="150dp"
                         android:layout_marginBottom="10dp"
                         android:text="@string/todo"
                         android:textColor="@color/brand_c2" />
@@ -70,7 +71,7 @@
                 <LinearLayout
                     android:id="@+id/ly_card_item_exercises_routine_menu_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:visibility="gone">
@@ -152,11 +153,12 @@
                 <LinearLayout
                     android:id="@+id/ly_card_item_exercises_routine_data_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="visible"
+                    tools:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="wrap_content"

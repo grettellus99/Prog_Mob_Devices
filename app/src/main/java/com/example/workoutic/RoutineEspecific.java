@@ -88,6 +88,7 @@ public class RoutineEspecific extends AppCompatActivity {
                 if(view.getId() == R.id.ly_exercise_routine_especific_exercise_view){
                     Intent intent = new Intent(getApplicationContext(),SelExerEspecific.class);
                     intent.putExtra("routine",routine);
+                    intent.putExtra("exercise",((ExerciseRoutineViewAdapter)lv.getAdapter()).getExercise(i));
                     intent.putExtra("caller","RoutineEspecific");
                     startActivity(intent);
 
@@ -125,7 +126,10 @@ public class RoutineEspecific extends AppCompatActivity {
                     lv.setVisibility(View.INVISIBLE);
                     ProgressBar pb = findViewById(R.id.progressBar_routine_esp);
                     pb.setVisibility(View.VISIBLE);
+                    WorkouticDBHelper helper = new WorkouticDBHelper(getApplicationContext(),DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
+                    helper.deleteExerciseRoutine((ExercisesRoutineModel) lv.getAdapter().getItem(i));
                     ((ExerciseRoutineViewAdapter) lv.getAdapter()).deleteExcercise(i);
+
                     pb.setVisibility(View.GONE);
                     lv.setVisibility(View.VISIBLE);
                 }

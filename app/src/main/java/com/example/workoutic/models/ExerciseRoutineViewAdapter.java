@@ -53,10 +53,13 @@ public class ExerciseRoutineViewAdapter extends BaseAdapter {
         LinearLayout share = view.findViewById(R.id.btn_menu_item_exercise_routine_share);
         LinearLayout mod = view.findViewById(R.id.btn_menu_item_exercise_routine_edit);
         LinearLayout delete = view.findViewById(R.id.btn_menu_item_exercise_routine_delete);
+        LinearLayout details = view.findViewById(R.id.ly_exercise_routine_especific_exercise_view);
+
         setOnClickListener(menu,i,viewGroup);
         setOnClickListener(share,i,viewGroup);
         setOnClickListener(mod,i,viewGroup);
         setOnClickListener(delete,i,viewGroup);
+        setOnClickListener(details,i,viewGroup);
 
         ExercisesModel e = findIdExercises(exercisesRoutModelData.get(i).getExercise_id());
 

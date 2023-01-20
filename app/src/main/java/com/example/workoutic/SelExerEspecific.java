@@ -2,7 +2,9 @@ package com.example.workoutic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -73,7 +75,10 @@ public class SelExerEspecific extends AppCompatActivity {
         Intent intMenu= new Intent(getApplicationContext(),Menu.class);
         intMenu.putExtra("caller","EspecificExercises");
         intMenu.putExtra("exercise",exercise);
-        if(!caller.equals("RoutineSelExercises")){
+        if(caller.equals("RoutineEspecific")){
+            intMenu.putExtra("routine",getIntent().getSerializableExtra("routine"));
+        }
+        else if(!caller.equals("RoutineSelExercises")){
             intMenu.putExtra("category",caller);
         }else{
             Intent i = getIntent();
@@ -81,17 +86,35 @@ public class SelExerEspecific extends AppCompatActivity {
             intMenu.putExtra("category",i.getStringExtra("category"));
             intMenu.putExtra("day",getIntent().getStringExtra("day"));
             intMenu.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
-            startActivity(intMenu);
         }
+        startActivity(intMenu);
     }
 
     public void goMain(View view) {
         if(caller.equals("RoutineSelExercises")){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
+
         }
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
+    }
+
+    // Shared preferences de num de elementos
+    private long getNumElmSP(){
+        // Obtiene la cantidad de elementos
+        SharedPreferences sp = getSharedPreferences(NewRoutine.PREF, Context.MODE_PRIVATE);
+        return sp.getLong("numElem",-1);
+    }
+    private void removeNumElmSP(){
+        // Elimina la cant de elementos
+        if(getNumElmSP() != -1){
+            SharedPreferences sp = getSharedPreferences(NewRoutine.PREF, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.remove("numElem");
+            editor.apply();
+        }
     }
     public void goBack(View view) {
         if(caller.equals("RoutineEspecific")){

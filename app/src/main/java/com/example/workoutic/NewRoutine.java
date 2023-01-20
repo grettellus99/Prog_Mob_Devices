@@ -55,14 +55,13 @@ public class NewRoutine extends AppCompatActivity {
         if(!(i.getStringExtra("caller") != null && i.getStringExtra("caller").equals("Routine_Main"))){
             if(i.getLongExtra("numElem",-1) != -1){
                 modo = MODO_MOD;
-                // Guardar la cant de elementos para evitar volverlos a adicionar a la BD al final de la mod de la rutina
-                SharedPreferences sp = getSharedPreferences(PREF,Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putLong("numElem",getIntent().getLongExtra("numElem",-1));
-                editor.apply();
-
+                setNumElmSP();
             }else{
-                modo = MODO_ADD;
+                if(getNumElmSP() != -1){
+                    modo = MODO_MOD;
+                }else{
+                    modo = MODO_ADD;
+                }
                 editName.setVisibility(View.VISIBLE);
                 showName.setVisibility(View.GONE);
             }
@@ -80,6 +79,7 @@ public class NewRoutine extends AppCompatActivity {
     public void goMain(View view) {
         WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
         dbExtra.deleteDB(); // borrar la BD extra
+        removeNumElmSP();
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
     }
@@ -96,6 +96,7 @@ public class NewRoutine extends AppCompatActivity {
         dbExtra.deleteDB(); // borrar la BD extra
         if(modo.equals(MODO_MOD)){
             Intent intent = new Intent(getApplicationContext(),RoutineEspecific.class);
+            removeNumElmSP();
             intent.putExtra("routine",routine);
             startActivity(intent);
         }else{
@@ -114,8 +115,7 @@ public class NewRoutine extends AppCompatActivity {
             long idR = routine.getId(); // Si la rutina es nueva se cambia por el nuevo id mas adelante. Pero si es mod este es el id que estaba en la BD
 
             if(modo.equals(MODO_MOD)){
-                SharedPreferences sp = getSharedPreferences(PREF,Context.MODE_PRIVATE);
-                size = sp.getLong("numELem",-1);
+                size = getNumElmSP();
             }else{
                 idR = dbHelper.addRoutine(routine,false);
             }
@@ -287,6 +287,29 @@ public class NewRoutine extends AppCompatActivity {
         long id = dbExtra.updateRoutine(routine);
         Log.println(Log.DEBUG,"ID RUTINA ACT",String.valueOf(id));
         routine.setId(id);
+    }
+
+    private long getNumElmSP(){
+        // Obtiene la cantidad de elementos
+        SharedPreferences sp = getSharedPreferences(PREF,Context.MODE_PRIVATE);
+        return sp.getLong("numElem",-1);
+    }
+    private void setNumElmSP(){
+        // Guardar la cant de elementos para evitar volverlos a adicionar a la BD al final de la mod de la rutina
+        SharedPreferences sp = getSharedPreferences(PREF,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putLong("numElem",getIntent().getLongExtra("numElem",-1));
+        editor.apply();
+    }
+
+    private void removeNumElmSP(){
+        // Elimina la cant de elementos
+        if(getNumElmSP() != -1){
+            SharedPreferences sp = getSharedPreferences(PREF,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.remove("numElem");
+            editor.apply();
+        }
     }
 
 }

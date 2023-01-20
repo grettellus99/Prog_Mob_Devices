@@ -2,7 +2,9 @@ package com.example.workoutic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -97,6 +99,7 @@ public class ExercisesManage extends AppCompatActivity {
         else{
             Intent intent = new Intent(getApplicationContext(),RoutineSelExercises.class);
             intent.putExtra("category",getIntent().getStringExtra("category"));
+            intent.putExtra("day",exerciseRoutine.getDayOfWeek());
             intent.putExtra("fitnessLevel",getIntent().getStringExtra("fitnessLevel"));
             startActivity(intent);
         }
@@ -127,9 +130,26 @@ public class ExercisesManage extends AppCompatActivity {
         if(mode.equals(MODE_ADD)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
+    }
+
+    // Shared preferences de num de elementos
+    private long getNumElmSP(){
+        // Obtiene la cantidad de elementos
+        SharedPreferences sp = getSharedPreferences(NewRoutine.PREF, Context.MODE_PRIVATE);
+        return sp.getLong("numElem",-1);
+    }
+    private void removeNumElmSP(){
+        // Elimina la cant de elementos
+        if(getNumElmSP() != -1){
+            SharedPreferences sp = getSharedPreferences(NewRoutine.PREF, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.remove("numElem");
+            editor.apply();
+        }
     }
 
     public void addExercise(View view) {

@@ -1,6 +1,8 @@
 package com.example.workoutic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -63,7 +65,7 @@ public class Menu extends AppCompatActivity {
                     intExercEspec.putExtra("category",i.getStringExtra("category"));
                 }else if(rout != null){
                     intExercEspec.putExtra("routine",rout);
-                    if(i.getStringExtra("callerActivity").equals("SelExerEspecific")){
+                    if(i.getStringExtra("callerActivity")!= null && i.getStringExtra("callerActivity").equals("SelExerEspecific")){
                         intExercEspec.putExtra("callerActivity",i.getStringExtra("SelExerEspecific"));
                         intExercEspec.putExtra("caller",i.getStringExtra("caller2"));
                         intExercEspec.putExtra("exercise",i.getSerializableExtra("exercise"));
@@ -117,7 +119,7 @@ public class Menu extends AppCompatActivity {
                 i = getIntent();
                 intRoutSelExer.putExtra("category",i.getStringExtra("category"));
                 intRoutSelExer.putExtra("day",i.getStringExtra("day"));
-                i.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+                intRoutSelExer.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
                 startActivity(intRoutSelExer);
                 break;
             case "ExercisesManage":
@@ -152,6 +154,8 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
+
         }
         Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
         startActivity(intExercises);
@@ -161,6 +165,7 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
@@ -170,6 +175,7 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
         Intent intLog = new Intent(getApplicationContext(),LoginActivity.class);
         startActivity(intLog);
@@ -179,6 +185,7 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
         Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
         startActivity(intRoutine);
@@ -188,8 +195,25 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
 
         //////////////////// TODO /////////////////////
+    }
+
+    // Shared preferences de num de elementos
+    private long getNumElmSP(){
+        // Obtiene la cantidad de elementos
+        SharedPreferences sp = getSharedPreferences(NewRoutine.PREF,Context.MODE_PRIVATE);
+        return sp.getLong("numElem",-1);
+    }
+    private void removeNumElmSP(){
+        // Elimina la cant de elementos
+        if(getNumElmSP() != -1){
+            SharedPreferences sp = getSharedPreferences(NewRoutine.PREF, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.remove("numElem");
+            editor.apply();
+        }
     }
 }
