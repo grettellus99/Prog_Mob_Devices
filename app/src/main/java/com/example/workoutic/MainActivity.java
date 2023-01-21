@@ -12,6 +12,7 @@ import com.example.workoutic.signin_signup.LoginActivity;
 import com.example.workoutic.signin_signup.RegisterActivity;
 
 
+
 public class MainActivity extends AppCompatActivity {
     private View exercisesView;
     private View routineView;
@@ -21,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
     }
 
     public void goExercises(View view) {

@@ -30,19 +30,14 @@
     <string name="brazo">B</string>
     <string name="deltoides">Deltoides</string>
     <string name="espalda">Espalda</string>
-
-
     <string name="abductores">Abductores</string>
     <string name="gluteos">Gluteos</string>
-
     <string name="username">username</string>
     <string name="email">email</string>
     <string name="Usuarios">Usuarios</string>
     <string name="Chats">Chats</string>
     <string name="message">Escriba un mensaje...</string>
     <string name="Buscar_usuario">Buscar usuario...</string>
-
-
     <string name="img_abs_descrip">Imagen enfocada en Abdominales</string>
     <string name="img_arms_descrip">Imagen enfocada en Brazos</string>
     <string name="img_back_descrip">Imagen enfocada en Espalda</string>

@@ -1,6 +1,16 @@
 package com.example.workoutic.adapters;
 
+import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +19,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.workoutic.R;
 import com.example.workoutic.models.Message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -23,12 +41,19 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private String usericon;
 
     private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDB;
 
 
     public MessageAdapter(Context context, List<Message> listMessage, String usericon) {
         this.context = context;
         this.listMessage = listMessage;
         this.usericon = usericon;
+
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        this.firebaseDB = FirebaseDatabase.getInstance();
     }
 
     @NonNull
@@ -61,9 +86,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 System.out.println("GETIMAGEURL1: "+m.getImageURL());
                 msi.getMessage().setVisibility(View.GONE);
                 msi.getImgMessage().setVisibility(View.VISIBLE);
+                msi.getFl().setVisibility(View.VISIBLE);
                 System.out.println("hola: "+m.getImageURL());
                 Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(msi.imgMessage);
-
             }
             else if(!m.getMessage().equals("")){
                 System.out.println("GETIMAGEURL2: "+m.getImageURL());
@@ -73,8 +98,16 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 msi.getTime2().setVisibility(View.GONE);
                 msi.setMessage(m.getMessage());
                 msi.getMessage().setVisibility(View.VISIBLE);
-                msi.getImgMessage().setVisibility(View.GONE);
+                msi.getFl().setVisibility(View.GONE);
             }
+
+            msi.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    selectOptionSender(msi, m);
+                    return false;
+                }
+            });
 
         }
         else {
@@ -96,9 +129,33 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 System.out.println("GETIMAGEURL3: "+m.getImageURL());
                 mri.getMessage().setVisibility(View.GONE);
-                mri.getImgMessage().setVisibility(View.VISIBLE);
+                mri.getFl().setVisibility(View.VISIBLE);
                 System.out.println("hola: "+m.getImageURL());
                 Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(mri.imgMessage);
+/*
+                mri.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+
+
+                        String url = m.getImageURL();
+                        String name = url.substring(url.lastIndexOf("/")+1);
+                        BitmapDrawable bitmapDrawable = (BitmapDrawable) mri.imgMessage.getDrawable();
+                        Bitmap bitmap = bitmapDrawable.getBitmap();
+                        String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(),bitmap, name, null);
+
+                        Intent shareIntent = new Intent();
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        Uri uri = Uri.parse(bitmapPath);
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                        shareIntent.setType("image/jpeg");
+                        context.startActivity(Intent.createChooser(shareIntent, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                        return false;
+                    }
+                });
+
+ */
 
             }
             else if(!m.getMessage().equals("")){
@@ -112,13 +169,118 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 mri.setMessage(m.getMessage());
                 mri.getMessage().setVisibility(View.VISIBLE);
-                mri.getImgMessage().setVisibility(View.GONE);
+                mri.getFl().setVisibility(View.GONE);
             }
+            mri.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    selectOptionReceiver(mri, m);
+                    return false;
+                }
+            });
 
 
         }
 
     }
+    private void selectOptionSender(MessageSendItem msi, Message m){
+        final CharSequence[] options = {"Compartir", "Borrar", "Cancelar"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Elija una opción");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(options[i].equals("Compartir")){
+                    shareSender(msi, m);
+                }
+                else if(options[i].equals("Borrar")){
+                    delete(m);
+                }
+                else{
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+        builder.show();
+    }
+
+    private void selectOptionReceiver(MessageReceiveItem mri, Message m){
+        final CharSequence[] options = {"Compartir", "Cancelar"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Elija una opción");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(options[i].equals("Compartir")){
+                    shareReceiver(mri, m);
+                }
+                else{
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+        builder.show();
+    }
+
+    private void delete(Message m){
+        firebaseUser = firebaseAuth.getCurrentUser();
+        databaseReference = firebaseDB.getReference("Chats");
+
+        databaseReference.child(m.getID()).removeValue();
+
+        listMessage.remove(m);
+    }
+
+    private void shareSender(MessageSendItem msi, Message m){
+        Intent shareIntent = new Intent();
+        if(!m.getImageURL().equals("")){
+            String url = m.getImageURL();
+            String name = url.substring(url.lastIndexOf("/")+1);
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) msi.imgMessage.getDrawable();
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(),bitmap, name, null);
+
+            shareIntent.setAction(Intent.ACTION_SEND);
+            Uri uri = Uri.parse(bitmapPath);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/jpeg");
+        }
+        else if(!m.getMessage().equals("")){
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, m.getMessage());
+            shareIntent.setType("text/plain");
+        }
+        context.startActivity(Intent.createChooser(shareIntent, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+
+    }
+
+    private void shareReceiver(MessageReceiveItem mri, Message m){
+        Intent shareIntent = new Intent();
+        if(!m.getImageURL().equals("")){
+            String url = m.getImageURL();
+            String name = url.substring(url.lastIndexOf("/")+1);
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) mri.imgMessage.getDrawable();
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(),bitmap, name, null);
+
+            shareIntent.setAction(Intent.ACTION_SEND);
+            Uri uri = Uri.parse(bitmapPath);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/jpeg");
+        }
+        else if(!m.getMessage().equals("")){
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, m.getMessage());
+            shareIntent.setType("text/plain");
+        }
+        context.startActivity(Intent.createChooser(shareIntent, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+
+    }
+
 
     @Override
     public int getItemCount() {
@@ -127,7 +289,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = firebaseAuth.getCurrentUser();
         if(listMessage.get(position).getSenderID().equals(firebaseUser.getUid())){
             return 0;
         }
@@ -135,4 +297,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return 1;
         }
     }
+
+
+
 }
