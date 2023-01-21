@@ -371,6 +371,8 @@ public class MessageActivity extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intMenu = new Intent(getApplicationContext(), Menu.class);
         intMenu.putExtra("caller","Message");
+        intMenu.putExtra("userid",userid);
+        intMenu.putExtra("caller2",caller);
         startActivity(intMenu);
     }
 }

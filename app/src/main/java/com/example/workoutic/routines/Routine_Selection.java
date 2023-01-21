@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.workoutic.MainActivity;
 import com.example.workoutic.Menu;
 import com.example.workoutic.R;
+import com.example.workoutic.adapters.ExerciseRoutineViewAdapter;
 import com.example.workoutic.database.WorkouticDBHelper;
 import com.example.workoutic.exercises.SelExerEspecific;
 import com.example.workoutic.models.ExercisesRoutineModel;
@@ -32,11 +33,18 @@ public class Routine_Selection extends AppCompatActivity {
     public static final String MOD_MOD = "Modificar";
     String modo;
     SearchView sv;
+
+    TextView headerLv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routine_selection);
         pb = findViewById(R.id.progressBar_routine_selection);
+
+        // Inicializando list view
+        headerLv = findViewById(R.id.txt_header_liv_no_item_routine);
+        headerLv.setVisibility(View.GONE);
 
 
         lv = findViewById(R.id.lv_routine_sel_routines);
@@ -136,6 +144,13 @@ public class Routine_Selection extends AppCompatActivity {
 
         WorkouticDBHelper DBhelper = new WorkouticDBHelper(this, DatabasesUtil.DATABASE_NAME, null, DatabasesUtil.DATABASE_VERSION);
         List<RoutineModel> r = DBhelper.getAllRoutines(met);
+
+        if(r.size() == 0){
+            pb.setVisibility(View.GONE);
+            headerLv.setVisibility(View.VISIBLE);
+            lv.setVisibility(View.GONE);
+
+        }
         ((RoutinesAdapter) lv.getAdapter()).updateRoutines(r);
 
         pb.setVisibility(View.GONE);

@@ -17,6 +17,8 @@ import com.example.workoutic.MainActivity;
 import com.example.workoutic.Menu;
 import com.example.workoutic.R;
 import com.example.workoutic.chat.ChatActivity;
+import com.example.workoutic.chat.MessageActivity;
+import com.example.workoutic.chat.UserActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -55,7 +57,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 currentUser = firebaseAuth.getCurrentUser();
                 if(currentUser != null){
-                    Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+                    Intent intent;
+                    String caller = getIntent().getStringExtra("caller");
+                    if(caller != null && caller.equals("User")){
+                        intent = new Intent(LoginActivity.this, UserActivity.class);
+                    }else if(caller != null && caller.equals("Message")){
+                        intent = new Intent(LoginActivity.this, MessageActivity.class);
+                        intent.putExtra("userid",getIntent().getStringExtra("userid"));
+                        intent.putExtra("caller",getIntent().getStringExtra("caller2"));
+                    }
+                    else{
+                        intent = new Intent(LoginActivity.this, ChatActivity.class);
+                    }
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -82,7 +95,18 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 Toast.makeText(LoginActivity.this, R.string.log_success, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+                                String caller = getIntent().getStringExtra("caller");
+                                Intent intent;
+                                if(caller != null && caller.equals("User")){
+                                    intent = new Intent(LoginActivity.this, UserActivity.class);
+                                }else if(caller != null && caller.equals("Message")){
+                                    intent = new Intent(LoginActivity.this, MessageActivity.class);
+                                    intent.putExtra("userid",getIntent().getStringExtra("userid"));
+                                    intent.putExtra("caller",getIntent().getStringExtra("caller2"));
+                                }
+                                else{
+                                    intent = new Intent(LoginActivity.this, ChatActivity.class);
+                                }
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
@@ -126,6 +150,12 @@ public class LoginActivity extends AppCompatActivity {
     public void goMenu(View view) {
         Intent intent = new Intent(getApplicationContext(), Menu.class);
         intent.putExtra("caller","Login");
+        String caller = getIntent().getStringExtra("caller");
+        intent.putExtra("caller2",caller);
+        if(caller!=null && caller.equals("Message")){
+            intent.putExtra("userid",getIntent().getStringExtra("userid"));
+            intent.putExtra("caller3",getIntent().getStringExtra("caller2"));
+        }
         startActivity(intent);
     }
 
@@ -144,7 +174,17 @@ public class LoginActivity extends AppCompatActivity {
 
     public void noAccount(View view) {
         Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-        intent.putExtra("caller","Login");
+        String caller = getIntent().getStringExtra("caller");
+        if(caller != null && caller.equals("User")){
+            intent.putExtra("caller","User");
+        }else if(caller != null && caller.equals("Message")){
+            intent.putExtra("caller","Message");
+            intent.putExtra("userid",getIntent().getStringExtra("userid"));
+            intent.putExtra("caller3",getIntent().getStringExtra("caller2"));
+        }
+        else{
+            intent.putExtra("caller","Login");
+        }
         startActivity(intent);
     }
 }

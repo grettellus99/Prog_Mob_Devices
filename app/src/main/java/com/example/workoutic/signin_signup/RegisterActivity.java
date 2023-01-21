@@ -67,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password) || TextUtils.isEmpty(txt_valid_password) ){
                     Toast.makeText(RegisterActivity.this, R.string.msg_regist_void, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    intent.putExtra("caller",getIntent().getStringExtra("caller"));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -151,15 +152,19 @@ public class RegisterActivity extends AppCompatActivity {
         intent.putExtra("caller","Register");
         String caller = getIntent().getStringExtra("caller");
         intent.putExtra("caller2",caller);
+        intent.putExtra("caller3",getIntent().getStringExtra("caller3"));
+        intent.putExtra("userid",getIntent().getStringExtra("userid"));
         startActivity(intent);
     }
 
     public void goBack(View view) {
         String caller = getIntent().getStringExtra("caller");
-        if(caller != null && caller.equals("Login")){
-            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-            startActivity(intent);
-        }
-        /////// TODO
+        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        intent.putExtra("caller2",getIntent().getStringExtra("caller3"));
+        intent.putExtra("caller",caller);
+        intent.putExtra("userid",getIntent().getStringExtra("userid"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

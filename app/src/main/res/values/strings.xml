@@ -179,4 +179,8 @@
     <string name="msg_err_register">No puedes registrarte con ese nombre de usuario o email</string>
     <string name="user_added">🥳🥳🥳 USUARIO AÑADIDO 🥳🥳🥳</string>
     <string name="logout">Log out</string>
+    <string name="option_yes">CONTINUAR</string>
+    <string name="option_no">CANCELAR</string>
+    <string name="tag_dialog_delete_er">DeleteER</string>
+    <string name="tag_delete_routine">DeleteRoutine</string>
 </resources>

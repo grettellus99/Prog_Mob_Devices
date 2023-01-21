@@ -2,6 +2,7 @@ package com.example.workoutic.routines;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,6 +25,8 @@ import com.example.workoutic.models.ExercisesModel;
 import com.example.workoutic.models.ExercisesRoutineModel;
 import com.example.workoutic.models.RoutineModel;
 import com.example.workoutic.util.DatabasesUtil;
+import com.example.workoutic.util.DeleteItemDialogFragment;
+import com.example.workoutic.util.DeleteRoutineDialogFragment;
 import com.example.workoutic.util.NetUtil;
 
 import java.util.ArrayList;
@@ -120,16 +123,16 @@ public class RoutineEspecific extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else if(view.getId() == R.id.btn_menu_item_exercise_routine_delete){
-                    ExercisesRoutineModel er = (ExercisesRoutineModel) adapterView.getAdapter().getItem(i);
-                    lv.setVisibility(View.INVISIBLE);
-                    ProgressBar pb = findViewById(R.id.progressBar_routine_esp);
-                    pb.setVisibility(View.VISIBLE);
-                    WorkouticDBHelper helper = new WorkouticDBHelper(getApplicationContext(),DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
-                    helper.deleteExerciseRoutine((ExercisesRoutineModel) lv.getAdapter().getItem(i));
-                    ((ExerciseRoutineViewAdapter) lv.getAdapter()).deleteExcercise(i);
+                    ExercisesModel e = ((ExerciseRoutineViewAdapter) adapterView.getAdapter()).getExercise(i);
+                    String title = "Estás seguro de que quieres eliminar el ejercicio";
+                    String message = "Perderás todas las especificaciones introducidas para " + e.getName();
 
-                    pb.setVisibility(View.GONE);
-                    lv.setVisibility(View.VISIBLE);
+                    ProgressBar pb = findViewById(R.id.progressBar_routine_esp);
+                    ExercisesRoutineModel er = (ExercisesRoutineModel) adapterView.getAdapter().getItem(i);
+
+                    DialogFragment newDialog = new DeleteItemDialogFragment(message,title,getApplicationContext(),lv,pb,er,i);
+                    newDialog.show(getSupportFragmentManager(),getString(R.string.tag_dialog_delete_er));
+
                 }
 
             }
@@ -221,9 +224,11 @@ public class RoutineEspecific extends AppCompatActivity {
     }
 
     public void deleteRoutine(View view) {
-        WorkouticDBHelper helper = new WorkouticDBHelper(this,DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
-        helper.deleteRoutine(routine);
-        goBack(null);
+        String title = "Estás seguro de que quieres eliminar la rutina";
+        String message = "Perderás todas las especificaciones introducidas para " + routine.getName();
+
+        DialogFragment newDialog = new DeleteRoutineDialogFragment(message,title,getApplicationContext(),routine);
+        newDialog.show(getSupportFragmentManager(),getString(R.string.tag_delete_routine));
     }
 
     public void getExercisesMonday(View view) {
@@ -357,7 +362,7 @@ public class RoutineEspecific extends AppCompatActivity {
         LinearLayout.LayoutParams p = (LinearLayout.LayoutParams) ly_data.getLayoutParams();
         if(mode.equals(MODE_MENU)){
             menu.setVisibility(View.VISIBLE);
-            p.setMargins(0,-400,0,0);
+            p.setMargins(0,-410,0,0);
         }else{
             menu.setVisibility(View.GONE);
             p.setMargins(0,0,0,0);
@@ -399,5 +404,7 @@ public class RoutineEspecific extends AppCompatActivity {
         }
         return res;
     }
+
+
 
 }

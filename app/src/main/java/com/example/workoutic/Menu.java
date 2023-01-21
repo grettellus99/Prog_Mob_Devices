@@ -187,19 +187,36 @@ public class Menu extends AppCompatActivity {
                 break;
             case "Login":
                 Intent intLog = new Intent(getApplicationContext(), LoginActivity.class);
+                String c = getIntent().getStringExtra("caller2");
+                intLog.putExtra("caller",c);
+                if(c != null && c.equals("Message")){
+                    intLog.putExtra("userid",getIntent().getStringExtra("userid"));
+                    intLog.putExtra("caller2",getIntent().getStringExtra("caller3"));
+                }
                 startActivity(intLog);
                 break;
             case "Register":
                 Intent intReg = new Intent(getApplicationContext(), RegisterActivity.class);
                 intReg.putExtra("caller",getIntent().getStringExtra("caller2"));
+                intReg.putExtra("caller3",getIntent().getStringExtra("caller3"));
+                intReg.putExtra("userid",getIntent().getStringExtra("userid"));
                 startActivity(intReg);
                 break;
+            case "Chat":
+                Intent intChat = new Intent(getApplicationContext(), LoginActivity.class);
+                intChat.putExtra("caller","Chat");
+                startActivity(intChat);
+                break;
             case "User":
-                Intent intUser = new Intent(getApplicationContext(), UserActivity.class);
-                startActivity(intUser);
+                Intent intentUser = new Intent(getApplicationContext(), LoginActivity.class);
+                intentUser.putExtra("caller","User");
+                startActivity(intentUser);
                 break;
             case "Message":
-                Intent intMessage = new Intent(getApplicationContext(), MessageActivity.class);
+                Intent intMessage = new Intent(getApplicationContext(), LoginActivity.class);
+                intMessage.putExtra("caller","Message");
+                intMessage.putExtra("userid",getIntent().getStringExtra("userid"));
+                intMessage.putExtra("caller2",getIntent().getStringExtra("caller2"));
                 startActivity(intMessage);
                 break;
 
