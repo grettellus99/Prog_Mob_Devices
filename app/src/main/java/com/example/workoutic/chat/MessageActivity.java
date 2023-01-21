@@ -280,6 +280,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 if (notify) {
+                    assert user != null;
                     sendNotification(receiverID, user.getUsername(), msg);
                 }
                 notify = false;
@@ -300,17 +301,15 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(firebaseUser.getUid(), R.drawable.ic_user_account_45, username+": "+message, "New Message",
+                    Data data = new Data(firebaseUser.getUid(), R.drawable.ic_user_account_45, username.toUpperCase()+"\n\t"+message, "¡Has recibido un nuevo mensaje!",
                             userid);
-
                     Sender sender = new Sender(data, token.getToken());
-
-
                     apiService.sendNotification(sender)
                             .enqueue(new Callback<WKResponse>() {
                                 @Override
                                 public void onResponse(Call<WKResponse> call, Response<WKResponse> response) {
                                     if (response.code() == 200){
+                                        assert response.body() != null;
                                         if (response.body().success != 1){
                                             Toast.makeText(MessageActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                                         }
@@ -319,7 +318,7 @@ public class MessageActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<WKResponse> call, Throwable t) {
-
+                                    Toast.makeText(MessageActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }

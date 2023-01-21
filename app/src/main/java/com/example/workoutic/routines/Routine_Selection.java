@@ -64,7 +64,9 @@ public class Routine_Selection extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String s) {
-                ((RoutinesAdapter)lv.getAdapter()).getFilter().filter(s);
+                if((lv.getAdapter()).getCount() > 0){
+                    ((RoutinesAdapter)lv.getAdapter()).getFilter().filter(s);
+                }
                 return true;
             }
         });

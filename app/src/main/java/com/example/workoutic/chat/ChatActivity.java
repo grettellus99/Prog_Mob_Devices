@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.workoutic.MainActivity;
@@ -16,6 +17,8 @@ import com.example.workoutic.adapters.UserAdapter;
 import com.example.workoutic.models.Chatlist;
 import com.example.workoutic.models.User;
 import com.example.workoutic.notification.Token;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -84,7 +87,16 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-        updateToken(FirebaseMessaging.getInstance().getToken().toString());
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(!task.isSuccessful()){
+                    Log.w("TOKEN", "Fetching FCM registration token failed", task.getException());
+                }
+                String token = task.getResult();
+                updateToken(token);
+            }
+        });
         floatingActionButton = findViewById(R.id.fab_add_user);
         goUser();
 

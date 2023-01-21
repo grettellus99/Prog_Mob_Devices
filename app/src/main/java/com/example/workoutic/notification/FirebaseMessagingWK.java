@@ -9,11 +9,14 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.workoutic.chat.MessageActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -27,15 +30,20 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        String refreshToken = FirebaseMessaging.getInstance().getToken().toString();
-        if (refreshToken != null){
-            updateToken(refreshToken);
-        }
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(!task.isSuccessful()){
+                    Log.w("TOKEN", "Fetching FCM registration token failed", task.getException());
+                }
+                String token = task.getResult();
+                updateToken(token);
+            }
+        });
     }
     private void updateToken(String refreshToken) {
-        if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null){
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
             Token token = new Token(refreshToken);
             reference.child(firebaseUser.getUid()).setValue(token);
@@ -58,7 +66,6 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
             }
             else{
                 sendNotification(message);
-
             }
         }
     }
@@ -75,7 +82,7 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
         bundle.putString("userid", user);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_IMMUTABLE);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -85,7 +92,6 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
         if (j > 0){
             i = j;
         }
-
         not.getManager().notify(i, builder.build());
     }
 

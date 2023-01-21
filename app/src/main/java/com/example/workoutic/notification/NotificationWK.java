@@ -10,6 +10,8 @@ import android.content.ContextWrapper;
 import android.net.Uri;
 import android.os.Build;
 
+import androidx.core.app.NotificationCompat;
+
 
 public class NotificationWK extends ContextWrapper {
     private static final String CHANNEL_ID = "com.example.workoutic";
