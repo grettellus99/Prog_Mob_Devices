@@ -84,13 +84,7 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
         updateToken(FirebaseMessaging.getInstance().getToken().toString());
-
-
         floatingActionButton = findViewById(R.id.fab_add_user);
         goUser();
 

@@ -176,4 +176,7 @@
     <string name="buscar_rutina">Buscar rutina</string>
     <string name="no_se_encontraron_ejercicios">No se encontraron ejercicios</string>
     <string name="new_acount">Crear un cuenta</string>
+    <string name="msg_err_register">No puedes registrarte con ese nombre de usuario o email</string>
+    <string name="user_added">🥳🥳🥳 USUARIO AÑADIDO 🥳🥳🥳</string>
+    <string name="logout">Log out</string>
 </resources>

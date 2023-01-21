@@ -95,6 +95,15 @@
                 android:onClick="goLogin"
                 android:text="@string/log_in_sing_up" />
 
+            <TextView
+                android:id="@+id/txt_menu_log_out"
+                style="@style/text_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:onClick="goLogOut"
+                android:text="@string/logout"/>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="48dp" />
@@ -115,7 +124,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/round_exercises_blue"
                 android:orientation="vertical">
 
@@ -154,6 +162,7 @@
                         android:id="@+id/txt_menu_chat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
                         android:fontFamily="@font/play"
                         android:minHeight="48dp"
                         android:onClick="goChat"
@@ -188,16 +197,4 @@
             app:srcCompat="@drawable/brand" />
 
     </FrameLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!-- <Toolbar
-            android:id="@+id/tb_menuSb_footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/footer_2"
-            android:foregroundGravity="center|fill_vertical"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />-->

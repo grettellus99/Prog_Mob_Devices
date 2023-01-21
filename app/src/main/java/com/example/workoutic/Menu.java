@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.workoutic.chat.ChatActivity;
 import com.example.workoutic.chat.MessageActivity;
 import com.example.workoutic.chat.UserActivity;
 import com.example.workoutic.database.WorkouticDBHelper;
@@ -27,6 +31,8 @@ import com.example.workoutic.routines.Routine_Selection;
 import com.example.workoutic.signin_signup.LoginActivity;
 import com.example.workoutic.signin_signup.RegisterActivity;
 import com.example.workoutic.util.DatabasesUtil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +40,15 @@ import java.util.List;
 public class Menu extends AppCompatActivity {
     private String caller;
     List<String> casesDeleteBD;
+
+    TextView login;
+    TextView logout;
+
+    // Logged ?
+    FirebaseAuth auth;
+    FirebaseUser currentUser;
+    FirebaseAuth.AuthStateListener authStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +61,34 @@ public class Menu extends AppCompatActivity {
         casesDeleteBD.add("FitnessLevel");
         casesDeleteBD.add("RoutineSelExercises");
         casesDeleteBD.add("ExercisesManage");
+
+        login = findViewById(R.id.txt_menu_profile);
+        logout = findViewById(R.id.txt_menu_log_out);
+
+        auth = FirebaseAuth.getInstance();
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if(currentUser != null){
+                   logout.setVisibility(View.VISIBLE);
+                    login.setVisibility(View.GONE);
+                }else{
+                    login.setVisibility(View.VISIBLE);
+                    logout.setVisibility(View.GONE);
+                }
+            }
+        };
+
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = auth.getCurrentUser();
+        auth.addAuthStateListener(authStateListener);
+    }
+
     public void goBack(View view) {
         Intent i;
         switch (caller){
@@ -211,8 +253,8 @@ public class Menu extends AppCompatActivity {
             dbExtra.deleteDB(); // borrar la BD extra
             removeNumElmSP();
         }
-
-        //////////////////// TODO /////////////////////
+        Intent intChat= new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intChat);
     }
 
     // Shared preferences de num de elementos
@@ -228,6 +270,12 @@ public class Menu extends AppCompatActivity {
             SharedPreferences.Editor editor = sp.edit();
             editor.remove("numElem");
             editor.apply();
+        }
+    }
+
+    public void goLogOut(View view) {
+        if(currentUser != null && auth != null){
+            auth.signOut();
         }
     }
 }

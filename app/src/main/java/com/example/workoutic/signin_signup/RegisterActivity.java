@@ -15,32 +15,31 @@ import android.widget.Toast;
 import com.example.workoutic.MainActivity;
 import com.example.workoutic.Menu;
 import com.example.workoutic.R;
+import com.example.workoutic.chat.ChatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText username, email, password, passwordValidation;
     Button btn_register;
+    ProgressBar pb;
 
     FirebaseAuth auth;
     DatabaseReference reference;
-
-    FirebaseAuth.AuthStateListener authStateListener;
     FirebaseUser currentUser;
-
-//    //Firestore connection
-//    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    ProgressBar pb;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
+
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,17 +65,19 @@ public class RegisterActivity extends AppCompatActivity {
                 String txt_valid_password = passwordValidation.getText().toString();
 
                 if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password) || TextUtils.isEmpty(txt_valid_password) ){
-                    Toast.makeText(RegisterActivity.this, R.string.msg_regist_void, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.msg_regist_void, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
                 } else if (txt_password.length() < 6 ){
-                    Toast.makeText(RegisterActivity.this, R.string.msg_six_caracters, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.msg_six_caracters, Toast.LENGTH_LONG).show();
                 }else if(!txt_password.equals(txt_valid_password)){
-                    Toast.makeText(RegisterActivity.this, R.string.msg_dif_password, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.msg_dif_password, Toast.LENGTH_LONG).show();
                 }
                 else {
+                    pb.setVisibility(View.VISIBLE);
+                    btn_register.setVisibility(View.GONE);
                     register(txt_username, txt_email, txt_password);
                 }
             }
@@ -84,46 +86,59 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register(String username, String email, String password){
 
-        System.out.println("hoola1");
-
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    System.out.println("hoola2");
-                    FirebaseUser firebaseUser = auth.getCurrentUser();
-                    assert firebaseUser != null;
-                    String userid = firebaseUser.getUid();
+                    currentUser = auth.getCurrentUser();
+                    assert currentUser != null;
+                    String userid = currentUser.getUid();
 
                     reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                    HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put("id", userid);
-                    hashMap.put("username", username);
-                    hashMap.put("usericon", "default");
-                    hashMap.put("email", email);
+                    Map<String, String> userObj = new HashMap<>();
+                    userObj.put("id", userid);
+                    userObj.put("username", username);
+                    userObj.put("usericon", "default");
+                    userObj.put("email", email);
 
-                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            System.out.println("hoola3");
-                            if (task.isSuccessful()){
-                                //Intent intent = new Intent(RegisterActivity.this, UserActivity.class);
-                                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                //startActivity(intent);
-                                //finish();
-                                Toast.makeText(RegisterActivity.this, "USUARIO AÑADIDO CRUCK", Toast.LENGTH_SHORT).show();
 
-                            }
-                        }
-                    });
+                    reference.setValue(userObj)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    pb.setVisibility(View.INVISIBLE);
+                                    // Ir a chat
+                                    Toast.makeText(RegisterActivity.this, R.string.user_added, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(RegisterActivity.this, ChatActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(RegisterActivity.this, R.string.msg_err_register, Toast.LENGTH_LONG).show();
+                                    btn_register.setVisibility(View.VISIBLE);
+                                    pb.setVisibility(View.GONE);
+                                }
+                            });
                 } else {
-                    System.out.println("hoola2");
-                    Toast.makeText(RegisterActivity.this, "You can't register woth this email or password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.msg_err_register, Toast.LENGTH_LONG).show();
+                    btn_register.setVisibility(View.VISIBLE);
+                    pb.setVisibility(View.GONE);
                 }
             }
-        });
-
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RegisterActivity.this, R.string.msg_err_register, Toast.LENGTH_LONG).show();
+                        btn_register.setVisibility(View.VISIBLE);
+                        pb.setVisibility(View.GONE);
+                    }
+                });
     }
 
     public void goMain(View view) {

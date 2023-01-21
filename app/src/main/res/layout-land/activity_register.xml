@@ -164,6 +164,18 @@
                         android:hint="@string/repetir_contrase_a"
                         android:inputType="textPassword" />
 
+
+                    <ProgressBar
+                        android:id="@+id/pb_create_acount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/brand_c2"
+                        android:indeterminateTintMode="src_atop"
+                        android:padding="30dp"
+                        android:visibility="gone" />
+
                     <Button
                         android:id="@+id/btn_registerRe"
                         android:layout_width="match_parent"
