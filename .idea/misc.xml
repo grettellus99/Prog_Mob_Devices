@@ -69,6 +69,7 @@
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/drawable/round_user_search.xml" value="0.183" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout-land/activity_login.xml" value="0.21711711711711712" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout-land/activity_register.xml" value="0.3203125" />
+        <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout-land/activity_routine_especific.xml" value="0.47477477477477475" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_chat.xml" value="0.4" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_exercises.xml" value="0.22644927536231885" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_exercises_grid.xml" value="0.24166666666666667" />
@@ -77,6 +78,7 @@
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_message.xml" value="0.264" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_register.xml" value="0.31640625" />
+        <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_routine_especific.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_routine_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_routine_selection.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/activity_sel_exer_especific.xml" value="0.27447916666666666" />
@@ -90,6 +92,7 @@
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/message_send_item.xml" value="0.4" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/layout/user_item.xml" value="0.2510548523206751" />
         <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/mipmap-anydpi-v26/ic_brand.xml" value="0.1515" />
+        <entry key="..\:/Users/hiimk/Documents/5_Semestre/ProgrammingForMobileDevices/Prog_Mob_Devices/app/src/main/res/xml/file_paths.xml" value="0.12395833333333334" />
       </map>
     </option>
   </component>

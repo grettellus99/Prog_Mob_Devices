@@ -2,12 +2,18 @@ package com.example.workoutic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.workoutic.activity.UserActivity;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +29,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createNotificationChannel();
+
+        Calendar calendar = Calendar.getInstance();
+
+        Intent intent = new Intent(MainActivity.this, TipNotification.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300, pendingIntent);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, pendingIntent);
+
+
+    }
+
+    private void setAlarm(){
 
     }
 
@@ -50,5 +74,18 @@ public class MainActivity extends AppCompatActivity {
     public void goChat(View view) {
         Intent intRoutines= new Intent(getApplicationContext(),LoginActivity.class);
         startActivity(intRoutines);
+    }
+
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "TipNotificationChannel";
+            String description = "Notification for a tip";
+            NotificationChannel notificationChannel = new NotificationChannel("tipNotification", name, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 }

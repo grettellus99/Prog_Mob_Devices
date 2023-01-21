@@ -3,13 +3,20 @@ package com.example.workoutic.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,6 +49,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,7 +85,19 @@ public class MessageActivity extends AppCompatActivity {
 
     private String userid;
 
-    private static final int PHOTO_SEND = 1;
+    private static final int GALERY_PHOTO_SEND = 1;
+    private static final int CAM_PHOTO_SEND = 2;
+
+    private final String ROOT = "ImagenesWorkoutic/";
+    private final String IMAGE_ROUTE = ROOT + "CameraImages";
+
+    private String currentPhotoPath;
+    private Uri photoURI;
+
+    private String pathImg;
+    private File fileImg;
+    private Bitmap bitmapImg;
+
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
 
@@ -137,10 +158,9 @@ public class MessageActivity extends AppCompatActivity {
         cam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                startActivityForResult(Intent.createChooser(intent,"Seleccione una imagen"),PHOTO_SEND);
+
+                selectOption();
+
 
             }
         });
@@ -183,21 +203,100 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("hola");
-        if(requestCode == PHOTO_SEND && resultCode == RESULT_OK){
-            System.out.println("hola2");
+
+
+
+        if(requestCode == GALERY_PHOTO_SEND && resultCode == RESULT_OK){
+
             Uri uri = data.getData();
             storageReference = firebaseStorage.getReference("chat_images");
             final StorageReference imageID = storageReference.child(uri.getLastPathSegment());
+
             imageID.putFile(uri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    System.out.println("hola3");
 
                     sendImage(firebaseUser.getUid(), userid, uri.toString());
                 }
             });
         }
+        else if(requestCode == CAM_PHOTO_SEND && resultCode == RESULT_OK){
+            Toast.makeText(MessageActivity.this, "HALLO!", Toast.LENGTH_SHORT).show();
+            storageReference = firebaseStorage.getReference("chat_images");
+            final StorageReference imageID = storageReference.child(photoURI.getLastPathSegment());
+            imageID.putFile(photoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    sendImage(firebaseUser.getUid(), userid, photoURI.toString());
+                }
+            });
+        }
+
+
+    }
+
+    public void selectOption(){
+        final CharSequence[] options = {"Hacer foto", "Seleccionar imagen", "Cancelar"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MessageActivity.this);
+        builder.setTitle("Elija una opción");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(options[i].equals("Hacer foto")){
+                    openCam();
+                }
+                else if(options[i].equals("Seleccionar imagen")){
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                    startActivityForResult(Intent.createChooser(intent,"Seleccione una imagen"),GALERY_PHOTO_SEND);
+
+                }
+                else{
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+        builder.show();
+    }
+
+    private void openCam(){
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, CAM_PHOTO_SEND);
+            }
+        }
+
+    }
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     public void goBack(View view) {
@@ -217,6 +316,7 @@ public class MessageActivity extends AppCompatActivity {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("senderID", senderID);
         map.put("receiverID", receiverID);
+
         map.put("message", "");
         map.put("imageURL", imageURL);
         map.put("time", new SimpleDateFormat("dd/MM/yyyy - HH:mm a", Locale.getDefault()).format(new Date()));
@@ -343,19 +443,21 @@ public class MessageActivity extends AppCompatActivity {
                 Iterator<DataSnapshot> it = children.iterator();
                 DataSnapshot dataSnapshot;
                 Message m;
+
                 while(it.hasNext()){
                     dataSnapshot = it.next();
                     m = dataSnapshot.getValue(Message.class);
+                    m.setID(dataSnapshot.getKey());
                     if((m.getReceiverID().equals(id1) && m.getSenderID().equals(id2)) || (m.getReceiverID().equals(id2) && m.getSenderID().equals(id1))){
                         listMessage.add(m);
                     }
                 }
-                messageAdapter = new MessageAdapter(getApplicationContext(), listMessage, usericon);
+                messageAdapter = new MessageAdapter(MessageActivity.this, listMessage, usericon);
                 recyclerView.setAdapter(messageAdapter);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error){
 
             }
         });

@@ -17,6 +17,7 @@ public class MessageReceiveItem extends RecyclerView.ViewHolder{
     private TextView time1;
     private TextView time2;
 
+    private View fl;
     public ImageView imgMessage;
     public MessageReceiveItem(View itemView) {
         super(itemView);
@@ -26,6 +27,7 @@ public class MessageReceiveItem extends RecyclerView.ViewHolder{
         time2 = itemView.findViewById(R.id.txt_imgmessage_receive_time);
 
         imgMessage = itemView.findViewById(R.id.img_message_receive_item);
+        fl = itemView.findViewById(R.id.fl_message_receive_item);
     }
 
     public CircleImageView getCusericon() {
@@ -68,5 +70,13 @@ public class MessageReceiveItem extends RecyclerView.ViewHolder{
 
     public void setImgMessage(ImageView imgMessage) {
         this.imgMessage = imgMessage;
+    }
+
+    public View getFl() {
+        return fl;
+    }
+
+    public void setFl(View fl) {
+        this.fl = fl;
     }
 }

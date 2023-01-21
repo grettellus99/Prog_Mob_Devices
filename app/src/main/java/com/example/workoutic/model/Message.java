@@ -1,5 +1,7 @@
 package com.example.workoutic.model;
 
+import android.net.Uri;
+
 public class Message {
     private String senderID;
     private String receiverID;
@@ -7,12 +9,16 @@ public class Message {
     private String imageURL;
     private String time;
 
-    public Message(String senderID, String receiverID, String message, String imageURL, String time) {
+    private String ID;
+
+    public Message(String senderID, String receiverID, String message, String imageURL, String time, String ID) {
         this.senderID = senderID;
         this.receiverID = receiverID;
         this.message = message;
         this.imageURL = imageURL;
         this.time = time;
+        this.ID = ID;
+
     }
     public Message(){
 
@@ -57,4 +63,13 @@ public class Message {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }
+

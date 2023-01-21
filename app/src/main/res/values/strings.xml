@@ -174,12 +174,7 @@
     <string name="msg_six_caracters">La contraseña debe tener al menos 6 caracteres</string>
     <string name="msg_dif_password">Las contraseñas introducidas son diferentes</string>
     <string name="buscar_rutina">Buscar rutina</string>
-<<<<<<< HEAD
 
-=======
     <string name="no_se_encontraron_ejercicios">No se encontraron ejercicios</string>
-    =======
->>>>>>> b7ad63619dfda392576f5b453fa023c57c5fba76
->>>>>>> 3c5bab6bdc15194f6624338b8ccff96fc9a61c30
->>>>>>> 05771b885371bdf0eac15514c4aaacdab81398a4
+
 </resources>
