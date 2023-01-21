@@ -204,8 +204,6 @@ public class MessageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-
         if(requestCode == GALERY_PHOTO_SEND && resultCode == RESULT_OK){
 
             Uri uri = data.getData();
@@ -227,7 +225,6 @@ public class MessageActivity extends AppCompatActivity {
             imageID.putFile(photoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                     sendImage(firebaseUser.getUid(), userid, photoURI.toString());
                 }
             });
@@ -316,7 +313,6 @@ public class MessageActivity extends AppCompatActivity {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("senderID", senderID);
         map.put("receiverID", receiverID);
-
         map.put("message", "");
         map.put("imageURL", imageURL);
         map.put("time", new SimpleDateFormat("dd/MM/yyyy - HH:mm a", Locale.getDefault()).format(new Date()));
@@ -337,6 +333,7 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+
     }
     public void sendMessage(String senderID, String receiverID, String message){
         DatabaseReference databaseReference = firebaseDB.getReference();
@@ -401,7 +398,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(firebaseUser.getUid(), R.drawable.ic_user_account_45, username.toUpperCase()+"\n\t"+message, "¡Has recibido un nuevo mensaje!",
+                    Data data = new Data(firebaseUser.getUid(), R.drawable.ic_workoutic_notis, message, username,
                             userid);
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)

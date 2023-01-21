@@ -20,6 +20,11 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="notifications">
+        <item name="backgroundColor">@color/secondary_main</item>
+        <item name="fontFamily">@font/play_regular</item>
+    </style>
+
     <style name="categorias">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

@@ -5,15 +5,19 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.example.workoutic.R;
 import com.example.workoutic.chat.MessageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Calendar;
 
 
 public class FirebaseMessagingWK extends FirebaseMessagingService {
@@ -75,6 +81,7 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
 
+
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]", ""));
         Intent intent = new Intent(this, MessageActivity.class);
@@ -84,10 +91,8 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
         NotificationWK not = new NotificationWK(this);
-        Notification.Builder builder = not.getNotificationWK(title, body, pendingIntent, defaultSound, icon);
+        Notification.Builder builder = not.getNotificationWK(title, body, pendingIntent, icon);
         int i = 0;
         if (j > 0){
             i = j;
@@ -109,23 +114,42 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
         bundle.putString("userid", user);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_IMMUTABLE);
 
+        RemoteViews  collapseView;
+        RemoteViews expandedView;
+            collapseView = new RemoteViews(getPackageName(), R.layout.notification_collapsed);
+            expandedView = new RemoteViews(getPackageName(), R.layout.notification_expanded);
+            collapseView.setTextViewText(R.id.text_view_collapsed_msg,body);
+            expandedView.setTextViewText(R.id.text_view_expanded_msg,body);
+
+        Bitmap iconLarge = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.ic_workoutic_round);
+        
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setContentIntent(pendingIntent)
                 .setSmallIcon(Integer.parseInt(icon))
-                .setContentTitle(title)
-                .setContentText(body)
-                .setAutoCancel(true)
-                .setSound(defaultSound)
-                .setContentIntent(pendingIntent);
-        NotificationManager noti = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                .setLargeIcon(iconLarge)
+                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setWhen(Calendar.getInstance().getTimeInMillis())
+                .setShowWhen(true)
+                .setCustomContentView(collapseView)
+                .setCustomBigContentView(expandedView)
+                .setDefaults(Notification.DEFAULT_SOUND |
+                        Notification.DEFAULT_VIBRATE)
+                .setSound(
+                        RingtoneManager.getDefaultUri(
+                                RingtoneManager.TYPE_NOTIFICATION))
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setLights(getResources().getColor(R.color.brand_c2), 0, 1)
+                .setAutoCancel(true);
 
+        NotificationManager noti = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         int i = 0;
         if (j > 0){
             i = j;
         }
-
         noti.notify(i, builder.build());
     }
 

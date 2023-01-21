@@ -180,4 +180,5 @@
     <string name="tag_delete_routine">DeleteRoutine</string>
     <string name="no_routines">No se encontraron rutinas</string>
     <string name="nuevo_mensaje">¡Nuevo Mensaje!</string>
+    <string name="icon">Icon de usuario</string>
 </resources>

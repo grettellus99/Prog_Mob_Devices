@@ -64,6 +64,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/round_outline"
@@ -106,8 +107,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:orientation="horizontal"
-                android:visibility="visible"
-                tools:visibility="visible">
+                android:visibility="visible">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -142,23 +142,25 @@
                     style="@style/acept_button"
                     android:layout_gravity="center_vertical"
                     android:backgroundTint="@color/acept"
+                    android:contentDescription="@string/validar"
+                    android:drawablePadding="0dp"
+                    android:minWidth="50dp"
                     android:onClick="validateName"
-                    android:paddingStart="20dp"
-                    android:text="@string/validar"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="12dp"
                     android:textColor="@color/font_grid"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ly_routine_name_display"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:orientation="horizontal"
-                android:visibility="gone"
-                tools:visibility="gone">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txt_new_routine_routine_name_display"
@@ -180,14 +182,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
-                    android:layout_marginStart="20dp"
                     android:backgroundTint="@color/secondary_MenuBar"
+                    android:contentDescription="@string/editar"
                     android:drawableEnd="@drawable/ic_baseline_edit"
-                    android:drawablePadding="5dp"
                     android:elevation="3dp"
+                    android:minWidth="50dp"
                     android:onClick="editName"
-                    android:paddingStart="20dp"
-                    android:text="@string/editar"
+                    android:paddingStart="0dp"
                     android:textColor="@color/font_grid"
                     android:textSize="18sp" />
 
