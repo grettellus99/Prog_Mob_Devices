@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_MenuBar"
-    tools:context=".activity.ChatActivity">
+    tools:context=".chat.ChatActivity">
 
     <LinearLayout
         android:id="@+id/tb_chat_menu"

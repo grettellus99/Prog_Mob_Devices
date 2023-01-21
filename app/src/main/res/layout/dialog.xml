@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_shape"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/dialog_title_shape"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
+        android:src="@drawable/brand_ws" />
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/play_bold"
+        android:padding="20dp"
+        android:text="@string/todo"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/dialog_specific_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/play_regular"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp"
+        android:text="@string/todo"
+        android:textColor="@color/secondary_MenuBar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <LinearLayout
+            android:id="@+id/btn_option_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/screen_background_light_transparent"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/btn_option_negative_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/play_bold"
+                android:text="@string/option_no"
+                android:textColor="@color/brand_c2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_option_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="@android:drawable/screen_background_light_transparent">
+
+            <TextView
+                android:id="@+id/btn_option_positive_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/play_bold"
+                android:padding="15dp"
+                android:text="@string/option_yes"
+                android:textColor="@color/secondary_MenuBar" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

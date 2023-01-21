@@ -1,17 +1,38 @@
 package com.example.workoutic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.workoutic.activity.MessageActivity;
-import com.example.workoutic.activity.UserActivity;
-import com.example.workoutic.data.WorkouticDBHelper;
+import com.example.workoutic.chat.ChatActivity;
+import com.example.workoutic.chat.MessageActivity;
+import com.example.workoutic.chat.UserActivity;
+import com.example.workoutic.database.WorkouticDBHelper;
+import com.example.workoutic.exercises.Exercises;
+import com.example.workoutic.exercises.SelExerEspecific;
+import com.example.workoutic.exercises.SelectionExercises;
 import com.example.workoutic.models.ExercisesModel;
 import com.example.workoutic.models.RoutineModel;
+import com.example.workoutic.routines.CategorySelection;
+import com.example.workoutic.routines.ExercisesManage;
+import com.example.workoutic.routines.FitnessLevelSelection;
+import com.example.workoutic.routines.NewRoutine;
+import com.example.workoutic.routines.RoutineEspecific;
+import com.example.workoutic.routines.RoutineSelExercises;
+import com.example.workoutic.routines.Routine_Main;
+import com.example.workoutic.routines.Routine_Selection;
+import com.example.workoutic.signin_signup.LoginActivity;
+import com.example.workoutic.signin_signup.RegisterActivity;
 import com.example.workoutic.util.DatabasesUtil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +40,15 @@ import java.util.List;
 public class Menu extends AppCompatActivity {
     private String caller;
     List<String> casesDeleteBD;
+
+    TextView login;
+    TextView logout;
+
+    // Logged ?
+    FirebaseAuth auth;
+    FirebaseUser currentUser;
+    FirebaseAuth.AuthStateListener authStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +61,34 @@ public class Menu extends AppCompatActivity {
         casesDeleteBD.add("FitnessLevel");
         casesDeleteBD.add("RoutineSelExercises");
         casesDeleteBD.add("ExercisesManage");
+
+        login = findViewById(R.id.txt_menu_profile);
+        logout = findViewById(R.id.txt_menu_log_out);
+
+        auth = FirebaseAuth.getInstance();
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if(currentUser != null){
+                   logout.setVisibility(View.VISIBLE);
+                    login.setVisibility(View.GONE);
+                }else{
+                    login.setVisibility(View.VISIBLE);
+                    logout.setVisibility(View.GONE);
+                }
+            }
+        };
+
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = auth.getCurrentUser();
+        auth.addAuthStateListener(authStateListener);
+    }
+
     public void goBack(View view) {
         Intent i;
         switch (caller){
@@ -40,17 +97,17 @@ public class Menu extends AppCompatActivity {
                 startActivity(intMain);
                 break;
             case "Exercises":
-                Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
+                Intent intExercises = new Intent(getApplicationContext(), Exercises.class);
                 startActivity(intExercises);
                 break;
             case "SelectionExercises":
-                Intent intSelExercises = new Intent(getApplicationContext(),SelectionExercises.class);
+                Intent intSelExercises = new Intent(getApplicationContext(), SelectionExercises.class);
                 i = getIntent();
                 intSelExercises.putExtra("caller",i.getStringExtra("category"));
                 startActivity(intSelExercises);
                 break;
             case "EspecificExercises":
-                Intent intExercEspec = new Intent(getApplicationContext(),SelExerEspecific.class);
+                Intent intExercEspec = new Intent(getApplicationContext(), SelExerEspecific.class);
                 i = getIntent();
                 intExercEspec.putExtra("exercise",(ExercisesModel) i.getSerializableExtra("exercise"));
                 String fit = i.getStringExtra("fitnessLevel");
@@ -63,7 +120,7 @@ public class Menu extends AppCompatActivity {
                     intExercEspec.putExtra("category",i.getStringExtra("category"));
                 }else if(rout != null){
                     intExercEspec.putExtra("routine",rout);
-                    if(i.getStringExtra("callerActivity").equals("SelExerEspecific")){
+                    if(i.getStringExtra("callerActivity")!= null && i.getStringExtra("callerActivity").equals("SelExerEspecific")){
                         intExercEspec.putExtra("callerActivity",i.getStringExtra("SelExerEspecific"));
                         intExercEspec.putExtra("caller",i.getStringExtra("caller2"));
                         intExercEspec.putExtra("exercise",i.getSerializableExtra("exercise"));
@@ -77,11 +134,11 @@ public class Menu extends AppCompatActivity {
                 startActivity(intExercEspec);
                 break;
             case "RoutineMain":
-                Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
+                Intent intRoutine = new Intent(getApplicationContext(), Routine_Main.class);
                 startActivity(intRoutine);
                 break;
             case "RoutineSelection":
-                Intent intRoutSel = new Intent(getApplicationContext(),Routine_Selection.class);
+                Intent intRoutSel = new Intent(getApplicationContext(), Routine_Selection.class);
                 Intent in = getIntent();
                 if(in.getStringExtra("callerActivity") != null && in.getStringExtra("callerActivity").equals("SelExerEspecific")){
                     intRoutSel.putExtra("exerciseRoutine",in.getSerializableExtra("exerciseRoutine"));
@@ -92,36 +149,36 @@ public class Menu extends AppCompatActivity {
                 startActivity(intRoutSel);
                 break;
             case "RoutineEspecific":
-                Intent routEspe = new Intent(getApplicationContext(),RoutineEspecific.class);
+                Intent routEspe = new Intent(getApplicationContext(), RoutineEspecific.class);
                 routEspe.putExtra("routine",getIntent().getSerializableExtra("routine"));
                 startActivity(routEspe);
                 break;
             case "New_Routine":
-                Intent intNewRoutine = new Intent(getApplicationContext(),NewRoutine.class);
+                Intent intNewRoutine = new Intent(getApplicationContext(), NewRoutine.class);
                 startActivity(intNewRoutine);
                 break;
             case "CategorySelection":
-                Intent intCategory = new Intent(getApplicationContext(),CategorySelection.class);
+                Intent intCategory = new Intent(getApplicationContext(), CategorySelection.class);
                 intCategory.putExtra("day",getIntent().getStringExtra("day"));
                 startActivity(intCategory);
                 break;
             case "FitnessLevel":
-                Intent intFit = new Intent(getApplicationContext(),FitnessLevelSelection.class);
+                Intent intFit = new Intent(getApplicationContext(), FitnessLevelSelection.class);
                 i = getIntent();
                 intFit.putExtra("category",i.getStringExtra("category"));
                 intFit.putExtra("day",i.getStringExtra("day"));
                 startActivity(intFit);
                 break;
             case "RoutineSelExercises":
-                Intent intRoutSelExer = new Intent(getApplicationContext(),RoutineSelExercises.class);
+                Intent intRoutSelExer = new Intent(getApplicationContext(), RoutineSelExercises.class);
                 i = getIntent();
                 intRoutSelExer.putExtra("category",i.getStringExtra("category"));
                 intRoutSelExer.putExtra("day",i.getStringExtra("day"));
-                i.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
+                intRoutSelExer.putExtra("fitnessLevel",i.getStringExtra("fitnessLevel"));
                 startActivity(intRoutSelExer);
                 break;
             case "ExercisesManage":
-                Intent intExercisManage = new Intent(getApplicationContext(),ExercisesManage.class);
+                Intent intExercisManage = new Intent(getApplicationContext(), ExercisesManage.class);
                 intExercisManage.putExtra("exerciseRoutine",getIntent().getSerializableExtra("exerciseRoutine"));
                 intExercisManage.putExtra("exercise",getIntent().getSerializableExtra("exercise"));
                 intExercisManage.putExtra("category",getIntent().getStringExtra("category"));
@@ -129,19 +186,37 @@ public class Menu extends AppCompatActivity {
                 startActivity(intExercisManage);
                 break;
             case "Login":
-                Intent intLog = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intLog = new Intent(getApplicationContext(), LoginActivity.class);
+                String c = getIntent().getStringExtra("caller2");
+                intLog.putExtra("caller",c);
+                if(c != null && c.equals("Message")){
+                    intLog.putExtra("userid",getIntent().getStringExtra("userid"));
+                    intLog.putExtra("caller2",getIntent().getStringExtra("caller3"));
+                }
                 startActivity(intLog);
                 break;
             case "Register":
-                Intent intReg = new Intent(getApplicationContext(),RegisterActivity.class);
+                Intent intReg = new Intent(getApplicationContext(), RegisterActivity.class);
+                intReg.putExtra("caller",getIntent().getStringExtra("caller2"));
+                intReg.putExtra("caller3",getIntent().getStringExtra("caller3"));
+                intReg.putExtra("userid",getIntent().getStringExtra("userid"));
                 startActivity(intReg);
                 break;
+            case "Chat":
+                Intent intChat = new Intent(getApplicationContext(), LoginActivity.class);
+                intChat.putExtra("caller","Chat");
+                startActivity(intChat);
+                break;
             case "User":
-                Intent intUser = new Intent(getApplicationContext(), UserActivity.class);
-                startActivity(intUser);
+                Intent intentUser = new Intent(getApplicationContext(), LoginActivity.class);
+                intentUser.putExtra("caller","User");
+                startActivity(intentUser);
                 break;
             case "Message":
-                Intent intMessage = new Intent(getApplicationContext(), MessageActivity.class);
+                Intent intMessage = new Intent(getApplicationContext(), LoginActivity.class);
+                intMessage.putExtra("caller","Message");
+                intMessage.putExtra("userid",getIntent().getStringExtra("userid"));
+                intMessage.putExtra("caller2",getIntent().getStringExtra("caller2"));
                 startActivity(intMessage);
                 break;
 
@@ -152,6 +227,8 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
+
         }
         Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
         startActivity(intExercises);
@@ -161,6 +238,7 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
         Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intMain);
@@ -170,6 +248,7 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
         Intent intLog = new Intent(getApplicationContext(),LoginActivity.class);
         startActivity(intLog);
@@ -179,6 +258,7 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
         Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
         startActivity(intRoutine);
@@ -188,8 +268,31 @@ public class Menu extends AppCompatActivity {
         if(casesDeleteBD.contains(caller)){
             WorkouticDBHelper dbExtra = new WorkouticDBHelper(this, DatabasesUtil.NR_DATABASE_NAME,null,DatabasesUtil.NR_DATABASE_VERSION);
             dbExtra.deleteDB(); // borrar la BD extra
+            removeNumElmSP();
         }
+        Intent intChat= new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intChat);
+    }
 
-        //////////////////// TODO /////////////////////
+    // Shared preferences de num de elementos
+    private long getNumElmSP(){
+        // Obtiene la cantidad de elementos
+        SharedPreferences sp = getSharedPreferences(NewRoutine.PREF,Context.MODE_PRIVATE);
+        return sp.getLong("numElem",-1);
+    }
+    private void removeNumElmSP(){
+        // Elimina la cant de elementos
+        if(getNumElmSP() != -1){
+            SharedPreferences sp = getSharedPreferences(NewRoutine.PREF, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.remove("numElem");
+            editor.apply();
+        }
+    }
+
+    public void goLogOut(View view) {
+        if(currentUser != null && auth != null){
+            auth.signOut();
+        }
     }
 }

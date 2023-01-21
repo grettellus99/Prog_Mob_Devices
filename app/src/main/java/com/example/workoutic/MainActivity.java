@@ -11,12 +11,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.workoutic.activity.UserActivity;
+
+//import com.example.workoutic.activity.UserActivity;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+
+import com.example.workoutic.exercises.Exercises;
+import com.example.workoutic.routines.Routine_Main;
+import com.example.workoutic.signin_signup.LoginActivity;
+import com.example.workoutic.signin_signup.RegisterActivity;
 
 
 
@@ -51,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goExercises(View view) {
-        Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
+        Intent intExercises = new Intent(getApplicationContext(), Exercises.class);
         startActivity(intExercises);
     }
 
@@ -67,13 +74,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goRoutines(View view) {
-        Intent intRoutines= new Intent(getApplicationContext(),Routine_Main.class);
+        Intent intRoutines= new Intent(getApplicationContext(), Routine_Main.class);
         startActivity(intRoutines);
     }
 
     public void goChat(View view) {
-        Intent intRoutines= new Intent(getApplicationContext(),LoginActivity.class);
-        startActivity(intRoutines);
+        Intent intChat= new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intChat);
     }
 
     private void createNotificationChannel(){

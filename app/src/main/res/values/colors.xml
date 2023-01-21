@@ -17,11 +17,6 @@
     <color name="brand_c2">#8F1457</color>
     <color name="footer">#E5BEBC</color>
     <color name="footer_2">#F0ECE3</color>
-
-
-
-
-
     <color name="grey">#979797</color>
     <color name="greylight">#D3D3D3</color>
     <color name="rose">#AE3A3A</color>
@@ -29,7 +24,11 @@
     <color name="acept">#129A49</color>
     <color name="edit">#DDFF9100</color>
     <color name="new_button">#FF1D89</color>
+<<<<<<< HEAD
 
     <color name ="hint">#9945526C</color>
 
+=======
+    <color name ="hint">#9945526C</color>
+>>>>>>> 0a2df4512cd724fc4173dc476cac0fbde797d3a3
 </resources>

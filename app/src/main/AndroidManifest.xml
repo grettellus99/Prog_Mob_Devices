@@ -24,54 +24,54 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".RoutineEspecific"
+            android:name=".routines.RoutineEspecific"
             android:exported="false" />
         <activity
-            android:name=".ExercisesManage"
+            android:name=".routines.ExercisesManage"
             android:exported="false" />
         <activity
-            android:name=".RoutineSelExercises"
+            android:name=".routines.RoutineSelExercises"
             android:exported="false" />
         <activity
-            android:name=".CategorySelection"
+            android:name=".routines.CategorySelection"
             android:exported="false" />
         <activity
-            android:name=".FitnessLevelSelection"
+            android:name=".routines.FitnessLevelSelection"
             android:exported="false" />
         <activity
-            android:name=".NewRoutine"
+            android:name=".routines.NewRoutine"
             android:exported="false" />
         <activity
-            android:name=".activity.MessageActivity"
+            android:name=".chat.MessageActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".signin_signup.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".signin_signup.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ChatActivity"
+            android:name=".chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.UserActivity"/>
+            android:name=".chat.UserActivity"/>
         <activity
-            android:name=".Routine_Selection"
+            android:name=".routines.Routine_Selection"
             android:exported="false" />
         <activity
-            android:name=".Routine_Main"
+            android:name=".routines.Routine_Main"
             android:exported="false" />
         <activity
-            android:name=".SelExerEspecific"
+            android:name=".exercises.SelExerEspecific"
             android:exported="false" />
         <activity
-            android:name=".SelectionExercises"
+            android:name=".exercises.SelectionExercises"
             android:exported="false" />
         <activity
             android:name=".Menu"
             android:exported="false" />
         <activity
-            android:name=".Exercises"
+            android:name=".exercises.Exercises"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

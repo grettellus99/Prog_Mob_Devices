@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_MenuBar"
-    tools:context=".SelExerEspecific">
+    tools:context=".exercises.SelExerEspecific">
 
     <LinearLayout
         android:id="@+id/tb_main_menu"

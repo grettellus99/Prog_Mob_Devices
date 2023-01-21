@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 
 import com.example.workoutic.R;
-import com.example.workoutic.SelectionExercises;
+import com.example.workoutic.exercises.SelectionExercises;
 import com.example.workoutic.models.ExercisesModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
