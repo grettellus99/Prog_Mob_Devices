@@ -83,15 +83,14 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 msi.getTime1().setVisibility(View.GONE);
                 msi.setTime2(m.getTime());
                 msi.getTime2().setVisibility(View.VISIBLE);
-                System.out.println("GETIMAGEURL1: "+m.getImageURL());
+
                 msi.getMessage().setVisibility(View.GONE);
                 msi.getImgMessage().setVisibility(View.VISIBLE);
                 msi.getFl().setVisibility(View.VISIBLE);
-                System.out.println("hola: "+m.getImageURL());
+
                 Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(msi.imgMessage);
             }
             else if(!m.getMessage().equals("")){
-                System.out.println("GETIMAGEURL2: "+m.getImageURL());
                 msi.setTime1(m.getTime());
                 msi.getTime1().setVisibility(View.VISIBLE);
                 msi.setTime2(m.getTime());
@@ -127,39 +126,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 mri.setTime2(m.getTime());
                 mri.getTime2().setVisibility(View.VISIBLE);
 
-                System.out.println("GETIMAGEURL3: "+m.getImageURL());
                 mri.getMessage().setVisibility(View.GONE);
+                mri.getImgMessage().setVisibility(View.VISIBLE);
                 mri.getFl().setVisibility(View.VISIBLE);
-                System.out.println("hola: "+m.getImageURL());
+
                 Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(mri.imgMessage);
-/*
-                mri.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-
-
-                        String url = m.getImageURL();
-                        String name = url.substring(url.lastIndexOf("/")+1);
-                        BitmapDrawable bitmapDrawable = (BitmapDrawable) mri.imgMessage.getDrawable();
-                        Bitmap bitmap = bitmapDrawable.getBitmap();
-                        String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(),bitmap, name, null);
-
-                        Intent shareIntent = new Intent();
-                        shareIntent.setAction(Intent.ACTION_SEND);
-                        Uri uri = Uri.parse(bitmapPath);
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                        shareIntent.setType("image/jpeg");
-                        context.startActivity(Intent.createChooser(shareIntent, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-
-                        return false;
-                    }
-                });
-
- */
-
             }
             else if(!m.getMessage().equals("")){
-                System.out.println("GETIMAGEURL4: "+m.getImageURL());
 
                 mri.setTime1(m.getTime());
                 mri.getTime1().setVisibility(View.VISIBLE);
