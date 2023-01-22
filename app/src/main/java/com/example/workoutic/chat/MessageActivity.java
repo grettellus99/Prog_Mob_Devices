@@ -177,7 +177,6 @@ public class MessageActivity extends AppCompatActivity {
                 } else {
                     Glide.with(getApplicationContext()).load(u.getUsericon()).into(usericon);
                 }
-
                 getMessagesFromFirebase(firebaseUser.getUid(), userid, u.getUsericon());
             }
 
@@ -195,7 +194,7 @@ public class MessageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GALERY_PHOTO_SEND && resultCode == RESULT_OK){
+        if(requestCode == GALERY_PHOTO_SEND && resultCode == RESULT_OK && data.getData() != null){
 
             Uri uri = data.getData();
             storageReference = firebaseStorage.getReference("chat_images");
@@ -204,18 +203,30 @@ public class MessageActivity extends AppCompatActivity {
             imageID.putFile(uri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            sendImage(firebaseUser.getUid(), userid, uri.toString());
+                        }
+                    });
 
-                    sendImage(firebaseUser.getUid(), userid, uri.toString());
+
                 }
             });
         }
-        else if(requestCode == CAM_PHOTO_SEND && resultCode == RESULT_OK){
+        else if(requestCode == CAM_PHOTO_SEND && resultCode == RESULT_OK && data.getData() != null){
             storageReference = firebaseStorage.getReference("chat_images");
             final StorageReference imageID = storageReference.child(photoURI.getLastPathSegment());
             imageID.putFile(photoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    sendImage(firebaseUser.getUid(), userid, photoURI.toString());
+                    taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            sendImage(firebaseUser.getUid(), userid, uri.toString());
+                        }
+                    });
+
                 }
             });
         }
