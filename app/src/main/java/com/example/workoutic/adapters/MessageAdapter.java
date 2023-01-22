@@ -213,22 +213,44 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void selectOptionReceiver(MessageReceiveItem mri, Message m){
-        final CharSequence[] options = {"Compartir", "Cancelar"};
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Elija una opción");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(options[i].equals("Compartir")){
-                    shareReceiver(mri, m);
-                }
-                else{
-                    dialogInterface.dismiss();
-                }
 
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        // Inicializando
+        LinearLayout ly = (LinearLayout) inflater.inflate(R.layout.dialog_message_activity,null);
+        TextView titleTV = ly.findViewById(R.id.dialog_msg_act_title);
+        TextView op1 = ly.findViewById(R.id.dialog_msg_specific_message_op1);
+        TextView op2 = ly.findViewById(R.id.dialog_msg_specific_message_op2);
+
+        titleTV.setText(R.string.choose_an_option);
+        op1.setText(R.string.share);
+        op2.setVisibility(View.GONE);
+
+        LinearLayout btn_n = ly.findViewById(R.id.btn_msg_option_negative);
+
+        builder.setView(ly);
+
+        final AlertDialog dialog = builder.create();
+
+        op1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                op1.setAlpha(0.6F);
+                shareReceiver(mri, m);
+                dialog.dismiss();
             }
         });
-        builder.show();
+
+        btn_n.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_n.setAlpha(0.6F);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void delete(Message m){
