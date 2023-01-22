@@ -214,7 +214,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
             });
         }
-        else if(requestCode == CAM_PHOTO_SEND && resultCode == RESULT_OK && data.getData() != null){
+        else if(requestCode == CAM_PHOTO_SEND && resultCode == RESULT_OK ){
             storageReference = firebaseStorage.getReference("chat_images");
             final StorageReference imageID = storageReference.child(photoURI.getLastPathSegment());
             imageID.putFile(photoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
