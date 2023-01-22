@@ -325,14 +325,17 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        switch (caller){
-            case "UserActivity":
-                Intent intUserActivity = new Intent(getApplicationContext(),UserActivity.class);
+        if(caller == null){
+            Intent intChatActivity= new Intent(getApplicationContext(), ChatActivity.class);
+            startActivity(intChatActivity);
+        }else {
+            if ("UserActivity".equals(caller)) {
+                Intent intUserActivity = new Intent(getApplicationContext(), UserActivity.class);
                 startActivity(intUserActivity);
-                break;
-            case "ChatActivity":
-                Intent intChatActivity= new Intent(getApplicationContext(), ChatActivity.class);
+            } else {
+                Intent intChatActivity = new Intent(getApplicationContext(), ChatActivity.class);
                 startActivity(intChatActivity);
+            }
         }
     }
     public void sendImage(String senderID, String receiverID, String imageURL){
