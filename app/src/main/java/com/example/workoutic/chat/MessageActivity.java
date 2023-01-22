@@ -164,15 +164,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-/*
-        ActivityResultLauncher<Intent> camLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if(result.getResultCode() == RESULT_OK){
 
-                }
-            }
-        });*/
 
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -218,7 +210,6 @@ public class MessageActivity extends AppCompatActivity {
             });
         }
         else if(requestCode == CAM_PHOTO_SEND && resultCode == RESULT_OK){
-            Toast.makeText(MessageActivity.this, "HALLO!", Toast.LENGTH_SHORT).show();
             storageReference = firebaseStorage.getReference("chat_images");
             final StorageReference imageID = storageReference.child(photoURI.getLastPathSegment());
             imageID.putFile(photoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {

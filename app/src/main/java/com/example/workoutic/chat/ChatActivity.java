@@ -167,41 +167,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public void addFrequentChat(){
-        /*
-        firebaseUser = firebaseAuth.getCurrentUser();
-        databaseReference = firebaseDB.getReference("Chats");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listUserID.clear();
-                Iterable<DataSnapshot> children = snapshot.getChildren();
-                Iterator<DataSnapshot> it = children.iterator();
-                DataSnapshot dataSnapshot;
-                Message m;
-                while(it.hasNext()){
-                    dataSnapshot = it.next();
-                    m = dataSnapshot.getValue(Message.class);
-
-                    assert m != null;
-                    if(m.getSenderID().equals(firebaseUser.getUid())){
-                        listUserID.add(m.getReceiverID());
-                    }
-                    if(m.getReceiverID().equals(firebaseUser.getUid())){
-                        listUserID.add(m.getSenderID());
-                    }
-                }
-
-                getMessagesFromFirebase();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        })*/
-    }
 
     public void getMessagesFromFirebase(){
 

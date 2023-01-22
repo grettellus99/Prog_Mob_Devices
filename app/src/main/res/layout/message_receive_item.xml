@@ -17,17 +17,17 @@
 
     <TextView
         android:id="@+id/txt_message_receive_item"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="15sp"
-        app:layout_constraintWidth_max="wrap"
+        app:layout_constraintWidth_max="260dp"
         app:layout_constraintStart_toEndOf="@id/cimg_message_receive_item"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintWidth_percent="0.5"
         android:background="@drawable/round_message_receive_background"/>
 
 
@@ -40,8 +40,9 @@
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/cimg_message_receive_item"
-        app:layout_constraintWidth_max="300dp"
-        app:layout_constraintHeight_max="300dp"
+        app:layout_constraintWidth_max="260dp"
+        app:layout_constraintHeight_max="260dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintWidth_percent="0.75"
         app:layout_constraintHeight_percent="0.75"
         android:background="@drawable/round_message_receive_background">
