@@ -22,8 +22,6 @@ public class MessageSendItem extends RecyclerView.ViewHolder{
         time1 = itemView.findViewById(R.id.txt_message_send_time);
         time2 = itemView.findViewById(R.id.txt_imgmessage_send_time);
         fl = itemView.findViewById(R.id.fl_message_send_item);
-
-
     }
 
     public TextView getMessage() {

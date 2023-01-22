@@ -43,7 +43,7 @@
             android:exported="false" />
         <activity
             android:name=".chat.MessageActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".signin_signup.LoginActivity"
             android:exported="false" />

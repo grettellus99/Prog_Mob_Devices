@@ -128,7 +128,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
 
             if(!m.getImageURL().equals("")){
-
                 mri.setTime1(m.getTime());
                 mri.getTime1().setVisibility(View.GONE);
                 mri.setTime2(m.getTime());
@@ -326,7 +325,4 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return 1;
         }
     }
-
-
-
 }
