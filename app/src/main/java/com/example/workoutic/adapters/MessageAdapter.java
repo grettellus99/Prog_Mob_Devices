@@ -88,14 +88,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 msi.getMessage().setVisibility(View.GONE);
                 msi.getImgMessage().setVisibility(View.VISIBLE);
                 msi.getFl().setVisibility(View.VISIBLE);
-                //System.out.println("hola: "+m.getImageURL());
-                Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(msi.imgMessage);
-            }
-            else if(!m.getMessage().equals("")){
-                msi.getMessage().setVisibility(View.GONE);
-                msi.getImgMessage().setVisibility(View.VISIBLE);
-                msi.getFl().setVisibility(View.VISIBLE);
-
                 Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(msi.imgMessage);
             }
             else if(!m.getMessage().equals("")){
@@ -105,6 +97,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 msi.getTime2().setVisibility(View.GONE);
                 msi.setMessage(m.getMessage());
                 msi.getMessage().setVisibility(View.VISIBLE);
+                msi.getImgMessage().setVisibility(View.GONE);
                 msi.getFl().setVisibility(View.GONE);
             }
 
