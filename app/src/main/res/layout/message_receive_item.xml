@@ -57,9 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/cimg_message_receive_item"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="300dp"
-                app:layout_constraintHeight_max="300dp"
+                app:layout_constraintWidth_max="260dp"
+                app:layout_constraintHeight_max="260dp"
                 app:layout_constraintWidth_percent="0.75"
                 app:layout_constraintHeight_percent="0.75"
                 android:src="@mipmap/ic_workoutic_round" />
