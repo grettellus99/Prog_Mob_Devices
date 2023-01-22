@@ -70,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
                     intent.putExtra("caller",getIntent().getStringExtra("caller"));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    finish();
                 } else if (txt_password.length() < 6 ){
                     Toast.makeText(RegisterActivity.this, R.string.msg_six_caracters, Toast.LENGTH_LONG).show();
                 }else if(!txt_password.equals(txt_valid_password)){
@@ -115,7 +114,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     Intent intent = new Intent(RegisterActivity.this, ChatActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
-                                    finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

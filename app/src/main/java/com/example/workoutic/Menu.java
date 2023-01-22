@@ -219,7 +219,6 @@ public class Menu extends AppCompatActivity {
                 intMessage.putExtra("caller2",getIntent().getStringExtra("caller2"));
                 startActivity(intMessage);
                 break;
-
         }
     }
 
@@ -231,7 +230,9 @@ public class Menu extends AppCompatActivity {
 
         }
         Intent intExercises = new Intent(getApplicationContext(),Exercises.class);
+        intExercises.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intExercises);
+
     }
 
     public void goMain(View view) {
@@ -240,8 +241,10 @@ public class Menu extends AppCompatActivity {
             dbExtra.deleteDB(); // borrar la BD extra
             removeNumElmSP();
         }
-        Intent intMain = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intMain = new Intent(getApplicationContext(), MainActivity.class);
+        intMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intMain);
+
     }
 
     public void goLogin(View view) {
@@ -251,6 +254,7 @@ public class Menu extends AppCompatActivity {
             removeNumElmSP();
         }
         Intent intLog = new Intent(getApplicationContext(),LoginActivity.class);
+        intLog.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intLog);
     }
 
@@ -261,6 +265,7 @@ public class Menu extends AppCompatActivity {
             removeNumElmSP();
         }
         Intent intRoutine = new Intent(getApplicationContext(),Routine_Main.class);
+        intRoutine.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intRoutine);
     }
 
@@ -271,6 +276,7 @@ public class Menu extends AppCompatActivity {
             removeNumElmSP();
         }
         Intent intChat= new Intent(getApplicationContext(), LoginActivity.class);
+        intChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intChat);
     }
 

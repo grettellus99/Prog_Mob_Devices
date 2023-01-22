@@ -61,12 +61,13 @@ public class UserActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
     public void goBack(View view) {
-        Intent intMain = new Intent(getApplicationContext(), ChatActivity.class);
-        startActivity(intMain);
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        startActivity(intent);
     }
 
     public void goMain(View view) {
         Intent intMain = new Intent(getApplicationContext(), MainActivity.class);
+        intMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intMain);
     }
 

@@ -73,7 +73,7 @@ public class RoutinesAdapter extends BaseAdapter implements Filterable {
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults filterResults = new FilterResults();
-                if(constraint == null || constraint.length() == 0){
+                if(constraint == null || constraint.length() == 0 || routinesData.size() == 0){
                     filterResults.count = routinesData.size();
                     filterResults.values = routinesData;
 

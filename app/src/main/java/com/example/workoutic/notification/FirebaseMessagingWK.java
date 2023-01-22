@@ -125,7 +125,7 @@ public class FirebaseMessagingWK extends FirebaseMessagingService {
 
         Bitmap iconLarge = BitmapFactory.decodeResource(this.getResources(),
                 R.mipmap.ic_workoutic_round);
-        
+
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)

@@ -512,6 +512,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|end"
                             android:layout_marginEnd="20dp"
+                            android:onClick="newExercise"
                             android:text="@string/nuevo"
                             android:textColor="@color/new_button" />
 

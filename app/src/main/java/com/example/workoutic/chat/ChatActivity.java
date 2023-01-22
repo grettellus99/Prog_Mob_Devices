@@ -109,7 +109,6 @@ public class ChatActivity extends AppCompatActivity {
                 Intent intent = new Intent(ChatActivity.this, UserActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -120,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
 
     public void goMain(View view) {
         Intent intMain = new Intent(getApplicationContext(), MainActivity.class);
+        intMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intMain);
     }
 

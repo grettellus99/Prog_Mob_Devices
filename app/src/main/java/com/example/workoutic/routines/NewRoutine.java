@@ -84,6 +84,7 @@ public class NewRoutine extends AppCompatActivity {
         dbExtra.deleteDB(); // borrar la BD extra
         removeNumElmSP();
         Intent intMain = new Intent(getApplicationContext(), MainActivity.class);
+        intMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intMain);
     }
 
@@ -205,11 +206,11 @@ public class NewRoutine extends AppCompatActivity {
                 day = "Miércoles";
             }else if(view.getId() == R.id.btn_new_routine_new_thursday){
                 day = "Jueves";
-            }else if(view.getId() == R.id.txt_new_routine_count_friday){
+            }else if(view.getId() == R.id.btn_new_routine_new_friday){
                 day = "Viernes";
             }else if(view.getId() == R.id.btn_new_routine_new_saturday){
                 day = "Sábado";
-            }else if(view.getId() == R.id.txt_new_routine_count_sunday){
+            }else if(view.getId() == R.id.btn_new_routine_new_sunday){
                 day = "Domingo";
             }
             intent.putExtra("day",day);

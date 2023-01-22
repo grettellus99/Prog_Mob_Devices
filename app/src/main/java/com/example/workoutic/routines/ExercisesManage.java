@@ -136,6 +136,7 @@ public class ExercisesManage extends AppCompatActivity {
             removeNumElmSP();
         }
         Intent intMain = new Intent(getApplicationContext(), MainActivity.class);
+        intMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intMain);
     }
 
@@ -179,6 +180,7 @@ public class ExercisesManage extends AppCompatActivity {
                             Intent i = new Intent(this,NewRoutine.class);
                             i.putExtra("caller","ExercisesManage");
                             Toast.makeText(this, R.string.msg_sucsess_add, Toast.LENGTH_SHORT).show();
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
                         }else if(mode.equals(MODE_ADD_R)){
                             if(isDay()){
@@ -196,6 +198,7 @@ public class ExercisesManage extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(),RoutineEspecific.class);
                             intent.putExtra("routine",getIntent().getSerializableExtra("routine"));
                             Toast.makeText(this, R.string.msg_sucsess_act, Toast.LENGTH_SHORT).show();
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
                     }else{

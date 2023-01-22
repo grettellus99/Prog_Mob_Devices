@@ -64,9 +64,7 @@ public class Routine_Selection extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String s) {
-                if((lv.getAdapter()).getCount() > 0){
-                    ((RoutinesAdapter)lv.getAdapter()).getFilter().filter(s);
-                }
+                ((RoutinesAdapter)lv.getAdapter()).getFilter().filter(s);
                 return true;
             }
         });
@@ -121,6 +119,7 @@ public class Routine_Selection extends AppCompatActivity {
 
     public void goMain(View view) {
         Intent intMain = new Intent(getApplicationContext(), MainActivity.class);
+        intMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intMain);
     }
 
