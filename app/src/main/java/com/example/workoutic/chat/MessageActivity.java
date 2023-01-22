@@ -17,9 +17,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -158,10 +160,7 @@ public class MessageActivity extends AppCompatActivity {
         cam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 selectOption();
-
-
             }
         });
 
@@ -234,29 +233,56 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public void selectOption(){
-        final CharSequence[] options = {"Hacer foto", "Seleccionar imagen", "Cancelar"};
+        //final CharSequence[] options = {"Hacer foto", "Seleccionar imagen", "Cancelar"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(MessageActivity.this);
-        builder.setTitle("Elija una opción");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        // Inicializando
+        LinearLayout ly = (LinearLayout) inflater.inflate(R.layout.dialog_message_activity,null);
+        TextView titleTV = ly.findViewById(R.id.dialog_msg_act_title);
+        TextView op1 = ly.findViewById(R.id.dialog_msg_specific_message_op1);
+        TextView op2 = ly.findViewById(R.id.dialog_msg_specific_message_op2);
+
+        titleTV.setText(R.string.choose_an_option);
+        op1.setText(R.string.take_picture);
+        op2.setText(R.string.select_image);
+
+        LinearLayout btn_n = ly.findViewById(R.id.btn_msg_option_negative);
+
+        builder.setView(ly);
+
+        final AlertDialog dialog = builder.create();
+
+        op1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(options[i].equals("Hacer foto")){
-                    openCam();
-                }
-                else if(options[i].equals("Seleccionar imagen")){
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                    startActivityForResult(Intent.createChooser(intent,"Seleccione una imagen"),GALERY_PHOTO_SEND);
-
-                }
-                else{
-                    dialogInterface.dismiss();
-                }
-
+            public void onClick(View v) {
+                op1.setAlpha(0.6F);
+                openCam();
+                dialog.dismiss();
             }
         });
-        builder.show();
+
+        op2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                op2.setAlpha(0.6F);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent,getString(R.string.select_an_image)),GALERY_PHOTO_SEND);
+                dialog.dismiss();
+            }
+        });
+
+        btn_n.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_n.setAlpha(0.6F);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void openCam(){

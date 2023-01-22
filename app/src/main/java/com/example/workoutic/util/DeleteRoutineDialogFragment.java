@@ -54,8 +54,7 @@ public class DeleteRoutineDialogFragment extends DialogFragment {
         btn_p.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txt = ly.findViewById(R.id.btn_option_positive_txt);
-                txt.setTextColor(getResources().getColor(R.color.edit));
+                btn_p.setAlpha(0.6F);
                 WorkouticDBHelper helper = new WorkouticDBHelper(c,DatabasesUtil.DATABASE_NAME,null,DatabasesUtil.DATABASE_VERSION);
                 helper.deleteRoutine(r);
                 Intent intent = new Intent(c, Routine_Selection.class);
@@ -66,8 +65,7 @@ public class DeleteRoutineDialogFragment extends DialogFragment {
         btn_n.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txt = ly.findViewById(R.id.btn_option_negative_txt);
-                txt.setTextColor(getResources().getColor(R.color.edit));
+                btn_n.setAlpha(0.6F);
                 dismiss();
             }
         });

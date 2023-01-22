@@ -61,9 +61,7 @@ public class DeleteItemDialogFragment extends DialogFragment {
         btn_p.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txt = ly.findViewById(R.id.btn_option_positive_txt);
-                txt.setTextColor(getResources().getColor(R.color.edit));
-
+                btn_p.setAlpha(0.6F);
                 lv.setVisibility(View.INVISIBLE);
 
                 pb.setVisibility(View.VISIBLE);
@@ -78,8 +76,7 @@ public class DeleteItemDialogFragment extends DialogFragment {
         btn_n.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txt = ly.findViewById(R.id.btn_option_negative_txt);
-                txt.setTextColor(getResources().getColor(R.color.edit));
+                btn_n.setAlpha(0.6F);
                 dismiss();
             }
         });

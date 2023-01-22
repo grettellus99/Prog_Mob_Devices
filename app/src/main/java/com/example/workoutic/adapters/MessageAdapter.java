@@ -1,5 +1,6 @@
 package com.example.workoutic.adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -14,6 +15,8 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.workoutic.R;
+import com.example.workoutic.chat.MessageActivity;
 import com.example.workoutic.models.Message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -76,22 +80,20 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if(getItemViewType(position) == 0){
             MessageSendItem msi = ((MessageSendItem) holder);
 
-
-
             if(!m.getImageURL().equals("")){
                 msi.setTime1(m.getTime());
                 msi.getTime1().setVisibility(View.GONE);
                 msi.setTime2(m.getTime());
                 msi.getTime2().setVisibility(View.VISIBLE);
-                System.out.println("GETIMAGEURL1: "+m.getImageURL());
+                //System.out.println("GETIMAGEURL1: "+m.getImageURL());
                 msi.getMessage().setVisibility(View.GONE);
                 msi.getImgMessage().setVisibility(View.VISIBLE);
                 msi.getFl().setVisibility(View.VISIBLE);
-                System.out.println("hola: "+m.getImageURL());
+                //System.out.println("hola: "+m.getImageURL());
                 Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(msi.imgMessage);
             }
             else if(!m.getMessage().equals("")){
-                System.out.println("GETIMAGEURL2: "+m.getImageURL());
+                //System.out.println("GETIMAGEURL2: "+m.getImageURL());
                 msi.setTime1(m.getTime());
                 msi.getTime1().setVisibility(View.VISIBLE);
                 msi.setTime2(m.getTime());
@@ -127,10 +129,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 mri.setTime2(m.getTime());
                 mri.getTime2().setVisibility(View.VISIBLE);
 
-                System.out.println("GETIMAGEURL3: "+m.getImageURL());
+                //System.out.println("GETIMAGEURL3: "+m.getImageURL());
                 mri.getMessage().setVisibility(View.GONE);
                 mri.getFl().setVisibility(View.VISIBLE);
-                System.out.println("hola: "+m.getImageURL());
+                //System.out.println("hola: "+m.getImageURL());
                 Glide.with(context).load(m.getImageURL()).fitCenter().centerCrop().into(mri.imgMessage);
 /*
                 mri.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -159,7 +161,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             }
             else if(!m.getMessage().equals("")){
-                System.out.println("GETIMAGEURL4: "+m.getImageURL());
+               // System.out.println("GETIMAGEURL4: "+m.getImageURL());
 
                 mri.setTime1(m.getTime());
                 mri.getTime1().setVisibility(View.VISIBLE);
@@ -184,25 +186,72 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
     private void selectOptionSender(MessageSendItem msi, Message m){
-        final CharSequence[] options = {"Compartir", "Borrar", "Cancelar"};
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Elija una opción");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(options[i].equals("Compartir")){
-                    shareSender(msi, m);
-                }
-                else if(options[i].equals("Borrar")){
-                    delete(m);
-                }
-                else{
-                    dialogInterface.dismiss();
-                }
 
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        // Inicializando
+        LinearLayout ly = (LinearLayout) inflater.inflate(R.layout.dialog_message_activity,null);
+        TextView titleTV = ly.findViewById(R.id.dialog_msg_act_title);
+        TextView op1 = ly.findViewById(R.id.dialog_msg_specific_message_op1);
+        TextView op2 = ly.findViewById(R.id.dialog_msg_specific_message_op2);
+
+        titleTV.setText(R.string.choose_an_option);
+        op1.setText(R.string.share);
+        op2.setText(R.string.delete);
+
+        LinearLayout btn_n = ly.findViewById(R.id.btn_msg_option_negative);
+
+        builder.setView(ly);
+
+        final AlertDialog dialog = builder.create();
+
+        op1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                op1.setAlpha(0.6F);
+                shareSender(msi, m);
+                dialog.dismiss();
             }
         });
-        builder.show();
+
+        op2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                op2.setAlpha(0.6F);
+                delete(m);
+                dialog.dismiss();
+            }
+        });
+
+        btn_n.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_n.setAlpha(0.6F);
+                dialog.dismiss();
+            }
+        });
+
+           dialog.show();
+//        final CharSequence[] options = {"Compartir", "Borrar", "Cancelar"};
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setTitle("Elija una opción");
+//        builder.setItems(options, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                if(options[i].equals("Compartir")){
+//
+//                }
+//                else if(options[i].equals("Borrar")){
+//                    delete(m);
+//                }
+//                else{
+//                    dialogInterface.dismiss();
+//                }
+//
+//            }
+//        });
+//        builder.show();
     }
 
     private void selectOptionReceiver(MessageReceiveItem mri, Message m){

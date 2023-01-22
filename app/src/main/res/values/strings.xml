@@ -181,4 +181,10 @@
     <string name="no_routines">No se encontraron rutinas</string>
     <string name="nuevo_mensaje">¡Nuevo Mensaje!</string>
     <string name="icon">Icon de usuario</string>
+    <string name="choose_an_option">Elija una opción</string>
+    <string name="take_picture">Hacer foto</string>
+    <string name="select_image">Seleccionar imagen</string>
+    <string name="select_an_image">Seleccione una imagen</string>
+    <string name="share">Compartir</string>
+    <string name="delete">Borrar</string>
 </resources>

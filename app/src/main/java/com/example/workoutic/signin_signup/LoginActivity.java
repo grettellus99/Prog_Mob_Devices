@@ -62,9 +62,15 @@ public class LoginActivity extends AppCompatActivity {
                     if(caller != null && caller.equals("User")){
                         intent = new Intent(LoginActivity.this, UserActivity.class);
                     }else if(caller != null && caller.equals("Message")){
-                        intent = new Intent(LoginActivity.this, MessageActivity.class);
-                        intent.putExtra("userid",getIntent().getStringExtra("userid"));
-                        intent.putExtra("caller",getIntent().getStringExtra("caller2"));
+                        String actUser = currentUser.getUid();
+                        String chatUser = getIntent().getStringExtra("userid");
+                        if(actUser.equals(chatUser)){
+                            intent = new Intent(LoginActivity.this,ChatActivity.class);
+                        }else{
+                            intent = new Intent(LoginActivity.this, MessageActivity.class);
+                            intent.putExtra("userid",chatUser);
+                            intent.putExtra("caller",getIntent().getStringExtra("caller2"));
+                        }
                     }
                     else{
                         intent = new Intent(LoginActivity.this, ChatActivity.class);
@@ -99,9 +105,15 @@ public class LoginActivity extends AppCompatActivity {
                                 if(caller != null && caller.equals("User")){
                                     intent = new Intent(LoginActivity.this, UserActivity.class);
                                 }else if(caller != null && caller.equals("Message")){
-                                    intent = new Intent(LoginActivity.this, MessageActivity.class);
-                                    intent.putExtra("userid",getIntent().getStringExtra("userid"));
-                                    intent.putExtra("caller",getIntent().getStringExtra("caller2"));
+                                    String actUser = currentUser.getUid();
+                                    String chatUser = getIntent().getStringExtra("userid");
+                                    if(actUser.equals(chatUser)){
+                                        intent = new Intent(LoginActivity.this,ChatActivity.class);
+                                    }else{
+                                        intent = new Intent(LoginActivity.this, MessageActivity.class);
+                                        intent.putExtra("userid",chatUser);
+                                        intent.putExtra("caller",getIntent().getStringExtra("caller2"));
+                                    }
                                 }
                                 else{
                                     intent = new Intent(LoginActivity.this, ChatActivity.class);
@@ -167,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goMain(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
